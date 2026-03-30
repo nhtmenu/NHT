@@ -189,7 +189,7 @@
     <script>
         let cart = [];
 
-        // Music Player - Random + Auto-play on load
+        // Music Player - Random + Auto-play
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
 
@@ -208,16 +208,27 @@
 
         audio.addEventListener('ended', playRandomTrack);
 
-        // Load menu from menu.json ONLY
+        // Load menu.json - tries root then /NHT/ for your project site
         async function loadMenu() {
+            const container = document.getElementById('menu-container');
             try {
-                const response = await fetch('menu.json');
-                if (!response.ok) throw new Error('menu.json not found');
+                let response = await fetch('menu.json');
+                if (!response.ok) {
+                    response = await fetch('/NHT/menu.json');   // your repo name
+                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
                 const data = await response.json();
                 renderMenu(data.items || []);
             } catch (e) {
-                console.error("Could not load menu.json", e);
-                document.getElementById('menu-container').innerHTML = `<p style="color:red; text-align:center;">Error loading menu. Make sure menu.json exists in the same folder.</p>`;
+                console.error("Menu load error:", e);
+                container.innerHTML = `
+                    <div class="menu-area" style="color:red; text-align:center; padding:30px; border:6px solid #ff0000;">
+                        <strong>Error loading menu.json</strong><br><br>
+                        Make sure the file is named exactly <strong>menu.json</strong> (all lowercase)<br>
+                        and placed in the root of your repo (same folder as index.html).<br><br>
+                        Commit & push, then wait 1-2 minutes and hard-refresh (Ctrl + Shift + R).
+                    </div>`;
             }
         }
 
@@ -315,7 +326,7 @@
         window.onload = () => {
             console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
             loadMenu();
-            playRandomTrack();   // Start random music automatically
+            playRandomTrack();
         };
     </script>
 </body>
