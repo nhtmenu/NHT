@@ -141,7 +141,6 @@
             <span>★★★ NEVER HAD THAT? NOW YOU WILL ★ FAST • DISCREET • 21+ ONLY ★ TRY SOMETHING NEW ★ MORE ITEMS LOADING SOON ★★★</span>
         </div>
 
-        <!-- Menu loaded from menu.json -->
         <div id="menu-container"></div>
 
         <!-- Music Player -->
@@ -189,7 +188,7 @@
     <script>
         let cart = [];
 
-        // Music Player - Random + Auto-play
+        // Music Player
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
 
@@ -208,26 +207,28 @@
 
         audio.addEventListener('ended', playRandomTrack);
 
-        // Load menu.json - tries root then /NHT/ for your project site
+        // Improved menu loading for GitHub Pages project site (/NHT/)
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
+                // Try multiple common paths for your setup
                 let response = await fetch('menu.json');
-                if (!response.ok) {
-                    response = await fetch('/NHT/menu.json');   // your repo name
-                }
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) response = await fetch('/NHT/menu.json');
+                if (!response.ok) response = await fetch('./menu.json');
+
+                if (!response.ok) throw new Error(`Status: ${response.status}`);
 
                 const data = await response.json();
                 renderMenu(data.items || []);
+                console.log("Menu loaded successfully from JSON");
             } catch (e) {
                 console.error("Menu load error:", e);
                 container.innerHTML = `
                     <div class="menu-area" style="color:red; text-align:center; padding:30px; border:6px solid #ff0000;">
-                        <strong>Error loading menu.json</strong><br><br>
-                        Make sure the file is named exactly <strong>menu.json</strong> (all lowercase)<br>
-                        and placed in the root of your repo (same folder as index.html).<br><br>
-                        Commit & push, then wait 1-2 minutes and hard-refresh (Ctrl + Shift + R).
+                        <strong>Still having trouble loading menu.json</strong><br><br>
+                        Your menu.json loads when you type the full URL, so the file is there.<br>
+                        Try a hard refresh (Ctrl + Shift + R) after pushing.<br><br>
+                        If it still fails, reply with the exact live URL of your site.
                     </div>`;
             }
         }
@@ -322,7 +323,6 @@
             document.body.removeChild(link);
         }
 
-        // Initialize
         window.onload = () => {
             console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
             loadMenu();
