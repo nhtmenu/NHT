@@ -69,7 +69,6 @@
 
         <div id="menu-container"></div>
 
-        <!-- Music Player -->
         <div class="music-player">
             <h3>♪ NOW SPINNING ON AOL RADIO ♪</h3>
             <audio id="aol-radio" controls autoplay></audio>
@@ -77,7 +76,6 @@
             <button onclick="playRandomTrack()" style="margin-top:10px; padding:8px 16px; font-size:12px;">NEXT TRACK</button>
         </div>
 
-        <!-- Cart -->
         <div id="cart-panel" class="cart-panel">
             <h2>YOUR CART</h2>
             <textarea id="cart-text" readonly placeholder="Click items above to add to cart..."></textarea>
@@ -114,68 +112,33 @@
     <script>
         let cart = [];
 
-        // Music Player
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
         const tracks = [
-            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", title: "SoundHelix Track 1 - Chill 90s Vibes" },
-            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", title: "SoundHelix Track 3 - Retro Groove" },
-            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", title: "SoundHelix Track 8 - 90s Dreamy Beat" }
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", title: "Chill 90s Vibes" },
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", title: "Retro Groove" },
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", title: "90s Dreamy Beat" }
         ];
 
         function playRandomTrack() {
-            const randomIndex = Math.floor(Math.random() * tracks.length);
-            audio.src = tracks[randomIndex].src;
-            nowPlaying.textContent = tracks[randomIndex].title;
+            const idx = Math.floor(Math.random() * tracks.length);
+            audio.src = tracks[idx].src;
+            nowPlaying.textContent = tracks[idx].title;
             audio.play().catch(() => {});
         }
         audio.addEventListener('ended', playRandomTrack);
 
-        // FINAL FIX: Use the exact absolute path that works on your site
+        // Simple relative fetch for GitHub Pages project site
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
-                // This is the path that definitely works for your repo
-                const response = await fetch('https://nhtmenu.github.io/NHT/menu.json');
-                if (!response.ok) throw new Error('Network error');
+                const response = await fetch('menu.json');   // relative path
+                if (!response.ok) throw new Error('fetch failed');
                 const data = await response.json();
                 renderMenu(data.items || []);
-                console.log("✅ Menu loaded successfully");
             } catch (e) {
                 console.error(e);
-                // Temporary fallback so you can see the menu while we debug
-                container.innerHTML = `
-                    <div class="menu-area" style="color:red; text-align:center; padding:20px;">
-                        <strong>Menu loading from JSON failed.</strong><br>
-                        Using temporary fallback menu.<br>
-                        Please hard refresh (Ctrl+Shift+R) after next push.
-                    </div>`;
-                // Fallback menu (only FLOWER expanded)
-                renderMenu([
-                    { category: "FLOWER", items: [
-                        {name: "Premium Indoor Bud", price: 45},
-                        {name: "Exotic Outdoor Green", price: 35},
-                        {name: "Never Had This Strain", price: 55},
-                        {name: "Classic OG Vibes", price: 40}
-                    ]},
-                    { category: "HASH", items: [
-                        {name: "Traditional Hashish", price: 30},
-                        {name: "Bubble Hash Concentrate", price: 50},
-                        {name: "Pressed Afghan Style", price: 35}
-                    ]},
-                    { category: "EDIBLE", items: [
-                        {name: "Groovy Gummies (10pk)", price: 25},
-                        {name: "Chocolate Chip Cookies", price: 18},
-                        {name: "Never Had This Brownie", price: 22},
-                        {name: "Fruit Punch Drink", price: 15}
-                    ]},
-                    { category: "BONUS (MISC)", items: [
-                        {name: "Pre-Rolled Joints (3pk)", price: 20},
-                        {name: "Disposable Vape Pen", price: 35},
-                        {name: "Grinder & Papers Kit", price: 12},
-                        {name: "Stash Jar", price: 8}
-                    ]}
-                ]);
+                container.innerHTML = `<div style="color:red;padding:20px;text-align:center;">Menu failed to load. Hard refresh or check that menu.json is in the root.</div>`;
             }
         }
 
@@ -189,7 +152,7 @@
                         <h2 onclick="toggleSection('${cat.category.toLowerCase()}-list')">${cat.category} ▼</h2>
                         <ul class="item-list ${isFlower ? 'active' : ''}" id="${cat.category.toLowerCase()}-list">
                             ${cat.items.map(item => `
-                                <li class="item" onclick="addToCart(event, this, '${item.name.replace(/'/g, "\\'")}', ${item.price})">
+                                <li class="item" onclick="addToCart(event, this, '${item.name.replace(/'/g,"\\'")}', ${item.price})">
                                     ${item.name} <span class="price">$${item.price}</span>
                                 </li>
                             `).join('')}
@@ -200,22 +163,22 @@
         }
 
         function toggleSection(id) {
-            const list = document.getElementById(id);
-            if (list) list.classList.toggle('active');
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('active');
         }
 
-        function addToCart(e, element, itemName, price) {
+        function addToCart(e, el, name, price) {
             e.stopImmediatePropagation();
-            element.classList.add('added');
-            setTimeout(() => element.classList.remove('added'), 800);
-            cart.push({ name: itemName, price: price });
+            el.classList.add('added');
+            setTimeout(() => el.classList.remove('added'), 800);
+            cart.push({name, price});
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
-            const textarea = document.getElementById('cart-text');
+            const ta = document.getElementById('cart-text');
             if (cart.length === 0) {
-                textarea.value = "Your cart is empty. Click items above to add them!";
+                ta.value = "Your cart is empty. Click items above to add them!";
                 return;
             }
             let text = "NEVER HAD THAT ORDER\n===================\n\n";
@@ -225,28 +188,28 @@
                 total += item.price;
             });
             text += `\nTOTAL: $${total}\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
-            textarea.value = text;
+            ta.value = text;
         }
 
-        function clearCart() { if (confirm("Clear your entire cart?")) { cart = []; updateCartDisplay(); alert("✅ Cart cleared!"); } }
+        function clearCart() { if (confirm("Clear cart?")) { cart = []; updateCartDisplay(); alert("Cart cleared!"); } }
         async function copyToClipboard() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) { alert("Nothing to copy yet!"); return; }
-            try { await navigator.clipboard.writeText(text); alert("✅ Copied!"); } catch(e) { alert("✅ Copied!"); }
+            if (!text || text.includes("empty")) return alert("Nothing to copy!");
+            try { await navigator.clipboard.writeText(text); alert("Copied!"); } catch(e) { alert("Copied!"); }
         }
         function sendSMS() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) { alert("Add items first!"); return; }
-            const link = document.createElement('a');
-            link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            if (!text || text.includes("empty")) return alert("Add items first!");
+            const a = document.createElement('a');
+            a.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         window.onload = () => {
-            console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
+            console.log("%cAOL Never Had That loaded", "color:lime");
             loadMenu();
             playRandomTrack();
         };
