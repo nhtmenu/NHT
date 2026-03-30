@@ -112,6 +112,7 @@
     <script>
         let cart = [];
 
+        // Music - random + auto-play
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
         const tracks = [
@@ -128,17 +129,21 @@
         }
         audio.addEventListener('ended', playRandomTrack);
 
-        // Simple relative fetch for GitHub Pages project site
+        // Load menu from JSON - using the path that works for your /NHT/ project site
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
-                const response = await fetch('menu.json');   // relative path
-                if (!response.ok) throw new Error('fetch failed');
+                // Try relative path first (recommended for GitHub Pages)
+                let response = await fetch('menu.json');
+                if (!response.ok) {
+                    // Fallback for project site structure
+                    response = await fetch('/NHT/menu.json');
+                }
                 const data = await response.json();
                 renderMenu(data.items || []);
             } catch (e) {
-                console.error(e);
-                container.innerHTML = `<div style="color:red;padding:20px;text-align:center;">Menu failed to load. Hard refresh or check that menu.json is in the root.</div>`;
+                console.error("JSON load failed:", e);
+                container.innerHTML = `<div class="menu-area" style="color:red;text-align:center;padding:30px;">Failed to load menu.json.<br>Make sure the file is in the root and do a hard refresh (Ctrl+Shift+R).</div>`;
             }
         }
 
@@ -152,7 +157,7 @@
                         <h2 onclick="toggleSection('${cat.category.toLowerCase()}-list')">${cat.category} ▼</h2>
                         <ul class="item-list ${isFlower ? 'active' : ''}" id="${cat.category.toLowerCase()}-list">
                             ${cat.items.map(item => `
-                                <li class="item" onclick="addToCart(event, this, '${item.name.replace(/'/g,"\\'")}', ${item.price})">
+                                <li class="item" onclick="addToCart(event, this, '${item.name.replace(/'/g, "\\'")}', ${item.price})">
                                     ${item.name} <span class="price">$${item.price}</span>
                                 </li>
                             `).join('')}
@@ -163,22 +168,22 @@
         }
 
         function toggleSection(id) {
-            const el = document.getElementById(id);
-            if (el) el.classList.toggle('active');
+            const list = document.getElementById(id);
+            if (list) list.classList.toggle('active');
         }
 
-        function addToCart(e, el, name, price) {
+        function addToCart(e, element, itemName, price) {
             e.stopImmediatePropagation();
-            el.classList.add('added');
-            setTimeout(() => el.classList.remove('added'), 800);
-            cart.push({name, price});
+            element.classList.add('added');
+            setTimeout(() => element.classList.remove('added'), 800);
+            cart.push({ name: itemName, price: price });
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
-            const ta = document.getElementById('cart-text');
+            const textarea = document.getElementById('cart-text');
             if (cart.length === 0) {
-                ta.value = "Your cart is empty. Click items above to add them!";
+                textarea.value = "Your cart is empty. Click items above to add them!";
                 return;
             }
             let text = "NEVER HAD THAT ORDER\n===================\n\n";
@@ -188,28 +193,28 @@
                 total += item.price;
             });
             text += `\nTOTAL: $${total}\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
-            ta.value = text;
+            textarea.value = text;
         }
 
-        function clearCart() { if (confirm("Clear cart?")) { cart = []; updateCartDisplay(); alert("Cart cleared!"); } }
+        function clearCart() { if (confirm("Clear your entire cart?")) { cart = []; updateCartDisplay(); alert("✅ Cart cleared!"); } }
         async function copyToClipboard() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) return alert("Nothing to copy!");
-            try { await navigator.clipboard.writeText(text); alert("Copied!"); } catch(e) { alert("Copied!"); }
+            if (!text || text.includes("empty")) return alert("Nothing to copy yet!");
+            try { await navigator.clipboard.writeText(text); alert("✅ Copied!"); } catch(e) { alert("✅ Copied!"); }
         }
         function sendSMS() {
             const text = document.getElementById('cart-text').value.trim();
             if (!text || text.includes("empty")) return alert("Add items first!");
-            const a = document.createElement('a');
-            a.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            const link = document.createElement('a');
+            link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         window.onload = () => {
-            console.log("%cAOL Never Had That loaded", "color:lime");
+            console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
             loadMenu();
             playRandomTrack();
         };
