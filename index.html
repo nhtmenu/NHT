@@ -28,6 +28,19 @@
             cursor: pointer; 
         }
 
+        .checkout-link {
+            display: block;
+            margin: 8px auto 0;
+            background: #ff0000;
+            color: #ffff00;
+            padding: 8px 20px;
+            font-weight: bold;
+            border: 4px solid #ffffff;
+            box-shadow: 4px 4px 0 #000;
+            width: fit-content;
+            text-decoration: none;
+        }
+
         .container {
             max-width: 780px; margin: 20px auto;
             background: #c0c0c0;
@@ -75,7 +88,7 @@
         .price {
             color: #ff0000;
             font-weight: bold;
-            min-width: 70px;
+            min-width: 90px;
             text-align: right;
             transition: all 0.4s;
         }
@@ -85,7 +98,7 @@
         }
         @keyframes pricePop {
             0% { transform: scale(1); color: #ff0000; }
-            50% { transform: scale(1.35); color: #00ff00; }
+            50% { transform: scale(1.4); color: #00ff00; }
             100% { transform: scale(1); color: #00ff00; }
         }
 
@@ -153,6 +166,10 @@
         <a onclick="document.getElementById('info-panel').scrollIntoView({behavior:'smooth'})">Chat</a> • 
         <a onclick="document.getElementById('map-panel').scrollIntoView({behavior:'smooth'})">Hudson Valley</a> • 
         <a href="https://instagram.com/never.had.that" target="_blank">Never Had That</a>
+        <br>
+        <a id="checkout-link" class="checkout-link" onclick="document.getElementById('cart-panel').scrollIntoView({behavior:'smooth'})">
+            🛒 CHECKOUT (0) $0
+        </a>
     </div>
 
     <div class="container">
@@ -237,7 +254,7 @@
             Screen Name: <a href="https://instagram.com/never.had.that" target="_blank" class="instagram-link">never.had.that</a>
         </div>
 
-        <!-- Map Zone - zoomed out wide view -->
+        <!-- Map Zone -->
         <div id="map-panel" class="map-panel">
             <h2>HUDSON VALLEY DELIVERY ZONE</h2>
             <p><strong>Service area includes:</strong> Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill, and surrounding towns across the region.</p>
@@ -261,11 +278,16 @@
 
     <div class="scanlines"></div>
 
+    <!-- Cash register sound -->
+    <audio id="ching" src="https://www.soundjay.com/buttons/beep-07.mp3" preload="auto"></audio>
+
     <script>
         let cart = [];
 
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
+        const chingSound = document.getElementById('ching');
+
         const tracks = [
             { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", title: "Chill 90s Vibes" },
             { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", title: "Retro Groove" },
@@ -287,30 +309,43 @@
 
         function addToCart(e, element, itemName, price) {
             e.stopImmediatePropagation();
+            
             element.classList.add('added');
             setTimeout(() => element.classList.remove('added'), 800);
+
+            chingSound.currentTime = 0;
+            chingSound.play().catch(() => {});
+
             cart.push({ name: itemName, price: price });
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
             const textarea = document.getElementById('cart-text');
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let count = cart.length;
+
             if (cart.length === 0) {
                 textarea.value = "Your cart is empty. Click items above to add them!";
                 return;
             }
+
             let text = "NEVER HAD THAT ORDER\n===================\n\n";
-            let total = 0;
             cart.forEach((item, i) => {
                 text += `${i+1}. ${item.name} — $${item.price}\n`;
-                total += item.price;
             });
             text += `\nTOTAL: $${total}\n`;
             text += `\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
             textarea.value = text;
         }
 
-        function clearCart() { if (confirm("Clear your entire cart?")) { cart = []; updateCartDisplay(); alert("✅ Cart cleared!"); } }
+        function clearCart() { 
+            if (confirm("Clear your entire cart?")) { 
+                cart = []; 
+                updateCartDisplay(); 
+                alert("✅ Cart cleared!"); 
+            } 
+        }
         async function copyToClipboard() {
             const text = document.getElementById('cart-text').value.trim();
             if (!text || text.includes("empty")) return alert("Nothing to copy yet!");
@@ -327,9 +362,20 @@
             document.body.removeChild(link);
         }
 
+        // Live update for Checkout button
+        function updateCheckoutButton() {
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let count = cart.length;
+            const btn = document.getElementById('checkout-link');
+            if (btn) {
+                btn.innerHTML = `🛒 CHECKOUT (${count}) $${total}`;
+            }
+        }
+
         window.onload = () => {
             console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
             playRandomTrack();
+            setInterval(updateCheckoutButton, 300);
         };
     </script>
 </body>
