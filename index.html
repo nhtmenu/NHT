@@ -112,7 +112,7 @@
     <script>
         let cart = [];
 
-        // Music - random + auto-play
+        // Music player
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
         const tracks = [
@@ -129,21 +129,16 @@
         }
         audio.addEventListener('ended', playRandomTrack);
 
-        // Load menu from JSON - using the path that works for your /NHT/ project site
+        // Direct raw GitHub URL - this bypasses the GitHub Pages fetch issue
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
-                // Try relative path first (recommended for GitHub Pages)
-                let response = await fetch('menu.json');
-                if (!response.ok) {
-                    // Fallback for project site structure
-                    response = await fetch('/NHT/menu.json');
-                }
+                const response = await fetch('https://raw.githubusercontent.com/nhtmenu/NHT/main/menu.json');
+                if (!response.ok) throw new Error('Failed');
                 const data = await response.json();
                 renderMenu(data.items || []);
             } catch (e) {
-                console.error("JSON load failed:", e);
-                container.innerHTML = `<div class="menu-area" style="color:red;text-align:center;padding:30px;">Failed to load menu.json.<br>Make sure the file is in the root and do a hard refresh (Ctrl+Shift+R).</div>`;
+                container.innerHTML = `<div class="menu-area" style="color:red;text-align:center;padding:30px;">Still couldn't load menu.json.<br>Double-check the file is in the root and try hard refresh.</div>`;
             }
         }
 
