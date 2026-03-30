@@ -7,115 +7,41 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        body {
-            margin: 0; padding: 0;
-            background: #000080 url('https://www.transparenttextures.com/patterns/old-wall.png') repeat;
-            color: #ffffff;
-            font-family: 'Press Start 2P', system-ui;
-            line-height: 1.5;
-            image-rendering: pixelated;
-        }
-
-        .aol-topbar {
-            background: #0000ff; color: #ffff00; padding: 8px 15px; text-align: center;
-            font-size: 14px; border-bottom: 4px solid #ffffff; text-shadow: 2px 2px 0 #000;
-            position: sticky; top: 0; z-index: 100;
-        }
+        body { margin: 0; padding: 0; background: #000080 url('https://www.transparenttextures.com/patterns/old-wall.png') repeat; color: #ffffff; font-family: 'Press Start 2P', system-ui; line-height: 1.5; image-rendering: pixelated; }
+        .aol-topbar { background: #0000ff; color: #ffff00; padding: 8px 15px; text-align: center; font-size: 14px; border-bottom: 4px solid #ffffff; text-shadow: 2px 2px 0 #000; position: sticky; top: 0; z-index: 100; }
         .aol-topbar a { color: #ffff00; text-decoration: underline; margin: 0 12px; }
-
-        .container {
-            max-width: 780px; margin: 20px auto;
-            background: #c0c0c0;
-            border: 8px solid #dfdfdf;
-            border-right-color: #808080; border-bottom-color: #808080;
-            box-shadow: 10px 10px 0 #000; padding: 15px;
-        }
-
-        .header {
-            background: linear-gradient(#000080, #0000aa); color: #ffffff;
-            padding: 18px; text-align: center; border: 6px solid #ffffff;
-            margin-bottom: 20px; text-shadow: 3px 3px 0 #000;
-        }
+        .container { max-width: 780px; margin: 20px auto; background: #c0c0c0; border: 8px solid #dfdfdf; border-right-color: #808080; border-bottom-color: #808080; box-shadow: 10px 10px 0 #000; padding: 15px; }
+        .header { background: linear-gradient(#000080, #0000aa); color: #ffffff; padding: 18px; text-align: center; border: 6px solid #ffffff; margin-bottom: 20px; text-shadow: 3px 3px 0 #000; }
         h1 { margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 3px; }
         .welcome { font-size: 18px; color: #ffff00; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0.6; } }
-
-        .marquee {
-            background: #000000; color: #00ff00; padding: 8px; font-size: 13px;
-            overflow: hidden; white-space: nowrap; margin: 15px 0; border: 3px solid #ff0000;
-        }
+        .marquee { background: #000000; color: #00ff00; padding: 8px; font-size: 13px; overflow: hidden; white-space: nowrap; margin: 15px 0; border: 3px solid #ff0000; }
         .marquee span { display: inline-block; animation: marquee 30s linear infinite; }
         @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-
-        .menu-area {
-            background: #ffffff; border: 6px solid #000080; padding: 20px;
-            color: #000; margin-bottom: 25px;
-        }
-        h2 {
-            color: #000080; font-size: 17px; margin: 0 0 15px 0;
-            text-transform: uppercase; border-bottom: 4px solid #ff0000;
-            padding-bottom: 6px; cursor: pointer;
-        }
+        .menu-area { background: #ffffff; border: 6px solid #000080; padding: 20px; color: #000; margin-bottom: 25px; }
+        h2 { color: #000080; font-size: 17px; margin: 0 0 15px 0; text-transform: uppercase; border-bottom: 4px solid #ff0000; padding-bottom: 6px; cursor: pointer; }
         .item-list { list-style: none; padding: 0; margin: 0; display: none; }
         .item-list.active { display: block; }
-        .item {
-            padding: 12px 8px; border-bottom: 2px dotted #808080;
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; transition: all 0.2s;
-        }
+        .item { padding: 12px 8px; border-bottom: 2px dotted #808080; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s; }
         .item:hover { background: #ffffe0; }
         .item.added { background: #ffff00; animation: flash 0.6s; }
         @keyframes flash { 0%, 100% { background: #ffff00; } 50% { background: #ffffff; } }
         .price { color: #ff0000; font-weight: bold; min-width: 70px; text-align: right; }
-
-        .music-player {
-            background: #000080; border: 6px solid #ffffff; padding: 15px;
-            margin: 25px 0; color: #00ff00; text-align: center; box-shadow: 4px 4px 0 #000;
-        }
+        .music-player { background: #000080; border: 6px solid #ffffff; padding: 15px; margin: 25px 0; color: #00ff00; text-align: center; box-shadow: 4px 4px 0 #000; }
         .music-player h3 { margin: 0 0 12px 0; color: #ffff00; text-shadow: 2px 2px 0 #000; font-size: 15px; }
         audio { width: 100%; margin-top: 8px; }
         .now-playing { font-size: 12px; margin-top: 8px; color: #ffff00; min-height: 18px; }
-
-        .cart-panel {
-            background: #ffffff; border: 6px solid #000080; padding: 20px;
-            color: #000; margin: 25px 0;
-        }
-        #cart-text {
-            width: 100%; height: 180px; background: #000080; color: #00ff00;
-            border: 4px solid #ffff00; padding: 12px;
-            font-family: 'Press Start 2P', system-ui; font-size: 13px; resize: vertical;
-        }
+        .cart-panel { background: #ffffff; border: 6px solid #000080; padding: 20px; color: #000; margin: 25px 0; }
+        #cart-text { width: 100%; height: 180px; background: #000080; color: #00ff00; border: 4px solid #ffff00; padding: 12px; font-family: 'Press Start 2P', system-ui; font-size: 13px; resize: vertical; }
         .button-row { margin-top: 15px; text-align: center; }
-        button {
-            background: #c0c0c0; color: #000080;
-            border: 4px solid #ffffff; border-right-color: #808080; border-bottom-color: #808080;
-            padding: 12px 24px; font-family: 'Press Start 2P', system-ui; font-size: 14px;
-            cursor: pointer; margin: 6px; text-transform: uppercase; box-shadow: 4px 4px 0 #000;
-        }
-        button:active {
-            border-color: #808080; border-right-color: #ffffff; border-bottom-color: #ffffff;
-            transform: translate(2px, 2px);
-        }
-
-        .info-panel {
-            background: #ffffff; border: 6px solid #000080; padding: 18px;
-            color: #000; font-size: 13px; margin-bottom: 20px;
-        }
+        button { background: #c0c0c0; color: #000080; border: 4px solid #ffffff; border-right-color: #808080; border-bottom-color: #808080; padding: 12px 24px; font-family: 'Press Start 2P', system-ui; font-size: 14px; cursor: pointer; margin: 6px; text-transform: uppercase; box-shadow: 4px 4px 0 #000; }
+        button:active { border-color: #808080; border-right-color: #ffffff; border-bottom-color: #ffffff; transform: translate(2px, 2px); }
+        .info-panel { background: #ffffff; border: 6px solid #000080; padding: 18px; color: #000; font-size: 13px; margin-bottom: 20px; }
         .instagram-link { color: #0000ff; text-decoration: underline; font-weight: bold; }
         .instagram-link:hover { color: #ff0000; }
-
-        .contact-box {
-            background: #000080; color: #ffff00; text-align: center; padding: 22px;
-            font-size: 19px; margin: 25px 0; border: 6px solid #ffffff;
-            text-shadow: 2px 2px 0 #000;
-        }
+        .contact-box { background: #000080; color: #ffff00; text-align: center; padding: 22px; font-size: 19px; margin: 25px 0; border: 6px solid #ffffff; text-shadow: 2px 2px 0 #000; }
         .phone-link { color: #ffff00; text-decoration: underline; }
-
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(transparent 0px, transparent 3px, rgba(0,255,0,0.06) 3px, rgba(0,255,0,0.06) 6px);
-            pointer-events: none; z-index: 9999;
-        }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(transparent 0px, transparent 3px, rgba(0,255,0,0.06) 3px, rgba(0,255,0,0.06) 6px); pointer-events: none; z-index: 9999; }
         .footer { text-align: center; font-size: 11px; color: #808080; margin-top: 20px; }
     </style>
 </head>
@@ -188,7 +114,7 @@
     <script>
         let cart = [];
 
-        // Music Player
+        // Music Player - random + auto play
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
 
@@ -204,32 +130,19 @@
             nowPlaying.textContent = tracks[randomIndex].title;
             audio.play().catch(() => {});
         }
-
         audio.addEventListener('ended', playRandomTrack);
 
-        // Improved menu loading for GitHub Pages project site (/NHT/)
+        // FIXED: Use the exact path that works on your site
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
-                // Try multiple common paths for your setup
-                let response = await fetch('menu.json');
-                if (!response.ok) response = await fetch('/NHT/menu.json');
-                if (!response.ok) response = await fetch('./menu.json');
-
-                if (!response.ok) throw new Error(`Status: ${response.status}`);
-
+                const response = await fetch('/NHT/menu.json');   // This matches your working URL
+                if (!response.ok) throw new Error('Failed to fetch menu');
                 const data = await response.json();
                 renderMenu(data.items || []);
-                console.log("Menu loaded successfully from JSON");
             } catch (e) {
-                console.error("Menu load error:", e);
-                container.innerHTML = `
-                    <div class="menu-area" style="color:red; text-align:center; padding:30px; border:6px solid #ff0000;">
-                        <strong>Still having trouble loading menu.json</strong><br><br>
-                        Your menu.json loads when you type the full URL, so the file is there.<br>
-                        Try a hard refresh (Ctrl + Shift + R) after pushing.<br><br>
-                        If it still fails, reply with the exact live URL of your site.
-                    </div>`;
+                console.error(e);
+                container.innerHTML = `<div class="menu-area" style="color:red;text-align:center;padding:30px;">Error loading menu — please hard refresh (Ctrl+Shift+R)</div>`;
             }
         }
 
@@ -239,7 +152,7 @@
 
             categories.forEach(cat => {
                 const isFlower = cat.category.toUpperCase() === 'FLOWER';
-                const sectionHTML = `
+                const html = `
                     <div class="menu-area">
                         <h2 onclick="toggleSection('${cat.category.toLowerCase()}-list')">${cat.category} ▼</h2>
                         <ul class="item-list ${isFlower ? 'active' : ''}" id="${cat.category.toLowerCase()}-list">
@@ -249,9 +162,8 @@
                                 </li>
                             `).join('')}
                         </ul>
-                    </div>
-                `;
-                container.innerHTML += sectionHTML;
+                    </div>`;
+                container.innerHTML += html;
             });
         }
 
@@ -280,43 +192,21 @@
                 text += `${i+1}. ${item.name} — $${item.price}\n`;
                 total += item.price;
             });
-            text += `\nTOTAL: $${total}\n`;
-            text += `\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
+            text += `\nTOTAL: $${total}\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
             textarea.value = text;
         }
 
-        function clearCart() {
-            if (confirm("Clear your entire cart?")) {
-                cart = [];
-                updateCartDisplay();
-                alert("✅ Cart cleared!");
-            }
-        }
-
+        function clearCart() { if (confirm("Clear your entire cart?")) { cart = []; updateCartDisplay(); alert("✅ Cart cleared!"); } }
         async function copyToClipboard() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) {
-                alert("Nothing to copy yet!");
-                return;
-            }
-            try {
-                await navigator.clipboard.writeText(text);
-                alert("✅ Copied to clipboard!");
-            } catch (e) {
-                alert("✅ Copied!");
-            }
+            if (!text || text.includes("empty")) { alert("Nothing to copy yet!"); return; }
+            try { await navigator.clipboard.writeText(text); alert("✅ Copied!"); } catch(e) { alert("✅ Copied!"); }
         }
-
         function sendSMS() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) {
-                alert("Add items to your cart first!");
-                return;
-            }
-            const encoded = encodeURIComponent(text);
-            const phone = "6466886312";
+            if (!text || text.includes("empty")) { alert("Add items first!"); return; }
             const link = document.createElement('a');
-            link.href = `sms:${phone}?body=${encoded}`;
+            link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
             link.style.display = 'none';
             document.body.appendChild(link);
             link.click();
