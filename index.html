@@ -21,7 +21,12 @@
             font-size: 14px; border-bottom: 4px solid #ffffff; text-shadow: 2px 2px 0 #000;
             position: sticky; top: 0; z-index: 100;
         }
-        .aol-topbar a { color: #ffff00; text-decoration: underline; margin: 0 12px; cursor: pointer; }
+        .aol-topbar a { 
+            color: #ffff00; 
+            text-decoration: underline; 
+            margin: 0 12px; 
+            cursor: pointer; 
+        }
 
         .container {
             max-width: 780px; margin: 20px auto;
@@ -143,11 +148,11 @@
 
     <div class="aol-topbar">
         <span style="color:#ff0000; font-size:22px;">AOL</span> • 
-        <a href="#">Mail</a> • 
-        <a href="#">Keyword: MENU</a> • 
+        <a onclick="document.getElementById('contact-box').scrollIntoView({behavior:'smooth'})">Mail</a> • 
+        <a href="#">Menu</a> • 
         <a onclick="document.getElementById('info-panel').scrollIntoView({behavior:'smooth'})">Chat</a> • 
         <a onclick="document.getElementById('map-panel').scrollIntoView({behavior:'smooth'})">Hudson Valley</a> • 
-        <a href="#">Never Had That</a>
+        <a href="https://instagram.com/never.had.that" target="_blank">Never Had That</a>
     </div>
 
     <div class="container">
@@ -232,17 +237,17 @@
             Screen Name: <a href="https://instagram.com/never.had.that" target="_blank" class="instagram-link">never.had.that</a>
         </div>
 
-        <!-- Map Zone - much wider zoomed-out view -->
+        <!-- Map Zone - zoomed out wide view -->
         <div id="map-panel" class="map-panel">
             <h2>HUDSON VALLEY DELIVERY ZONE</h2>
             <p><strong>Service area includes:</strong> Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill, and surrounding towns across the region.</p>
             <div class="map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1200000!2d-74.5!3d41.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e5b0b0b0b0b0%3A0x0!2sHudson+Valley%2C+NY!5e0!3m2!1sen!2sus!4v1740000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            <p style="margin-top:10px; font-size:12px;">Text us your exact address to confirm availability in your area.</p>
+            <p style="margin-top:10px; font-size:12px;">Text us your exact address to confirm availability.</p>
         </div>
 
-        <div class="contact-box">
+        <div id="contact-box" class="contact-box">
             📞 CALL OR TEXT TO ORDER:<br>
             <a href="tel:6466886312" class="phone-link"><strong>(646) 688-6312</strong></a><br>
             <span style="font-size:14px;">Discreet Delivery • You've Got Goods!</span>
