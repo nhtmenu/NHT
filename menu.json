@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "category": "FLOWER",
+      "items": [
+        {"name": "Premium Indoor Bud", "price": 45},
+        {"name": "Exotic Outdoor Green", "price": 35}
+      ]
+    },
+    {
+      "category": "HASH",
+      "items": [
+        {"name": "Traditional Hashish", "price": 30}
+      ]
+    }
+    // Add more categories and items easily
+  ]
+}
