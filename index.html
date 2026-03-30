@@ -219,6 +219,45 @@
             margin-bottom: 20px;
         }
 
+        .instagram-link {
+            color: #0000ff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .instagram-link:hover {
+            color: #ff0000;
+        }
+
+        .music-player {
+            background: #000080;
+            border: 6px solid #ffffff;
+            padding: 15px;
+            margin: 25px 0;
+            color: #00ff00;
+            text-align: center;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .music-player h3 {
+            margin: 0 0 12px 0;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #000;
+            font-size: 15px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .now-playing {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #ffff00;
+            min-height: 18px;
+        }
+
         .contact-box {
             background: #000080;
             color: #ffff00;
@@ -248,6 +287,13 @@
             pointer-events: none;
             z-index: 9999;
         }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #808080;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -274,7 +320,7 @@
             <span>★★★ NEVER HAD THAT? NOW YOU WILL ★ FAST • DISCREET • 21+ ONLY ★ TRY SOMETHING NEW ★ MORE ITEMS LOADING SOON ★★★</span>
         </div>
 
-        <!-- Flower (expanded by default) -->
+        <!-- Flower -->
         <div class="menu-area">
             <h2 onclick="toggleSection('flower-list')">FLOWER ▼</h2>
             <ul class="item-list active" id="flower-list">
@@ -317,6 +363,16 @@
             </ul>
         </div>
 
+        <!-- Music Player -->
+        <div class="music-player">
+            <h3>♪ NOW SPINNING ON AOL RADIO ♪</h3>
+            <audio id="aol-radio" controls>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="now-playing" id="now-playing">SoundHelix Track 1 - Chill 90s Vibes</div>
+        </div>
+
         <!-- Cart -->
         <div class="cart-panel">
             <h2>YOUR CART</h2>
@@ -324,8 +380,8 @@
             
             <div class="button-row">
                 <button onclick="clearCart()">CLEAR CART</button>
-                <button onclick="copyToClipboard()">COPY TO CLIPBOARD </button>
-                <button onclick="sendSMS()">SEND VIA TEXT </button>
+                <button onclick="copyToClipboard()">COPY TO CLIPBOARD</button>
+                <button onclick="sendSMS()">SEND VIA TEXT</button>
             </div>
         </div>
 
@@ -335,7 +391,7 @@
             <p><strong>Tip of the Day:</strong> Schedule ahead for faster delivery!</p>
             <hr style="border: 2px dashed #000080; margin: 15px 0;">
             <strong>Instant Message Us:</strong><br>
-            Screen Name: never.had.that
+            Screen Name: <a href="https://instagram.com/never.had.that" target="_blank" class="instagram-link">never.had.that</a>
         </div>
 
         <div class="contact-box">
@@ -434,8 +490,30 @@
             document.body.removeChild(link);
         }
 
+        // Music Player
+        const audio = document.getElementById('aol-radio');
+        const nowPlaying = document.getElementById('now-playing');
+
+        const tracks = [
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", title: "SoundHelix Track 1 - Chill 90s Vibes" },
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", title: "SoundHelix Track 3 - Retro Groove" },
+            { src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", title: "SoundHelix Track 8 - 90s Dreamy Beat" }
+        ];
+
+        let currentTrack = 0;
+
+        audio.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % tracks.length;
+            audio.src = tracks[currentTrack].src;
+            nowPlaying.textContent = tracks[currentTrack].title;
+            audio.play().catch(() => {});
+        });
+
         window.onload = () => {
             console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
+            
+            audio.src = tracks[0].src;
+            nowPlaying.textContent = tracks[0].title;
         };
     </script>
 </body>
