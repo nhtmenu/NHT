@@ -7,41 +7,135 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        body { margin: 0; padding: 0; background: #000080 url('https://www.transparenttextures.com/patterns/old-wall.png') repeat; color: #ffffff; font-family: 'Press Start 2P', system-ui; line-height: 1.5; image-rendering: pixelated; }
-        .aol-topbar { background: #0000ff; color: #ffff00; padding: 8px 15px; text-align: center; font-size: 14px; border-bottom: 4px solid #ffffff; text-shadow: 2px 2px 0 #000; position: sticky; top: 0; z-index: 100; }
-        .aol-topbar a { color: #ffff00; text-decoration: underline; margin: 0 12px; }
-        .container { max-width: 780px; margin: 20px auto; background: #c0c0c0; border: 8px solid #dfdfdf; border-right-color: #808080; border-bottom-color: #808080; box-shadow: 10px 10px 0 #000; padding: 15px; }
-        .header { background: linear-gradient(#000080, #0000aa); color: #ffffff; padding: 18px; text-align: center; border: 6px solid #ffffff; margin-bottom: 20px; text-shadow: 3px 3px 0 #000; }
+        body {
+            margin: 0; padding: 0;
+            background: #000080 url('https://www.transparenttextures.com/patterns/old-wall.png') repeat;
+            color: #ffffff;
+            font-family: 'Press Start 2P', system-ui;
+            line-height: 1.5;
+            image-rendering: pixelated;
+        }
+
+        .aol-topbar {
+            background: #0000ff; color: #ffff00; padding: 8px 15px; text-align: center;
+            font-size: 14px; border-bottom: 4px solid #ffffff; text-shadow: 2px 2px 0 #000;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .aol-topbar a { color: #ffff00; text-decoration: underline; margin: 0 12px; cursor: pointer; }
+
+        .container {
+            max-width: 780px; margin: 20px auto;
+            background: #c0c0c0;
+            border: 8px solid #dfdfdf;
+            border-right-color: #808080; border-bottom-color: #808080;
+            box-shadow: 10px 10px 0 #000; padding: 15px;
+        }
+
+        .header {
+            background: linear-gradient(#000080, #0000aa); color: #ffffff;
+            padding: 18px; text-align: center; border: 6px solid #ffffff;
+            margin-bottom: 20px; text-shadow: 3px 3px 0 #000;
+        }
         h1 { margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 3px; }
         .welcome { font-size: 18px; color: #ffff00; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0.6; } }
-        .marquee { background: #000000; color: #00ff00; padding: 8px; font-size: 13px; overflow: hidden; white-space: nowrap; margin: 15px 0; border: 3px solid #ff0000; }
+
+        .marquee {
+            background: #000000; color: #00ff00; padding: 8px; font-size: 13px;
+            overflow: hidden; white-space: nowrap; margin: 15px 0; border: 3px solid #ff0000;
+        }
         .marquee span { display: inline-block; animation: marquee 30s linear infinite; }
         @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-        .menu-area { background: #ffffff; border: 6px solid #000080; padding: 20px; color: #000; margin-bottom: 25px; }
-        h2 { color: #000080; font-size: 17px; margin: 0 0 15px 0; text-transform: uppercase; border-bottom: 4px solid #ff0000; padding-bottom: 6px; cursor: pointer; }
+
+        .menu-area {
+            background: #ffffff; border: 6px solid #000080; padding: 20px;
+            color: #000; margin-bottom: 25px;
+        }
+        h2 {
+            color: #000080; font-size: 17px; margin: 0 0 15px 0;
+            text-transform: uppercase; border-bottom: 4px solid #ff0000;
+            padding-bottom: 6px; cursor: pointer;
+        }
         .item-list { list-style: none; padding: 0; margin: 0; display: none; }
         .item-list.active { display: block; }
-        .item { padding: 12px 8px; border-bottom: 2px dotted #808080; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s; }
+        .item {
+            padding: 12px 8px; border-bottom: 2px dotted #808080;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: all 0.2s;
+        }
         .item:hover { background: #ffffe0; }
         .item.added { background: #ffff00; animation: flash 0.6s; }
         @keyframes flash { 0%, 100% { background: #ffff00; } 50% { background: #ffffff; } }
-        .price { color: #ff0000; font-weight: bold; min-width: 70px; text-align: right; }
-        .music-player { background: #000080; border: 6px solid #ffffff; padding: 15px; margin: 25px 0; color: #00ff00; text-align: center; box-shadow: 4px 4px 0 #000; }
+
+        .price {
+            color: #ff0000;
+            font-weight: bold;
+            min-width: 70px;
+            text-align: right;
+            transition: all 0.4s;
+        }
+        .item.added .price {
+            color: #00ff00;
+            animation: pricePop 0.8s ease-out;
+        }
+        @keyframes pricePop {
+            0% { transform: scale(1); color: #ff0000; }
+            50% { transform: scale(1.35); color: #00ff00; }
+            100% { transform: scale(1); color: #00ff00; }
+        }
+
+        .music-player {
+            background: #000080; border: 6px solid #ffffff; padding: 15px;
+            margin: 25px 0; color: #00ff00; text-align: center; box-shadow: 4px 4px 0 #000;
+        }
         .music-player h3 { margin: 0 0 12px 0; color: #ffff00; text-shadow: 2px 2px 0 #000; font-size: 15px; }
         audio { width: 100%; margin-top: 8px; }
         .now-playing { font-size: 12px; margin-top: 8px; color: #ffff00; min-height: 18px; }
-        .cart-panel { background: #ffffff; border: 6px solid #000080; padding: 20px; color: #000; margin: 25px 0; }
-        #cart-text { width: 100%; height: 180px; background: #000080; color: #00ff00; border: 4px solid #ffff00; padding: 12px; font-family: 'Press Start 2P', system-ui; font-size: 13px; resize: vertical; }
+
+        .cart-panel, .info-panel, .map-panel {
+            background: #ffffff; border: 6px solid #000080; padding: 20px;
+            color: #000; margin: 25px 0;
+        }
+        #cart-text {
+            width: 100%; height: 180px; background: #000080; color: #00ff00;
+            border: 4px solid #ffff00; padding: 12px;
+            font-family: 'Press Start 2P', system-ui; font-size: 13px; resize: vertical;
+        }
         .button-row { margin-top: 15px; text-align: center; }
-        button { background: #c0c0c0; color: #000080; border: 4px solid #ffffff; border-right-color: #808080; border-bottom-color: #808080; padding: 12px 24px; font-family: 'Press Start 2P', system-ui; font-size: 14px; cursor: pointer; margin: 6px; text-transform: uppercase; box-shadow: 4px 4px 0 #000; }
-        button:active { border-color: #808080; border-right-color: #ffffff; border-bottom-color: #ffffff; transform: translate(2px, 2px); }
-        .info-panel { background: #ffffff; border: 6px solid #000080; padding: 18px; color: #000; font-size: 13px; margin-bottom: 20px; }
+        button {
+            background: #c0c0c0; color: #000080;
+            border: 4px solid #ffffff; border-right-color: #808080; border-bottom-color: #808080;
+            padding: 12px 24px; font-family: 'Press Start 2P', system-ui; font-size: 14px;
+            cursor: pointer; margin: 6px; text-transform: uppercase; box-shadow: 4px 4px 0 #000;
+        }
+        button:active {
+            border-color: #808080; border-right-color: #ffffff; border-bottom-color: #ffffff;
+            transform: translate(2px, 2px);
+        }
+
+        .info-panel, .map-panel { font-size: 13px; }
         .instagram-link { color: #0000ff; text-decoration: underline; font-weight: bold; }
         .instagram-link:hover { color: #ff0000; }
-        .contact-box { background: #000080; color: #ffff00; text-align: center; padding: 22px; font-size: 19px; margin: 25px 0; border: 6px solid #ffffff; text-shadow: 2px 2px 0 #000; }
+
+        .contact-box {
+            background: #000080; color: #ffff00; text-align: center; padding: 22px;
+            font-size: 19px; margin: 25px 0; border: 6px solid #ffffff;
+            text-shadow: 2px 2px 0 #000;
+        }
         .phone-link { color: #ffff00; text-decoration: underline; }
-        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(transparent 0px, transparent 3px, rgba(0,255,0,0.06) 3px, rgba(0,255,0,0.06) 6px); pointer-events: none; z-index: 9999; }
+
+        .map-container { 
+            width: 100%; 
+            height: 420px; 
+            border: 4px solid #000080; 
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(transparent 0px, transparent 3px, rgba(0,255,0,0.06) 3px, rgba(0,255,0,0.06) 6px);
+            pointer-events: none; z-index: 9999;
+        }
         .footer { text-align: center; font-size: 11px; color: #808080; margin-top: 20px; }
     </style>
 </head>
@@ -51,9 +145,8 @@
         <span style="color:#ff0000; font-size:22px;">AOL</span> • 
         <a href="#">Mail</a> • 
         <a href="#">Keyword: MENU</a> • 
-        <a href="#cart-panel" onclick="document.getElementById('cart-panel').scrollIntoView({behavior:'smooth'})">Shopping Cart</a> • 
-        <a href="#">Chat</a> • 
-        <a href="#">Central Hudson Valley</a> • 
+        <a onclick="document.getElementById('info-panel').scrollIntoView({behavior:'smooth'})">Chat</a> • 
+        <a onclick="document.getElementById('map-panel').scrollIntoView({behavior:'smooth'})">Hudson Valley</a> • 
         <a href="#">Never Had That</a>
     </div>
 
@@ -67,8 +160,50 @@
             <span>★★★ NEVER HAD THAT? NOW YOU WILL ★ FAST • DISCREET • 21+ ONLY ★ TRY SOMETHING NEW ★ MORE ITEMS LOADING SOON ★★★</span>
         </div>
 
-        <div id="menu-container"></div>
+        <!-- FLOWER (expanded by default) -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('flower-list')">FLOWER ▼</h2>
+            <ul class="item-list active" id="flower-list">
+                <li class="item" onclick="addToCart(event, this, 'Doja', 65)">Doja <span class="price">$65</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Fu’s Flowers', 70)">Fu’s Flowers <span class="price">$70</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Jungle Boys', 55)">Jungle Boys <span class="price">$55</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Exotic Genetix', 60)">Exotic Genetix <span class="price">$60</span></li>
+            </ul>
+        </div>
 
+        <!-- HASH -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('hash-list')">HASH ▼</h2>
+            <ul class="item-list" id="hash-list">
+                <li class="item" onclick="addToCart(event, this, 'Doja Hash', 45)">Doja Hash <span class="price">$45</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Fu’s Bubble Hash', 50)">Fu’s Bubble Hash <span class="price">$50</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Temple Ball', 40)">Temple Ball <span class="price">$40</span></li>
+            </ul>
+        </div>
+
+        <!-- EDIBLE -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('edible-list')">EDIBLE ▼</h2>
+            <ul class="item-list" id="edible-list">
+                <li class="item" onclick="addToCart(event, this, 'Wana Gummies', 28)">Wana Gummies <span class="price">$28</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Doja Chocolate', 35)">Doja Chocolate <span class="price">$35</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Fu’s Brownie', 25)">Fu’s Brownie <span class="price">$25</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Kiva Punch', 18)">Kiva Punch <span class="price">$18</span></li>
+            </ul>
+        </div>
+
+        <!-- BONUS -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('bonus-list')">BONUS (MISC) ▼</h2>
+            <ul class="item-list" id="bonus-list">
+                <li class="item" onclick="addToCart(event, this, 'Doja Pre-Rolls', 30)">Doja Pre-Rolls <span class="price">$30</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Disposable Vape', 40)">Disposable Vape <span class="price">$40</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Grinder Kit', 15)">Grinder Kit <span class="price">$15</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Stash Jar', 12)">Stash Jar <span class="price">$12</span></li>
+            </ul>
+        </div>
+
+        <!-- Music Player -->
         <div class="music-player">
             <h3>♪ NOW SPINNING ON AOL RADIO ♪</h3>
             <audio id="aol-radio" controls autoplay></audio>
@@ -76,6 +211,7 @@
             <button onclick="playRandomTrack()" style="margin-top:10px; padding:8px 16px; font-size:12px;">NEXT TRACK</button>
         </div>
 
+        <!-- Cart -->
         <div id="cart-panel" class="cart-panel">
             <h2>YOUR CART</h2>
             <textarea id="cart-text" readonly placeholder="Click items above to add to cart..."></textarea>
@@ -86,13 +222,24 @@
             </div>
         </div>
 
-        <div class="info-panel">
+        <!-- Info Section -->
+        <div id="info-panel" class="info-panel">
             <h2>NEVER HAD THAT INFO</h2>
             <p><strong>Delivery Info:</strong> Fast • Discreet • 21+ Only</p>
             <p><strong>Tip of the Day:</strong> Schedule ahead for faster delivery!</p>
             <hr style="border: 2px dashed #000080; margin: 15px 0;">
             <strong>Instant Message Us:</strong><br>
             Screen Name: <a href="https://instagram.com/never.had.that" target="_blank" class="instagram-link">never.had.that</a>
+        </div>
+
+        <!-- Map Zone - much wider zoomed-out view -->
+        <div id="map-panel" class="map-panel">
+            <h2>HUDSON VALLEY DELIVERY ZONE</h2>
+            <p><strong>Service area includes:</strong> Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill, and surrounding towns across the region.</p>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1200000!2d-74.5!3d41.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e5b0b0b0b0b0%3A0x0!2sHudson+Valley%2C+NY!5e0!3m2!1sen!2sus!4v1740000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p style="margin-top:10px; font-size:12px;">Text us your exact address to confirm availability in your area.</p>
         </div>
 
         <div class="contact-box">
@@ -112,7 +259,6 @@
     <script>
         let cart = [];
 
-        // Music player
         const audio = document.getElementById('aol-radio');
         const nowPlaying = document.getElementById('now-playing');
         const tracks = [
@@ -128,39 +274,6 @@
             audio.play().catch(() => {});
         }
         audio.addEventListener('ended', playRandomTrack);
-
-        // Direct raw GitHub URL - this bypasses the GitHub Pages fetch issue
-        async function loadMenu() {
-            const container = document.getElementById('menu-container');
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/nhtmenu/NHT/main/menu.json');
-                if (!response.ok) throw new Error('Failed');
-                const data = await response.json();
-                renderMenu(data.items || []);
-            } catch (e) {
-                container.innerHTML = `<div class="menu-area" style="color:red;text-align:center;padding:30px;">Still couldn't load menu.json.<br>Double-check the file is in the root and try hard refresh.</div>`;
-            }
-        }
-
-        function renderMenu(categories) {
-            const container = document.getElementById('menu-container');
-            container.innerHTML = '';
-            categories.forEach(cat => {
-                const isFlower = cat.category.toUpperCase() === 'FLOWER';
-                const html = `
-                    <div class="menu-area">
-                        <h2 onclick="toggleSection('${cat.category.toLowerCase()}-list')">${cat.category} ▼</h2>
-                        <ul class="item-list ${isFlower ? 'active' : ''}" id="${cat.category.toLowerCase()}-list">
-                            ${cat.items.map(item => `
-                                <li class="item" onclick="addToCart(event, this, '${item.name.replace(/'/g, "\\'")}', ${item.price})">
-                                    ${item.name} <span class="price">$${item.price}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </div>`;
-                container.innerHTML += html;
-            });
-        }
 
         function toggleSection(id) {
             const list = document.getElementById(id);
@@ -187,7 +300,8 @@
                 text += `${i+1}. ${item.name} — $${item.price}\n`;
                 total += item.price;
             });
-            text += `\nTOTAL: $${total}\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
+            text += `\nTOTAL: $${total}\n`;
+            text += `\nDelivery to: [YOUR ADDRESS HERE]\nASAP • 21+ only\nPayment: Cash / whatever works\n\nLet me know if this looks good!`;
             textarea.value = text;
         }
 
@@ -210,7 +324,6 @@
 
         window.onload = () => {
             console.log("%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥", "color: lime; font-family: monospace;");
-            loadMenu();
             playRandomTrack();
         };
     </script>
