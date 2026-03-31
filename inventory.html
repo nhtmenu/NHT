@@ -111,6 +111,12 @@
             color: var(--text-light);
         }
 
+        .time-on-menu {
+            font-size: 12px;
+            color: #67e8f9;
+            margin-top: 4px;
+        }
+
         .retail-price {
             font-weight: 700;
             color: #67e8f9;
@@ -238,7 +244,8 @@
             "Exclusive Flower": 220,
             "Pre-Roll": 250,
             "Edible": 200,
-            "Concentrate/Hash": 160
+            "Concentrate/Hash": 160,
+            "VAPE": 180
         };
 
         function updateLastUpdated() {
@@ -246,12 +253,20 @@
             document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
         }
 
+        function daysAgo(dateStr) {
+            if (!dateStr) return "just added";
+            const diff = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24));
+            if (diff === 0) return "just added";
+            if (diff === 1) return "1 day";
+            return diff + " days";
+        }
+
         function renderList() {
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
             data.forEach((row, i) => {
-                const retail = Math.round(row.wholesale * (1 + row.markup / 100));
+                const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
 
                 const div = document.createElement('div');
                 div.className = 'product-item';
@@ -260,6 +275,7 @@
                         <div class="product-name">${row.name || 'Unnamed Item'}</div>
                         <div class="product-desc">${row.desc || ''}</div>
                         <div class="product-meta">${row.grower || ''} • ${row.category}</div>
+                        <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
                     </div>
                     <div style="text-align:right; min-width: 90px;">
                         <div class="retail-price">$${retail}</div>
@@ -273,9 +289,10 @@
 
         function editItem(index) {
             const row = data[index];
-            const retail = Math.round(row.wholesale * (1 + row.markup / 100));
+            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
 
-            // Create edit card
+            document.querySelectorAll('.edit-card').forEach(c => c.remove());
+
             const cardHTML = `
                 <div class="edit-card" id="edit-card-${index}">
                     <div class="line1">
@@ -286,6 +303,7 @@
                                 <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
                                 <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
                                 <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
+                                <option value="VAPE" ${row.category==='VAPE'?'selected':''}>VAPE</option>
                             </select>
                         </div>
                         <div>
@@ -317,7 +335,7 @@
                         </div>
                         <div>
                             <label>Markup %</label>
-                            <input type="number" value="${row.markup}" onchange="updateCell(${index}, 'markup', Number(this.value))">
+                            <input type="number" value="${row.markup || 120}" onchange="updateCell(${index}, 'markup', Number(this.value))">
                         </div>
                         <div>
                             <label>Retail $</label>
@@ -329,35 +347,30 @@
                         </div>
                     </div>
 
+                    <div style="font-size:12px;color:#64748b;margin:12px 0;">
+                        Added to menu: ${row.addedDate ? new Date(row.addedDate).toLocaleDateString() : 'just now'}
+                    </div>
+
                     <div class="card-actions">
                         <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
                     </div>
                 </div>
             `;
 
-            // Remove any existing open edit cards first
-            document.querySelectorAll('.edit-card').forEach(c => c.remove());
-
-            // Insert the edit card right after the product item
             const container = document.getElementById('productList');
             const productItem = container.children[index];
             if (productItem) {
                 productItem.insertAdjacentHTML('afterend', cardHTML);
-                productItem.style.display = 'none'; // hide the list row while editing
+                productItem.style.display = 'none';
             }
         }
 
         function closeEdit(index) {
-            // Remove the edit card and show the list row again
             const card = document.getElementById(`edit-card-${index}`);
             if (card) card.remove();
-
             const container = document.getElementById('productList');
-            if (container.children[index]) {
-                container.children[index].style.display = 'flex';
-            }
-
-            renderList(); // refresh the whole list to ensure correct indexing
+            if (container.children[index]) container.children[index].style.display = 'flex';
+            renderList();
             updateLastUpdated();
         }
 
@@ -382,7 +395,8 @@
                 wholesale: 0,
                 markup: 120,
                 retail: 0,
-                inventory: 0
+                inventory: 0,
+                addedDate: new Date().toISOString()   // ← new date tracking
             });
             renderList();
             updateLastUpdated();
@@ -400,6 +414,10 @@
                 try {
                     const imported = JSON.parse(ev.target.result);
                     data = imported.data || imported;
+                    // ensure every item has an addedDate
+                    data.forEach(item => {
+                        if (!item.addedDate) item.addedDate = new Date().toISOString();
+                    });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
                     updateLastUpdated();
