@@ -77,22 +77,68 @@
             transform: translateY(-2px);
         }
 
-        .item-row {
+        .product-list {
+            margin-bottom: 30px;
+        }
+
+        .product-item {
             background: var(--card);
             border-radius: 12px;
-            margin-bottom: 16px;
-            padding: 16px;
+            margin-bottom: 12px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
 
-        .item-row:hover {
-            box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.2);
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .product-meta {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .retail-price {
+            font-weight: 700;
+            color: #67e8f9;
+            font-size: 17px;
+            margin-right: 12px;
+        }
+
+        .edit-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .edit-card {
+            background: var(--card);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
         .line1, .line2 {
             display: grid;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .line1 {
@@ -127,12 +173,15 @@
             box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
         }
 
-        .retail {
-            font-weight: 700;
-            color: #67e8f9;
-            font-size: 16px;
-            text-align: center;
-            padding-top: 8px;
+        .card-actions {
+            text-align: right;
+            margin-top: 16px;
+        }
+
+        .save-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            padding: 10px 24px;
         }
 
         .result {
@@ -160,7 +209,7 @@
 <body>
     <h1>NEVER HAD THAT</h1>
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
-    <p class="note">Inventory Manager • Clean & Readable</p>
+    <p class="note">Inventory Manager • Compact List + Expand to Edit</p>
 
     <div class="controls">
         <button onclick="addRow()">+ Add New Item</button>
@@ -169,11 +218,11 @@
         <button onclick="copyMenuData()">📋 Copy Menu Data</button>
     </div>
 
-    <div id="itemsContainer"></div>
+    <div id="productList" class="product-list"></div>
 
     <div id="output" class="result"></div>
 
-    <p class="footer-note">Tip: Change Rarity to instantly update markup & retail price</p>
+    <p class="footer-note">Tap Edit to change details • Rarity updates price automatically</p>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
 
@@ -194,8 +243,133 @@
 
         function updateLastUpdated() {
             lastUpdated = new Date();
-            const display = document.getElementById('lastUpdated');
-            display.textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+            document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+        }
+
+        function renderList() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+
+            data.forEach((row, i) => {
+                const retail = Math.round(row.wholesale * (1 + row.markup / 100));
+
+                const div = document.createElement('div');
+                div.className = 'product-item';
+                div.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                        <div class="product-desc">${row.desc || ''}</div>
+                        <div class="product-meta">${row.grower || ''} • ${row.category}</div>
+                    </div>
+                    <div style="text-align:right; min-width: 90px;">
+                        <div class="retail-price">$${retail}</div>
+                        <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                        <button class="edit-btn" onclick="editItem(${i}); event.stopImmediatePropagation();">Edit</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function editItem(index) {
+            const row = data[index];
+            const retail = Math.round(row.wholesale * (1 + row.markup / 100));
+
+            // Create edit card
+            const cardHTML = `
+                <div class="edit-card" id="edit-card-${index}">
+                    <div class="line1">
+                        <div>
+                            <label>Category</label>
+                            <select onchange="updateCell(${index}, 'category', this.value)">
+                                <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
+                                <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
+                                <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
+                                <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Product</label>
+                            <input value="${row.name || ''}" onchange="updateCell(${index}, 'name', this.value)">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label>Description</label>
+                            <input value="${row.desc || ''}" onchange="updateCell(${index}, 'desc', this.value)">
+                        </div>
+                        <div>
+                            <label>Grower</label>
+                            <input value="${row.grower || ''}" onchange="updateCell(${index}, 'grower', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="line2">
+                        <div>
+                            <label>Rarity</label>
+                            <select onchange="setRarity(${index}, this.value)">
+                                ${Object.keys(rarityMarkup).map(r => 
+                                    `<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label>Wholesale $</label>
+                            <input type="number" value="${row.wholesale}" onchange="updateCell(${index}, 'wholesale', Number(this.value))">
+                        </div>
+                        <div>
+                            <label>Markup %</label>
+                            <input type="number" value="${row.markup}" onchange="updateCell(${index}, 'markup', Number(this.value))">
+                        </div>
+                        <div>
+                            <label>Retail $</label>
+                            <div class="retail">$${retail}</div>
+                        </div>
+                        <div>
+                            <label>Stock</label>
+                            <input type="number" value="${row.inventory}" onchange="updateCell(${index}, 'inventory', Number(this.value))">
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
+                    </div>
+                </div>
+            `;
+
+            // Remove any existing open edit cards first
+            document.querySelectorAll('.edit-card').forEach(c => c.remove());
+
+            // Insert the edit card right after the product item
+            const container = document.getElementById('productList');
+            const productItem = container.children[index];
+            if (productItem) {
+                productItem.insertAdjacentHTML('afterend', cardHTML);
+                productItem.style.display = 'none'; // hide the list row while editing
+            }
+        }
+
+        function closeEdit(index) {
+            // Remove the edit card and show the list row again
+            const card = document.getElementById(`edit-card-${index}`);
+            if (card) card.remove();
+
+            const container = document.getElementById('productList');
+            if (container.children[index]) {
+                container.children[index].style.display = 'flex';
+            }
+
+            renderList(); // refresh the whole list to ensure correct indexing
+            updateLastUpdated();
+        }
+
+        function updateCell(index, field, value) {
+            data[index][field] = value;
+            updateLastUpdated();
+        }
+
+        function setRarity(index, rarity) {
+            data[index].rarity = rarity;
+            data[index].markup = rarityMarkup[rarity] || 120;
+            updateLastUpdated();
         }
 
         function addRow() {
@@ -210,86 +384,7 @@
                 retail: 0,
                 inventory: 0
             });
-            renderItems();
-            updateLastUpdated();
-        }
-
-        function renderItems() {
-            const container = document.getElementById('itemsContainer');
-            container.innerHTML = '';
-
-            data.forEach((row, i) => {
-                const retail = Math.round(row.wholesale * (1 + row.markup / 100));
-                row.retail = retail;
-
-                const div = document.createElement('div');
-                div.className = 'item-row';
-                div.innerHTML = `
-                    <div class="line1">
-                        <div>
-                            <label>Category</label>
-                            <select onchange="updateCell(${i}, 'category', this.value)">
-                                <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
-                                <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
-                                <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
-                                <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Product</label>
-                            <input value="${row.name}" onchange="updateCell(${i}, 'name', this.value)">
-                        </div>
-                        <div style="grid-column: span 2;">
-                            <label>Description</label>
-                            <input value="${row.desc}" onchange="updateCell(${i}, 'desc', this.value)">
-                        </div>
-                        <div>
-                            <label>Grower</label>
-                            <input value="${row.grower}" onchange="updateCell(${i}, 'grower', this.value)">
-                        </div>
-                    </div>
-
-                    <div class="line2">
-                        <div>
-                            <label>Rarity</label>
-                            <select onchange="setRarity(${i}, this.value)">
-                                ${Object.keys(rarityMarkup).map(r => 
-                                    `<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`
-                                ).join('')}
-                            </select>
-                        </div>
-                        <div>
-                            <label>Wholesale $</label>
-                            <input type="number" value="${row.wholesale}" onchange="updateCell(${i}, 'wholesale', Number(this.value))">
-                        </div>
-                        <div>
-                            <label>Markup %</label>
-                            <input type="number" value="${row.markup}" onchange="updateCell(${i}, 'markup', Number(this.value))">
-                        </div>
-                        <div>
-                            <label>Retail $</label>
-                            <div class="retail">$${row.retail}</div>
-                        </div>
-                        <div>
-                            <label>Stock</label>
-                            <input type="number" value="${row.inventory}" onchange="updateCell(${i}, 'inventory', Number(this.value))">
-                        </div>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function updateCell(index, field, value) {
-            data[index][field] = value;
-            renderItems();
-            updateLastUpdated();
-        }
-
-        function setRarity(index, rarity) {
-            data[index].rarity = rarity;
-            data[index].markup = rarityMarkup[rarity] || 120;
-            renderItems();
+            renderList();
             updateLastUpdated();
         }
 
@@ -304,9 +399,9 @@
             reader.onload = function(ev) {
                 try {
                     const imported = JSON.parse(ev.target.result);
-                    data = imported.data || imported; // support old format too
+                    data = imported.data || imported;
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
-                    renderItems();
+                    renderList();
                     updateLastUpdated();
                     alert("✅ Inventory loaded!");
                 } catch(err) {
@@ -325,7 +420,7 @@
             };
 
             const jsonStr = JSON.stringify(exportData, null, 2);
-            const dateStr = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+            const dateStr = new Date().toISOString().slice(0,10);
             const blob = new Blob([jsonStr], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -349,7 +444,8 @@
             Object.keys(categories).forEach(cat => {
                 output += `// ${cat}\n`;
                 categories[cat].forEach(item => {
-                    output += `addToCart(event, this, '${item.name}', ${item.retail}, '${item.grower}', '${item.desc}')\n`;
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    output += `addToCart(event, this, '${item.name}', ${retail}, '${item.grower}', '${item.desc}')\n`;
                 });
                 output += "\n";
             });
@@ -361,8 +457,7 @@
         }
 
         window.onload = () => {
-            renderItems();
-            // If no previous date, show "Never"
+            renderList();
             document.getElementById('lastUpdated').textContent = "Last Updated: Never";
         };
     </script>
