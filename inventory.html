@@ -192,12 +192,21 @@
         .card-actions {
             text-align: right;
             margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
         }
 
         .save-btn {
             background: #22d3ee;
             color: #0f172a;
             padding: 10px 24px;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
         }
 
         .result {
@@ -334,7 +343,7 @@
                 <div class="line2">
                     <div>
                         <label>Rarity</label>
-                        <select id="rarity-select-${index}" onchange="setRarity(${index}, this.value); refreshLiveFields(${index});">
+                        <select onchange="setRarity(${index}, this.value); refreshLiveFields(${index});">
                             ${Object.keys(rarityMarkup).map(r => 
                                 `<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`
                             ).join('')}
@@ -363,6 +372,7 @@
                 </div>
 
                 <div class="card-actions">
+                    <button class="delete-btn" onclick="deleteItem(${index})">Delete Item</button>
                     <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
                 </div>
             `;
@@ -381,11 +391,9 @@
             const markup = parseFloat(row.markup) || 120;
             const retail = Math.round(wholesale * (1 + markup / 100));
 
-            // Update markup input (in case rarity changed it)
             const markupInput = document.getElementById(`markup-input-${index}`);
             if (markupInput) markupInput.value = markup;
 
-            // Update retail display
             const retailEl = document.getElementById(`live-retail-${index}`);
             if (retailEl) retailEl.textContent = `$${retail}`;
         }
@@ -398,6 +406,17 @@
             if (container.children[index]) {
                 container.children[index].style.display = 'flex';
             }
+
+            renderList();
+            updateLastUpdated();
+        }
+
+        function deleteItem(index) {
+            if (!confirm("Delete this item permanently?")) return;
+
+            data.splice(index, 1);
+            const card = document.getElementById(`edit-card-${index}`);
+            if (card) card.remove();
 
             renderList();
             updateLastUpdated();
