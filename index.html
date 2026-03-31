@@ -76,20 +76,40 @@
         }
         .item-list { list-style: none; padding: 0; margin: 0; display: none; }
         .item-list.active { display: block; }
+
         .item {
             padding: 12px 8px; border-bottom: 2px dotted #808080;
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; transition: all 0.2s;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+            cursor: pointer; 
+            transition: all 0.2s;
         }
         .item:hover { background: #ffffe0; }
         .item.added { background: #ffff00; animation: flash 0.6s; }
         @keyframes flash { 0%, 100% { background: #ffff00; } 50% { background: #ffffff; } }
 
+        .item-main {
+            flex: 1;
+        }
+        .item-name {
+            font-weight: bold;
+        }
+        .item-desc {
+            font-size: 11px;
+            color: #808080;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .price-area {
+            text-align: right;
+            min-width: 100px;
+        }
         .price {
             color: #ff0000;
             font-weight: bold;
-            min-width: 90px;
-            text-align: right;
+            display: block;
             transition: all 0.4s;
         }
         .item.added .price {
@@ -100,6 +120,12 @@
             0% { transform: scale(1); color: #ff0000; }
             50% { transform: scale(1.4); color: #00ff00; }
             100% { transform: scale(1); color: #00ff00; }
+        }
+        .grower {
+            font-size: 10px;
+            color: #000080;
+            margin-top: 2px;
+            display: block;
         }
 
         .music-player {
@@ -186,10 +212,46 @@
         <div class="menu-area">
             <h2 onclick="toggleSection('flower-list')">FLOWER ▼</h2>
             <ul class="item-list active" id="flower-list">
-                <li class="item" onclick="addToCart(event, this, 'Doja', 65)">Doja <span class="price">$65</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Fu’s Flowers', 70)">Fu’s Flowers <span class="price">$70</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Jungle Boys', 55)">Jungle Boys <span class="price">$55</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Exotic Genetix', 60)">Exotic Genetix <span class="price">$60</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Gelato', 65, 'Doja', 'Gelato x Biscotti')">
+                    <div class="item-main">
+                        <span class="item-name">Gelato</span><br>
+                        <span class="item-desc">Gelato x Biscotti</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$65</span><br>
+                        <span class="grower">Doja</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Zkittlez', 70, 'Fu’s Flowers', 'Zkittlez x Blue Dream')">
+                    <div class="item-main">
+                        <span class="item-name">Zkittlez</span><br>
+                        <span class="item-desc">Zkittlez x Blue Dream</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$70</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Wedding Cake', 55, 'Jungle Boys', 'Wedding Cake x Gelato')">
+                    <div class="item-main">
+                        <span class="item-name">Wedding Cake</span><br>
+                        <span class="item-desc">Wedding Cake x Gelato</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$55</span><br>
+                        <span class="grower">Jungle Boys</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Runtz', 60, 'Exotic Genetix', 'Runtz x Zkittlez')">
+                    <div class="item-main">
+                        <span class="item-name">Runtz</span><br>
+                        <span class="item-desc">Runtz x Zkittlez</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$60</span><br>
+                        <span class="grower">Exotic Genetix</span>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -197,9 +259,36 @@
         <div class="menu-area">
             <h2 onclick="toggleSection('hash-list')">HASH ▼</h2>
             <ul class="item-list" id="hash-list">
-                <li class="item" onclick="addToCart(event, this, 'Doja Hash', 45)">Doja Hash <span class="price">$45</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Fu’s Bubble Hash', 50)">Fu’s Bubble Hash <span class="price">$50</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Temple Ball', 40)">Temple Ball <span class="price">$40</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Full Melt', 45, 'Doja', 'Full melt bubble hash')">
+                    <div class="item-main">
+                        <span class="item-name">Full Melt</span><br>
+                        <span class="item-desc">Full melt bubble hash</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$45</span><br>
+                        <span class="grower">Doja</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Bubble Hash', 50, 'Fu’s Flowers', 'Solventless 6-star')">
+                    <div class="item-main">
+                        <span class="item-name">Bubble Hash</span><br>
+                        <span class="item-desc">Solventless 6-star</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$50</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Temple Ball', 40, 'Traditional', 'Traditional Afghan style')">
+                    <div class="item-main">
+                        <span class="item-name">Temple Ball</span><br>
+                        <span class="item-desc">Traditional Afghan style</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$40</span><br>
+                        <span class="grower">Traditional</span>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -207,10 +296,46 @@
         <div class="menu-area">
             <h2 onclick="toggleSection('edible-list')">EDIBLE ▼</h2>
             <ul class="item-list" id="edible-list">
-                <li class="item" onclick="addToCart(event, this, 'Wana Gummies', 28)">Wana Gummies <span class="price">$28</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Doja Chocolate', 35)">Doja Chocolate <span class="price">$35</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Fu’s Brownie', 25)">Fu’s Brownie <span class="price">$25</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Kiva Punch', 18)">Kiva Punch <span class="price">$18</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Mixed Berry', 28, 'Wana', 'Mixed berry - 100mg')">
+                    <div class="item-main">
+                        <span class="item-name">Mixed Berry</span><br>
+                        <span class="item-desc">Mixed berry - 100mg</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$28</span><br>
+                        <span class="grower">Wana</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Milk Chocolate', 35, 'Doja', 'Milk chocolate - 200mg')">
+                    <div class="item-main">
+                        <span class="item-name">Milk Chocolate</span><br>
+                        <span class="item-desc">Milk chocolate - 200mg</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$35</span><br>
+                        <span class="grower">Doja</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Classic Fudge', 25, 'Fu’s', 'Classic fudge - 150mg')">
+                    <div class="item-main">
+                        <span class="item-name">Classic Fudge</span><br>
+                        <span class="item-desc">Classic fudge - 150mg</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$25</span><br>
+                        <span class="grower">Fu’s</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Tropical Fruit', 18, 'Kiva', 'Tropical fruit - 100mg')">
+                    <div class="item-main">
+                        <span class="item-name">Tropical Fruit</span><br>
+                        <span class="item-desc">Tropical fruit - 100mg</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$18</span><br>
+                        <span class="grower">Kiva</span>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -218,10 +343,46 @@
         <div class="menu-area">
             <h2 onclick="toggleSection('bonus-list')">BONUS (MISC) ▼</h2>
             <ul class="item-list" id="bonus-list">
-                <li class="item" onclick="addToCart(event, this, 'Doja Pre-Rolls', 30)">Doja Pre-Rolls <span class="price">$30</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Disposable Vape', 40)">Disposable Vape <span class="price">$40</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Grinder Kit', 15)">Grinder Kit <span class="price">$15</span></li>
-                <li class="item" onclick="addToCart(event, this, 'Stash Jar', 12)">Stash Jar <span class="price">$12</span></li>
+                <li class="item" onclick="addToCart(event, this, 'Pre-Rolls', 30, 'Doja', '3x 0.75g infused joints')">
+                    <div class="item-main">
+                        <span class="item-name">Pre-Rolls</span><br>
+                        <span class="item-desc">3x 0.75g infused joints</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$30</span><br>
+                        <span class="grower">Doja</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Disposable Vape', 40, 'Live Resin', 'Live resin - 1g')">
+                    <div class="item-main">
+                        <span class="item-name">Disposable Vape</span><br>
+                        <span class="item-desc">Live resin - 1g</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$40</span><br>
+                        <span class="grower">Live Resin</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Grinder Kit', 15, 'Misc', 'Metal grinder + papers')">
+                    <div class="item-main">
+                        <span class="item-name">Grinder Kit</span><br>
+                        <span class="item-desc">Metal grinder + papers</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$15</span><br>
+                        <span class="grower">Misc</span>
+                    </div>
+                </li>
+                <li class="item" onclick="addToCart(event, this, 'Stash Jar', 12, 'Misc', 'Smell-proof glass jar')">
+                    <div class="item-main">
+                        <span class="item-name">Stash Jar</span><br>
+                        <span class="item-desc">Smell-proof glass jar</span>
+                    </div>
+                    <div class="price-area">
+                        <span class="price">$12</span><br>
+                        <span class="grower">Misc</span>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -362,7 +523,6 @@
             document.body.removeChild(link);
         }
 
-        // Live update for Checkout button
         function updateCheckoutButton() {
             let total = cart.reduce((sum, item) => sum + item.price, 0);
             let count = cart.length;
