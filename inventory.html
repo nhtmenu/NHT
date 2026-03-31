@@ -31,9 +31,15 @@
             font-family: 'Press Start 2P', system-ui;
             text-align: center;
             font-size: 20px;
-            margin: 0 0 24px;
+            margin: 0 0 8px;
             color: var(--accent);
-            text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 20px;
         }
 
         .note {
@@ -153,6 +159,7 @@
 </head>
 <body>
     <h1>NEVER HAD THAT</h1>
+    <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
     <p class="note">Inventory Manager • Clean & Readable</p>
 
     <div class="controls">
@@ -172,6 +179,7 @@
 
     <script>
         let data = [];
+        let lastUpdated = null;
 
         const rarityMarkup = {
             "Common Flower": 100,
@@ -183,6 +191,12 @@
             "Edible": 200,
             "Concentrate/Hash": 160
         };
+
+        function updateLastUpdated() {
+            lastUpdated = new Date();
+            const display = document.getElementById('lastUpdated');
+            display.textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+        }
 
         function addRow() {
             data.push({
@@ -197,6 +211,7 @@
                 inventory: 0
             });
             renderItems();
+            updateLastUpdated();
         }
 
         function renderItems() {
@@ -210,7 +225,6 @@
                 const div = document.createElement('div');
                 div.className = 'item-row';
                 div.innerHTML = `
-                    <!-- Line 1: Basic info -->
                     <div class="line1">
                         <div>
                             <label>Category</label>
@@ -235,7 +249,6 @@
                         </div>
                     </div>
 
-                    <!-- Line 2: Pricing & Stock -->
                     <div class="line2">
                         <div>
                             <label>Rarity</label>
@@ -270,12 +283,14 @@
         function updateCell(index, field, value) {
             data[index][field] = value;
             renderItems();
+            updateLastUpdated();
         }
 
         function setRarity(index, rarity) {
             data[index].rarity = rarity;
             data[index].markup = rarityMarkup[rarity] || 120;
             renderItems();
+            updateLastUpdated();
         }
 
         function importFile() {
@@ -288,8 +303,11 @@
             const reader = new FileReader();
             reader.onload = function(ev) {
                 try {
-                    data = JSON.parse(ev.target.result);
+                    const imported = JSON.parse(ev.target.result);
+                    data = imported.data || imported; // support old format too
+                    lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderItems();
+                    updateLastUpdated();
                     alert("✅ Inventory loaded!");
                 } catch(err) {
                     alert("Error loading file.");
@@ -300,12 +318,19 @@
 
         function exportFile() {
             if (data.length === 0) return alert("No data to export.");
-            const jsonStr = JSON.stringify(data, null, 2);
+
+            const exportData = {
+                lastUpdated: new Date().toISOString(),
+                data: data
+            };
+
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            const dateStr = new Date().toISOString().slice(0,10); // YYYY-MM-DD
             const blob = new Blob([jsonStr], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'never-had-that-inventory.json';
+            a.download = `never-had-that-inventory-${dateStr}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -337,6 +362,8 @@
 
         window.onload = () => {
             renderItems();
+            // If no previous date, show "Never"
+            document.getElementById('lastUpdated').textContent = "Last Updated: Never";
         };
     </script>
 </body>
