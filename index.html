@@ -62,7 +62,7 @@
             background: #000000; color: #00ff00; padding: 8px; font-size: 13px;
             overflow: hidden; white-space: nowrap; margin: 15px 0; border: 3px solid #ff0000;
         }
-        .marquee span { display: inline-block; animation: marquee 30s linear infinite; }
+        .marquee span { display: inline-block; animation: marquee 35s linear infinite; }
         @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
         .menu-area {
@@ -211,30 +211,30 @@
         </div>
 
         <div class="marquee">
-            <span>★★★ MENU LAST UPDATED: MARCH 30, 2026 ★ $1000+ GETS FREE DELIVERY ★ MENU UPDATED EVERY FRIDAY ★ FAST • DISCREET • 21+ ONLY ★★★</span>
+            <span>★★★ MENU LAST UPDATED: MARCH 30, 2026 ★ $100+ GETS FREE DELIVERY ★ MENU UPDATED EVERY FRIDAY ★ FAST • DISCREET • 21+ ONLY ★★★</span>
         </div>
 
         <!-- FLOWER (expanded by default) -->
         <div class="menu-area">
             <h2 onclick="toggleSection('flower-list')">FLOWER ▼</h2>
             <ul class="item-list active" id="flower-list">
-                <li class="item" onclick="addToCart(event, this, 'Gelato', 65, 'Doja', 'Gelato x Biscotti')">
+                <li class="item" onclick="addToCart(event, this, 'Gelato', 66, 'Doja', 'Gelato x Biscotti')">
                     <div class="item-main">
                         <span class="item-name">Gelato</span><br>
                         <span class="item-desc">Gelato x Biscotti</span>
                     </div>
                     <div class="price-area">
-                        <span class="price">$65</span><br>
+                        <span class="price">$66</span><br>
                         <span class="grower">Doja</span>
                     </div>
                 </li>
-                <li class="item" onclick="addToCart(event, this, 'Zkittlez', 70, 'Fu’s Flowers', 'Zkittlez x Blue Dream')">
+                <li class="item" onclick="addToCart(event, this, 'Zkittlez', 80, 'Fu’s Flowers', 'Zkittlez x Blue Dream')">
                     <div class="item-main">
                         <span class="item-name">Zkittlez</span><br>
                         <span class="item-desc">Zkittlez x Blue Dream</span>
                     </div>
                     <div class="price-area">
-                        <span class="price">$70</span><br>
+                        <span class="price">$80</span><br>
                         <span class="grower">Fu’s Flowers</span>
                     </div>
                 </li>
@@ -285,16 +285,6 @@
                         <span class="grower">Fu’s Flowers</span>
                     </div>
                 </li>
-                <li class="item" onclick="addToCart(event, this, 'Temple Ball', 40, 'Traditional', 'Traditional Afghan style')">
-                    <div class="item-main">
-                        <span class="item-name">Temple Ball</span><br>
-                        <span class="item-desc">Traditional Afghan style</span>
-                    </div>
-                    <div class="price-area">
-                        <span class="price">$40</span><br>
-                        <span class="grower">Traditional</span>
-                    </div>
-                </li>
             </ul>
         </div>
 
@@ -320,26 +310,6 @@
                     <div class="price-area">
                         <span class="price">$35</span><br>
                         <span class="grower">Doja</span>
-                    </div>
-                </li>
-                <li class="item" onclick="addToCart(event, this, 'Classic Fudge', 25, 'Fu’s', 'Classic fudge - 150mg')">
-                    <div class="item-main">
-                        <span class="item-name">Classic Fudge</span><br>
-                        <span class="item-desc">Classic fudge - 150mg</span>
-                    </div>
-                    <div class="price-area">
-                        <span class="price">$25</span><br>
-                        <span class="grower">Fu’s</span>
-                    </div>
-                </li>
-                <li class="item" onclick="addToCart(event, this, 'Tropical Fruit', 18, 'Kiva', 'Tropical fruit - 100mg')">
-                    <div class="item-main">
-                        <span class="item-name">Tropical Fruit</span><br>
-                        <span class="item-desc">Tropical fruit - 100mg</span>
-                    </div>
-                    <div class="price-area">
-                        <span class="price">$18</span><br>
-                        <span class="grower">Kiva</span>
                     </div>
                 </li>
             </ul>
@@ -369,26 +339,6 @@
                         <span class="grower">Live Resin</span>
                     </div>
                 </li>
-                <li class="item" onclick="addToCart(event, this, 'Grinder Kit', 15, 'Misc', 'Metal grinder + papers')">
-                    <div class="item-main">
-                        <span class="item-name">Grinder Kit</span><br>
-                        <span class="item-desc">Metal grinder + papers</span>
-                    </div>
-                    <div class="price-area">
-                        <span class="price">$15</span><br>
-                        <span class="grower">Misc</span>
-                    </div>
-                </li>
-                <li class="item" onclick="addToCart(event, this, 'Stash Jar', 12, 'Misc', 'Smell-proof glass jar')">
-                    <div class="item-main">
-                        <span class="item-name">Stash Jar</span><br>
-                        <span class="item-desc">Smell-proof glass jar</span>
-                    </div>
-                    <div class="price-area">
-                        <span class="price">$12</span><br>
-                        <span class="grower">Misc</span>
-                    </div>
-                </li>
             </ul>
         </div>
 
@@ -400,7 +350,7 @@
             <button onclick="playRandomTrack()" style="margin-top:10px; padding:8px 16px; font-size:12px;">NEXT TRACK</button>
         </div>
 
-        <!-- Enhanced Cart -->
+        <!-- Cart -->
         <div id="cart-panel" class="cart-panel">
             <h2>YOUR CART</h2>
             
@@ -438,7 +388,7 @@
             </div>
         </div>
 
-        <!-- Info, Map, Contact, Footer -->
+        <!-- Info, Map, Contact -->
         <div id="info-panel" class="info-panel">
             <h2>NEVER HAD THAT INFO</h2>
             <p><strong>Delivery Info:</strong> Fast • Discreet • 21+ Only</p>
@@ -450,11 +400,10 @@
 
         <div id="map-panel" class="map-panel">
             <h2>HUDSON VALLEY DELIVERY ZONE</h2>
-            <p><strong>Service area includes:</strong> Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill, and surrounding towns across the region.</p>
+            <p><strong>Service area includes:</strong> Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill, and surrounding towns.</p>
             <div class="map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1200000!2d-74.5!3d41.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e5b0b0b0b0b0%3A0x0!2sHudson+Valley%2C+NY!5e0!3m2!1sen!2sus!4v1740000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            <p style="margin-top:10px; font-size:12px;">Text us your exact address to confirm availability.</p>
         </div>
 
         <div id="contact-box" class="contact-box">
@@ -518,11 +467,7 @@
             let type = document.querySelector('input[name="orderType"]:checked').value;
 
             if (type === "delivery") {
-                if (subtotal >= 1000) deliveryFee = 0;
-                else if (subtotal >= 100) deliveryFee = 30;
-                else if (subtotal >= 50) deliveryFee = 40;
-                else deliveryFee = 50;   // under $50 = $50 fee
-
+                deliveryFee = (subtotal >= 100) ? 0 : 40;
                 document.getElementById('delivery-fields').style.display = 'block';
                 document.getElementById('pickup-fields').style.display = 'none';
             } else {
@@ -553,7 +498,7 @@
                 const address = document.getElementById('delivery-address').value || "[Delivery Address]";
                 const time = document.getElementById('delivery-time').value || "ASAP";
                 text += `DELIVERY: ${address} at ${time}\n`;
-                text += `Delivery Fee: $${deliveryFee}\n`;
+                text += `Delivery Fee: $${deliveryFee} ${deliveryFee === 0 ? '(FREE over $100)' : ''}\n`;
             }
 
             text += `TOTAL: $${total}\n`;
@@ -564,7 +509,7 @@
             // Update delivery fee display
             const feeDisplay = document.getElementById('delivery-fee-display');
             if (feeDisplay) {
-                feeDisplay.textContent = `Delivery Fee: $${deliveryFee} ${deliveryFee === 0 ? '(FREE over $1000)' : ''}`;
+                feeDisplay.textContent = `Delivery Fee: $${deliveryFee} ${deliveryFee === 0 ? '(FREE over $100)' : ''}`;
             }
         }
 
@@ -578,13 +523,13 @@
 
         async function copyToClipboard() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) return alert("Nothing to copy yet!");
+            if (!text) return alert("Nothing to copy yet!");
             try { await navigator.clipboard.writeText(text); alert("✅ Copied!"); } catch(e) { alert("✅ Copied!"); }
         }
 
         function sendSMS() {
             const text = document.getElementById('cart-text').value.trim();
-            if (!text || text.includes("empty")) return alert("Add items first!");
+            if (!text) return alert("Add items first!");
             const link = document.createElement('a');
             link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
             link.style.display = 'none';
@@ -598,12 +543,10 @@
             playRandomTrack();
             updateCartDisplay();
 
-            // Listen to radio changes
             document.querySelectorAll('input[name="orderType"]').forEach(radio => {
                 radio.addEventListener('change', updateCartDisplay);
             });
 
-            // Live update for all inputs
             const inputs = document.querySelectorAll('#pickup-fields select, #pickup-fields input, #delivery-fields input');
             inputs.forEach(input => input.addEventListener('input', updateCartDisplay));
         };
