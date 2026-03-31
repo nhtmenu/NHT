@@ -179,6 +179,16 @@
             box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
         }
 
+        .live-retail {
+            font-weight: 700;
+            color: #67e8f9;
+            font-size: 18px;
+            text-align: center;
+            padding: 10px 0;
+            background: #0f172a;
+            border-radius: 6px;
+        }
+
         .card-actions {
             text-align: right;
             margin-top: 16px;
@@ -228,7 +238,7 @@
 
     <div id="output" class="result"></div>
 
-    <p class="footer-note">Tap Edit to change details • Rarity updates price automatically</p>
+    <p class="footer-note">Tap Edit to change details • Retail & Markup update live</p>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
 
@@ -289,87 +299,106 @@
 
         function editItem(index) {
             const row = data[index];
-            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
-
             document.querySelectorAll('.edit-card').forEach(c => c.remove());
 
-            const cardHTML = `
-                <div class="edit-card" id="edit-card-${index}">
-                    <div class="line1">
-                        <div>
-                            <label>Category</label>
-                            <select onchange="updateCell(${index}, 'category', this.value)">
-                                <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
-                                <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
-                                <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
-                                <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
-                                <option value="VAPE" ${row.category==='VAPE'?'selected':''}>VAPE</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Product</label>
-                            <input value="${row.name || ''}" onchange="updateCell(${index}, 'name', this.value)">
-                        </div>
-                        <div style="grid-column: span 2;">
-                            <label>Description</label>
-                            <input value="${row.desc || ''}" onchange="updateCell(${index}, 'desc', this.value)">
-                        </div>
-                        <div>
-                            <label>Grower</label>
-                            <input value="${row.grower || ''}" onchange="updateCell(${index}, 'grower', this.value)">
-                        </div>
-                    </div>
+            const card = document.createElement('div');
+            card.className = 'edit-card';
+            card.id = `edit-card-${index}`;
 
-                    <div class="line2">
-                        <div>
-                            <label>Rarity</label>
-                            <select onchange="setRarity(${index}, this.value)">
-                                ${Object.keys(rarityMarkup).map(r => 
-                                    `<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`
-                                ).join('')}
-                            </select>
-                        </div>
-                        <div>
-                            <label>Wholesale $</label>
-                            <input type="number" value="${row.wholesale}" onchange="updateCell(${index}, 'wholesale', Number(this.value))">
-                        </div>
-                        <div>
-                            <label>Markup %</label>
-                            <input type="number" value="${row.markup || 120}" onchange="updateCell(${index}, 'markup', Number(this.value))">
-                        </div>
-                        <div>
-                            <label>Retail $</label>
-                            <div class="retail">$${retail}</div>
-                        </div>
-                        <div>
-                            <label>Stock</label>
-                            <input type="number" value="${row.inventory}" onchange="updateCell(${index}, 'inventory', Number(this.value))">
-                        </div>
+            card.innerHTML = `
+                <div class="line1">
+                    <div>
+                        <label>Category</label>
+                        <select onchange="updateCell(${index}, 'category', this.value); refreshLiveFields(${index});">
+                            <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
+                            <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
+                            <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
+                            <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
+                            <option value="VAPE" ${row.category==='VAPE'?'selected':''}>VAPE</option>
+                        </select>
                     </div>
+                    <div>
+                        <label>Product</label>
+                        <input value="${row.name || ''}" onchange="updateCell(${index}, 'name', this.value)">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Description</label>
+                        <input value="${row.desc || ''}" onchange="updateCell(${index}, 'desc', this.value)">
+                    </div>
+                    <div>
+                        <label>Grower</label>
+                        <input value="${row.grower || ''}" onchange="updateCell(${index}, 'grower', this.value)">
+                    </div>
+                </div>
 
-                    <div style="font-size:12px;color:#64748b;margin:12px 0;">
-                        Added to menu: ${row.addedDate ? new Date(row.addedDate).toLocaleDateString() : 'just now'}
+                <div class="line2">
+                    <div>
+                        <label>Rarity</label>
+                        <select id="rarity-select-${index}" onchange="setRarity(${index}, this.value); refreshLiveFields(${index});">
+                            ${Object.keys(rarityMarkup).map(r => 
+                                `<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`
+                            ).join('')}
+                        </select>
                     </div>
+                    <div>
+                        <label>Wholesale $</label>
+                        <input type="number" id="wholesale-input-${index}" value="${row.wholesale || 0}" onchange="updateCell(${index}, 'wholesale', Number(this.value)); refreshLiveFields(${index});">
+                    </div>
+                    <div>
+                        <label>Markup %</label>
+                        <input type="number" id="markup-input-${index}" value="${row.markup || 120}" onchange="updateCell(${index}, 'markup', Number(this.value)); refreshLiveFields(${index});">
+                    </div>
+                    <div>
+                        <label>Retail $</label>
+                        <div id="live-retail-${index}" class="live-retail">$${Math.round((row.wholesale || 0) * (1 + ((row.markup || 120) / 100)))}</div>
+                    </div>
+                    <div>
+                        <label>Stock</label>
+                        <input type="number" value="${row.inventory || 0}" onchange="updateCell(${index}, 'inventory', Number(this.value))">
+                    </div>
+                </div>
 
-                    <div class="card-actions">
-                        <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
-                    </div>
+                <div style="font-size:12px;color:#64748b;margin:12px 0;">
+                    Added: ${row.addedDate ? new Date(row.addedDate).toLocaleDateString() : 'just now'}
+                </div>
+
+                <div class="card-actions">
+                    <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
                 </div>
             `;
 
             const container = document.getElementById('productList');
             const productItem = container.children[index];
             if (productItem) {
-                productItem.insertAdjacentHTML('afterend', cardHTML);
+                productItem.insertAdjacentElement('afterend', card);
                 productItem.style.display = 'none';
             }
+        }
+
+        function refreshLiveFields(index) {
+            const row = data[index];
+            const wholesale = parseFloat(row.wholesale) || 0;
+            const markup = parseFloat(row.markup) || 120;
+            const retail = Math.round(wholesale * (1 + markup / 100));
+
+            // Update markup input (in case rarity changed it)
+            const markupInput = document.getElementById(`markup-input-${index}`);
+            if (markupInput) markupInput.value = markup;
+
+            // Update retail display
+            const retailEl = document.getElementById(`live-retail-${index}`);
+            if (retailEl) retailEl.textContent = `$${retail}`;
         }
 
         function closeEdit(index) {
             const card = document.getElementById(`edit-card-${index}`);
             if (card) card.remove();
+
             const container = document.getElementById('productList');
-            if (container.children[index]) container.children[index].style.display = 'flex';
+            if (container.children[index]) {
+                container.children[index].style.display = 'flex';
+            }
+
             renderList();
             updateLastUpdated();
         }
@@ -377,12 +406,14 @@
         function updateCell(index, field, value) {
             data[index][field] = value;
             updateLastUpdated();
+            refreshLiveFields(index);
         }
 
         function setRarity(index, rarity) {
             data[index].rarity = rarity;
             data[index].markup = rarityMarkup[rarity] || 120;
             updateLastUpdated();
+            refreshLiveFields(index);
         }
 
         function addRow() {
@@ -396,7 +427,7 @@
                 markup: 120,
                 retail: 0,
                 inventory: 0,
-                addedDate: new Date().toISOString()   // ← new date tracking
+                addedDate: new Date().toISOString()
             });
             renderList();
             updateLastUpdated();
@@ -414,7 +445,6 @@
                 try {
                     const imported = JSON.parse(ev.target.result);
                     data = imported.data || imported;
-                    // ensure every item has an addedDate
                     data.forEach(item => {
                         if (!item.addedDate) item.addedDate = new Date().toISOString();
                     });
