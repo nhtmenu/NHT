@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Never Had That • Inventory</title>
+    <title>Inventory Management</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap');
 
@@ -49,10 +49,15 @@
             margin-bottom: 20px;
         }
 
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
+        .controls-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .controls-bottom {
+            display: flex;
             justify-content: center;
             margin-bottom: 24px;
         }
@@ -61,20 +66,47 @@
             background: #334155;
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 14px 16px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            flex: 1;
-            max-width: 220px;
             font-size: 14px;
+            min-height: 52px;
         }
 
         button:hover {
             background: var(--accent);
             color: #0f172a;
             transform: translateY(-2px);
+        }
+
+        .add-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            font-size: 16px;
+            padding: 16px 24px;
+            max-width: 320px;
+        }
+
+        .category-header {
+            background: #1e2937;
+            color: var(--accent);
+            padding: 12px 16px;
+            margin: 20px 0 8px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-header:hover {
+            background: #334155;
         }
 
         .product-list {
@@ -223,37 +255,66 @@
             border: 1px solid #334155;
         }
 
-        .footer-note {
-            text-align: center;
+        .user-manual {
+            background: #1e2937;
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 30px;
-            color: #64748b;
-            font-size: 12px;
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.6;
+            border: 1px solid #334155;
+        }
+
+        .user-manual h3 {
+            color: var(--accent);
+            margin-top: 0;
         }
     </style>
 </head>
 <body>
-    <h1>NEVER HAD THAT</h1>
+    <h1>Inventory Management</h1>
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
-    <p class="note">Inventory Manager • Compact List + Expand to Edit</p>
+    <p class="note">Never Had That Delivery • Live Inventory Tool</p>
 
-    <div class="controls">
-        <button onclick="addRow()">+ Add New Item</button>
+    <!-- Top row: 4 square buttons -->
+    <div class="controls-top">
         <button onclick="importFile()">📥 Import JSON</button>
-        <button onclick="exportFile()">📤 Export JSON</button>
         <button onclick="copyMenuData()">📋 Copy Menu Data</button>
+        <button onclick="copySMSMenu()">📱 Copy SMS Menu</button>
+        <button onclick="exportFile()">📤 Export JSON</button>
+    </div>
+
+    <!-- Bottom: Add New Item -->
+    <div class="controls-bottom">
+        <button onclick="addRow()" class="add-btn">+ Add New Item</button>
     </div>
 
     <div id="productList" class="product-list"></div>
 
     <div id="output" class="result"></div>
 
-    <p class="footer-note">Tap Edit to change details • Retail & Markup update live</p>
+    <!-- Discrete User Manual -->
+    <div class="user-manual">
+        <h3>How to Use</h3>
+        <ul>
+            <li><strong>+ Add New Item</strong> — Add a new product (starts blank)</li>
+            <li><strong>Tap Edit</strong> on any item — opens full edit card with live price updates</li>
+            <li><strong>Delete Item</strong> — inside the edit card</li>
+            <li><strong>Tap category headers</strong> — collapse/expand sections</li>
+            <li><strong>Always Export JSON</strong> after changes to save your work</li>
+            <li><strong>Copy Menu Data</strong> — for updating the website</li>
+            <li><strong>Copy SMS Menu</strong> — full menu ready to text customers</li>
+        </ul>
+        <p><strong>Tip:</strong> Rarity changes automatically update markup & retail price live.</p>
+    </div>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
 
     <script>
         let data = [];
         let lastUpdated = null;
+        let collapsedCategories = new Set();
 
         const rarityMarkup = {
             "Common Flower": 100,
@@ -284,25 +345,54 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
-            data.forEach((row, i) => {
-                const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+            const grouped = {};
+            data.forEach(item => {
+                const cat = item.category || "OTHER";
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(item);
+            });
 
-                const div = document.createElement('div');
-                div.className = 'product-item';
-                div.innerHTML = `
-                    <div class="product-info">
-                        <div class="product-name">${row.name || 'Unnamed Item'}</div>
-                        <div class="product-desc">${row.desc || ''}</div>
-                        <div class="product-meta">${row.grower || ''} • ${row.category}</div>
-                        <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
-                    </div>
-                    <div style="text-align:right; min-width: 90px;">
-                        <div class="retail-price">$${retail}</div>
-                        <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
-                        <button class="edit-btn" onclick="editItem(${i}); event.stopImmediatePropagation();">Edit</button>
-                    </div>
+            const sortedCats = Object.keys(grouped).sort();
+
+            sortedCats.forEach(cat => {
+                const isCollapsed = collapsedCategories.has(cat);
+
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `
+                    ${cat} 
+                    <span style="font-size:18px;">${isCollapsed ? '▶' : '▼'}</span>
                 `;
-                container.appendChild(div);
+                header.onclick = () => {
+                    if (isCollapsed) collapsedCategories.delete(cat);
+                    else collapsedCategories.add(cat);
+                    renderList();
+                };
+                container.appendChild(header);
+
+                if (isCollapsed) return;
+
+                grouped[cat].forEach((row) => {
+                    const originalIndex = data.findIndex(item => item === row);
+                    const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+
+                    const div = document.createElement('div');
+                    div.className = 'product-item';
+                    div.innerHTML = `
+                        <div class="product-info">
+                            <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                            <div class="product-desc">${row.desc || ''}</div>
+                            <div class="product-meta">${row.grower || ''}</div>
+                            <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                        </div>
+                        <div style="text-align:right; min-width: 90px;">
+                            <div class="retail-price">$${retail}</div>
+                            <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                            <button class="edit-btn" onclick="editItem(${originalIndex}); event.stopImmediatePropagation();">Edit</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
             });
         }
 
@@ -319,6 +409,7 @@
                     <div>
                         <label>Category</label>
                         <select onchange="updateCell(${index}, 'category', this.value); refreshLiveFields(${index});">
+                            <option value="" ${!row.category ? 'selected' : ''}>Select Category</option>
                             <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
                             <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
                             <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
@@ -403,9 +494,9 @@
             if (card) card.remove();
 
             const container = document.getElementById('productList');
-            if (container.children[index]) {
-                container.children[index].style.display = 'flex';
-            }
+            Array.from(container.children).forEach(child => {
+                if (child.classList.contains('product-item')) child.style.display = 'flex';
+            });
 
             renderList();
             updateLastUpdated();
@@ -413,11 +504,9 @@
 
         function deleteItem(index) {
             if (!confirm("Delete this item permanently?")) return;
-
             data.splice(index, 1);
             const card = document.getElementById(`edit-card-${index}`);
             if (card) card.remove();
-
             renderList();
             updateLastUpdated();
         }
@@ -437,7 +526,7 @@
 
         function addRow() {
             data.push({
-                category: "FLOWER",
+                category: "",                    // blank by default
                 name: "",
                 desc: "",
                 grower: "",
@@ -469,7 +558,7 @@
                     });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
-                    updateLastUpdated();
+                    document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
                     alert("✅ Inventory loaded!");
                 } catch(err) {
                     alert("Error loading file.");
@@ -482,7 +571,7 @@
             if (data.length === 0) return alert("No data to export.");
 
             const exportData = {
-                lastUpdated: new Date().toISOString(),
+                lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString(),
                 data: data
             };
 
@@ -519,7 +608,56 @@
 
             document.getElementById('output').textContent = output;
             navigator.clipboard.writeText(output).then(() => {
-                alert("✅ Menu data copied!\nPaste it into your main menu HTML.");
+                alert("✅ Menu data copied!\n\nDon't forget to Export JSON to save your changes.");
+            });
+        }
+
+        function copySMSMenu() {
+            if (data.length === 0) return alert("Add some items first!");
+
+            let text = "NEVER HAD THAT MENU\n";
+            text += "===================\n\n";
+            text += "Last Updated: " + (lastUpdated ? lastUpdated.toLocaleDateString() : "Today") + "\n\n";
+
+            const grouped = {};
+            data.forEach(item => {
+                const cat = item.category || "OTHER";
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(item);
+            });
+
+            const sortedCats = Object.keys(grouped).sort();
+
+            sortedCats.forEach(cat => {
+                text += cat + "\n";
+                text += "-------------------\n";
+                grouped[cat].forEach(item => {
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}\n`;
+                    if (item.desc) text += `  ${item.desc}\n`;
+                    if (item.grower) text += `  by ${item.grower}\n`;
+                    text += "\n";
+                });
+            });
+
+            text += "\nText us your order!\n";
+            text += "Call/Text: (646) 688-6312\n";
+            text += "21+ only • Fast & Discreet";
+
+            document.getElementById('output').textContent = text;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON to save your changes.");
+                
+                // Try to open SMS app with pre-filled text
+                try {
+                    const link = document.createElement('a');
+                    link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch(e) {}
             });
         }
 
