@@ -345,7 +345,7 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
-            // 1. Show uncategorized (blank category) items FIRST at the very top
+            // Uncategorized items at the very top (no header)
             const uncategorized = data.filter(item => !item.category || item.category === "");
             uncategorized.forEach((row) => {
                 const globalIndex = data.findIndex(item => item === row);
@@ -369,7 +369,7 @@
                 container.appendChild(div);
             });
 
-            // 2. Then show categorized items under their expandable headers
+            // Categorized items under expandable headers
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -496,9 +496,8 @@
             `;
 
             const container = document.getElementById('productList');
-            const productItem = Array.from(container.children).find((el, i) => {
-                return el.classList.contains('product-item') && data.findIndex(item => item === data[i]) === index;
-            });
+            const productItem = Array.from(container.children).find(el => el.classList.contains('product-item') && 
+                data.findIndex(item => item === data[Array.from(container.children).indexOf(el)]) === index);
             if (productItem) {
                 productItem.parentNode.replaceChild(card, productItem);
             } else {
@@ -567,7 +566,7 @@
 
         function addRow() {
             data.unshift({
-                category: "",                    // blank = uncategorized, shows at top
+                category: "",
                 name: "",
                 desc: "",
                 grower: "",
@@ -660,10 +659,10 @@
             text += "===================\n\n";
             text += "Last Updated: " + (lastUpdated ? lastUpdated.toLocaleDateString() : "Today") + "\n\n";
 
-            // Uncategorized first
+            // Uncategorized items at top
             const uncategorized = data.filter(item => !item.category || item.category === "");
             if (uncategorized.length > 0) {
-                text += "UNCATEGORIZED / NEW\n";
+                text += "NEW / UNCATEGORIZED\n";
                 text += "-------------------\n";
                 uncategorized.forEach(item => {
                     const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
@@ -674,7 +673,7 @@
                 });
             }
 
-            // Then categorized
+            // Categorized items
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -699,14 +698,28 @@
             });
 
             text += "\nText us your order!\n";
-            text += "Call/Text: \n";
+            text += "Call/Text: (646) 688-6312\n";   // Phone number visible in message body
             text += "21+ only • Fast & Discreet";
 
             document.getElementById('output').textContent = text;
 
+            // Copy to clipboard
             navigator.clipboard.writeText(text).then(() => {
                 alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON to save your changes.");
             });
+
+            // Open SMS app with BLANK "To:" field (no prefilled number)
+            try {
+                const smsLink = document.createElement('a');
+                smsLink.href = `sms:?body=${encodeURIComponent(text)}`;
+                smsLink.style.display = 'none';
+                document.body.appendChild(smsLink);
+                smsLink.click();
+                document.body.removeChild(smsLink);
+            } catch(e) {
+                // Fallback for devices that don't support sms: URI
+                console.log("SMS app could not be opened automatically.");
+            }
         }
 
         window.onload = () => {
