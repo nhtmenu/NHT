@@ -641,7 +641,7 @@
             });
 
             text += "\nText us your order!\n";
-            text += "Call/Text: (646) 688-6312\n";
+            text += "Call/Text: (646) 688-6312\n";   // phone number included
             text += "21+ only • Fast & Discreet";
 
             document.getElementById('output').textContent = text;
@@ -649,7 +649,7 @@
             navigator.clipboard.writeText(text).then(() => {
                 alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON to save your changes.");
                 
-                // Try to open SMS app with pre-filled text
+                // Auto-open SMS app with pre-filled text and number
                 try {
                     const link = document.createElement('a');
                     link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
