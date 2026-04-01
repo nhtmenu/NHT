@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Inventory Management</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap');
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e2937;
+            --accent: #22d3ee;
+            --text: #e2e8f0;
+            --text-light: #94a3b8;
+            --profit: #67e8f9;
+        }
+
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 16px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', system-ui;
+            text-align: center;
+            font-size: 20px;
+            margin: 0 0 8px;
+            color: var(--accent);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .note {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .controls-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .controls-bottom {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        button {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            min-height: 52px;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .add-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            font-size: 16px;
+            padding: 16px 24px;
+            max-width: 320px;
+        }
+
+        .category-header {
+            background: #1e2937;
+            color: var(--accent);
+            padding: 12px 16px;
+            margin: 20px 0 8px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-header:hover {
+            background: #334155;
+        }
+
+        .product-list {
+            margin-bottom: 30px;
+        }
+
+        .product-item {
+            background: var(--card);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .product-meta {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .time-on-menu {
+            font-size: 12px;
+            color: #67e8f9;
+            margin-top: 4px;
+        }
+
+        .retail-price {
+            font-weight: 700;
+            color: #67e8f9;
+            font-size: 17px;
+            margin-right: 12px;
+        }
+
+        .edit-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .edit-card {
+            background: var(--card);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .line1, .line2 {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .line1 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .line2 {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        input, select {
+            background: #0f172a;
+            color: white;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 10px 10px;
+            width: 100%;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+        }
+
+        .live-retail {
+            font-weight: 700;
+            color: #67e8f9;
+            font-size: 18px;
+            text-align: center;
+            padding: 10px 0;
+            background: #0f172a;
+            border-radius: 6px;
+        }
+
+        .card-actions {
+            text-align: right;
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .save-btn {
+            background: #22d3ee;
+            color: #0f172a;
+            padding: 10px 24px;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        /* Profit Tracker */
+        .profit-tracker {
+            background: #1e2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #334155;
+        }
+
+        .profit-total {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--profit);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .profit-breakdown table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .profit-breakdown th, .profit-breakdown td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .profit-breakdown th {
+            color: var(--accent);
+        }
+
+        .sales-history {
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+
+        .sales-history div {
+            padding: 8px;
+            background: #0f172a;
+            margin-bottom: 6px;
+            border-radius: 6px;
+        }
+
+        .result {
+            margin-top: 30px;
+            background: #1e2937;
+            border-radius: 12px;
+            padding: 20px;
+            color: #67e8f9;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            max-height: 320px;
+            overflow: auto;
+            border: 1px solid #334155;
+        }
+
+        .user-manual {
+            background: #1e2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.6;
+            border: 1px solid #334155;
+        }
+
+        .user-manual h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventory Management</h1>
+    <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
+    <p class="note">Never Had That Delivery • Live Inventory Tool</p>
+
+    <!-- Top row: 4 square buttons -->
+    <div class="controls-top">
+        <button onclick="importFile()">📥 Import JSON</button>
+        <button onclick="copyMenuData()">📋 Copy Menu Data</button>
+        <button onclick="copySMSMenu()">📱 Copy SMS Menu</button>
+        <button onclick="exportFile()">📤 Export JSON</button>
+    </div>
+
+    <!-- Bottom: Add New Item -->
+    <div class="controls-bottom">
+        <button onclick="addRow()" class="add-btn">+ Add New Item</button>
+    </div>
+
+    <div id="productList" class="product-list"></div>
+
+    <!-- SALES & PROFIT TRACKER -->
+    <div class="profit-tracker">
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Sales & Profit Tracker</h3>
+        <div id="profitTotal" class="profit-total">$0.00</div>
+        
+        <div class="profit-breakdown">
+            <table id="profitTable">
+                <thead><tr><th>Item</th><th>Units Sold</th><th>Revenue</th><th>Profit</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:20px;">
+            <h4 style="margin:0 0 8px 0;color:#67e8f9;">Recent Sales History</h4>
+            <div id="salesHistory" class="sales-history"></div>
+        </div>
+
+        <button onclick="resetProfitTracker()" style="margin-top:16px;width:100%;background:#ef4444;">Reset Tracker (New Update)</button>
+    </div>
+
+    <div id="output" class="result"></div>
+
+    <!-- Discrete User Manual -->
+    <div class="user-manual">
+        <h3>How to Use</h3>
+        <ul>
+            <li><strong>+ Add New Item</strong> — starts blank at the top</li>
+            <li><strong>Tap Edit</strong> — item becomes edit card (change stock → auto-logs sale)</li>
+            <li><strong>Delete Item</strong> — inside edit card</li>
+            <li><strong>Tap category headers</strong> — collapse/expand</li>
+            <li><strong>Export JSON</strong> after changes</li>
+            <li><strong>Copy SMS Menu</strong> — opens SMS ready to send</li>
+        </ul>
+        <p><strong>Tip:</strong> Lowering stock in edit card automatically logs sales & profit.</p>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display:none;">
+
+    <script>
+        let data = [];
+        let lastUpdated = null;
+        let salesHistory = [];        // new: global sales log
+        let collapsedCategories = new Set();
+
+        const rarityMarkup = {
+            "Common Flower": 100, "Mid-Tier Flower": 120, "Small Batch Flower": 150,
+            "Rare Flower": 180, "Exclusive Flower": 220, "Pre-Roll": 250,
+            "Edible": 200, "Concentrate/Hash": 160, "VAPE": 180
+        };
+
+        function updateLastUpdated() {
+            lastUpdated = new Date();
+            document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+        }
+
+        function daysAgo(dateStr) {
+            if (!dateStr) return "just added";
+            const diff = Math.floor((new Date() - new Date(dateStr)) / (86400000));
+            return diff === 0 ? "just added" : (diff === 1 ? "1 day" : diff + " days");
+        }
+
+        function renderList() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+
+            // 1. Uncategorized items at very top
+            const uncategorized = data.filter(item => !item.category || item.category === "");
+            uncategorized.forEach(row => renderProductItem(row, container));
+
+            // 2. Categorized items
+            const grouped = {};
+            data.forEach(item => {
+                if (item.category && item.category !== "") {
+                    if (!grouped[item.category]) grouped[item.category] = [];
+                    grouped[item.category].push(item);
+                }
+            });
+
+            Object.keys(grouped).sort().forEach(cat => {
+                const isCollapsed = collapsedCategories.has(cat);
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `${cat} <span style="font-size:18px;">${isCollapsed ? '▶' : '▼'}</span>`;
+                header.onclick = () => { 
+                    isCollapsed ? collapsedCategories.delete(cat) : collapsedCategories.add(cat);
+                    renderList();
+                };
+                container.appendChild(header);
+                if (isCollapsed) return;
+
+                grouped[cat].forEach(row => renderProductItem(row, container));
+            });
+
+            updateProfitTracker();
+        }
+
+        function renderProductItem(row, container) {
+            const globalIndex = data.findIndex(item => item === row);
+            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+
+            const div = document.createElement('div');
+            div.className = 'product-item';
+            div.innerHTML = `
+                <div class="product-info">
+                    <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                    <div class="product-desc">${row.desc || ''}</div>
+                    <div class="product-meta">${row.grower || ''}</div>
+                    <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                </div>
+                <div style="text-align:right; min-width: 90px;">
+                    <div class="retail-price">$${retail}</div>
+                    <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                    <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function editItem(index) {
+            const row = data[index];
+            document.querySelectorAll('.edit-card').forEach(c => c.remove());
+
+            const card = document.createElement('div');
+            card.className = 'edit-card';
+            card.id = `edit-card-${index}`;
+            card.dataset.oldStock = row.inventory || 0;   // remember old stock for sale calc
+
+            card.innerHTML = `
+                <div class="line1">
+                    <div><label>Category</label><select onchange="updateCell(${index}, 'category', this.value); refreshLiveFields(${index});">
+                        <option value="" ${!row.category?'selected':''}>Select Category</option>
+                        <option value="FLOWER" ${row.category==='FLOWER'?'selected':''}>FLOWER</option>
+                        <option value="HASH" ${row.category==='HASH'?'selected':''}>HASH</option>
+                        <option value="EDIBLE" ${row.category==='EDIBLE'?'selected':''}>EDIBLE</option>
+                        <option value="BONUS" ${row.category==='BONUS'?'selected':''}>BONUS</option>
+                        <option value="VAPE" ${row.category==='VAPE'?'selected':''}>VAPE</option>
+                    </select></div>
+                    <div><label>Product</label><input value="${row.name||''}" onchange="updateCell(${index},'name',this.value)"></div>
+                    <div style="grid-column:span 2"><label>Description</label><input value="${row.desc||''}" onchange="updateCell(${index},'desc',this.value)"></div>
+                    <div><label>Grower</label><input value="${row.grower||''}" onchange="updateCell(${index},'grower',this.value)"></div>
+                </div>
+                <div class="line2">
+                    <div><label>Rarity</label><select onchange="setRarity(${index},this.value);refreshLiveFields(${index});">
+                        ${Object.keys(rarityMarkup).map(r=>`<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`).join('')}
+                    </select></div>
+                    <div><label>Wholesale $</label><input type="number" id="wholesale-input-${index}" value="${row.wholesale||0}" onchange="updateCell(${index},'wholesale',Number(this.value));refreshLiveFields(${index});"></div>
+                    <div><label>Markup %</label><input type="number" id="markup-input-${index}" value="${row.markup||120}" onchange="updateCell(${index},'markup',Number(this.value));refreshLiveFields(${index});"></div>
+                    <div><label>Retail $</label><div id="live-retail-${index}" class="live-retail">$${Math.round((row.wholesale||0)*(1+((row.markup||120)/100)))}</div></div>
+                    <div><label>Stock</label><input type="number" id="stock-input-${index}" value="${row.inventory||0}" onchange="updateCell(${index},'inventory',Number(this.value));refreshLiveFields(${index});"></div>
+                </div>
+                <div style="font-size:12px;color:#64748b;margin:12px 0;">Added: ${row.addedDate?new Date(row.addedDate).toLocaleDateString():'just now'}</div>
+                <div class="card-actions">
+                    <button class="delete-btn" onclick="deleteItem(${index})">Delete Item</button>
+                    <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
+                </div>
+            `;
+
+            const container = document.getElementById('productList');
+            const productItem = Array.from(container.children).find(el => el.classList.contains('product-item') && data.indexOf(row) === index);
+            if (productItem) productItem.parentNode.replaceChild(card, productItem);
+        }
+
+        function refreshLiveFields(index) {
+            const row = data[index];
+            const wholesale = parseFloat(row.wholesale) || 0;
+            const markup = parseFloat(row.markup) || 120;
+            const retail = Math.round(wholesale * (1 + markup / 100));
+            const markupInput = document.getElementById(`markup-input-${index}`);
+            if (markupInput) markupInput.value = markup;
+            const retailEl = document.getElementById(`live-retail-${index}`);
+            if (retailEl) retailEl.textContent = `$${retail}`;
+        }
+
+        function closeEdit(index) {
+            const card = document.getElementById(`edit-card-${index}`);
+            if (!card) return;
+
+            const row = data[index];
+            const oldStock = parseFloat(card.dataset.oldStock) || 0;
+            const newStock = parseFloat(row.inventory) || 0;
+
+            // AUTO-LOG SALE if stock was lowered
+            if (newStock < oldStock) {
+                const unitsSold = oldStock - newStock;
+                const retailPrice = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+                const revenue = unitsSold * retailPrice;
+                const cost = unitsSold * (row.wholesale || 0);
+                const profit = revenue - cost;
+
+                salesHistory.unshift({
+                    date: new Date().toLocaleString(),
+                    item: row.name || 'Unnamed',
+                    units: unitsSold,
+                    revenue: revenue,
+                    profit: profit
+                });
+
+                // Keep only last 30 entries
+                if (salesHistory.length > 30) salesHistory.pop();
+            }
+
+            const newItem = document.createElement('div');
+            newItem.className = 'product-item';
+            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+            newItem.innerHTML = `
+                <div class="product-info">
+                    <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                    <div class="product-desc">${row.desc || ''}</div>
+                    <div class="product-meta">${row.grower || ''}</div>
+                    <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                </div>
+                <div style="text-align:right; min-width: 90px;">
+                    <div class="retail-price">$${retail}</div>
+                    <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                    <button class="edit-btn" onclick="editItem(${index}); event.stopImmediatePropagation();">Edit</button>
+                </div>
+            `;
+            card.parentNode.replaceChild(newItem, card);
+
+            renderList();
+            updateLastUpdated();
+        }
+
+        function deleteItem(index) {
+            if (!confirm("Delete this item permanently?")) return;
+            data.splice(index, 1);
+            renderList();
+            updateLastUpdated();
+        }
+
+        function updateCell(index, field, value) {
+            data[index][field] = value;
+            updateLastUpdated();
+            refreshLiveFields(index);
+        }
+
+        function setRarity(index, rarity) {
+            data[index].rarity = rarity;
+            data[index].markup = rarityMarkup[rarity] || 120;
+            updateLastUpdated();
+            refreshLiveFields(index);
+        }
+
+        function addRow() {
+            data.unshift({
+                category: "",
+                name: "",
+                desc: "",
+                grower: "",
+                rarity: "Mid-Tier Flower",
+                wholesale: 0,
+                markup: 120,
+                retail: 0,
+                inventory: 0,
+                addedDate: new Date().toISOString()
+            });
+            renderList();
+            updateLastUpdated();
+        }
+
+        function updateProfitTracker() {
+            let totalProfit = 0;
+            const perItem = {};
+
+            salesHistory.forEach(sale => {
+                totalProfit += sale.profit;
+                if (!perItem[sale.item]) perItem[sale.item] = {units:0, revenue:0, profit:0};
+                perItem[sale.item].units += sale.units;
+                perItem[sale.item].revenue += sale.revenue;
+                perItem[sale.item].profit += sale.profit;
+            });
+
+            // Grand total
+            document.getElementById('profitTotal').innerHTML = `Total Profit Since Last Update<br><span style="font-size:32px;">$${totalProfit.toFixed(0)}</span>`;
+
+            // Per-item table
+            const tbody = document.querySelector('#profitTable tbody');
+            tbody.innerHTML = '';
+            Object.keys(perItem).forEach(item => {
+                const row = perItem[item];
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item}</td><td>${row.units}</td><td>$${row.revenue}</td><td style="color:#67e8f9;">$${row.profit}</td>`;
+                tbody.appendChild(tr);
+            });
+
+            // Sales history
+            const historyDiv = document.getElementById('salesHistory');
+            historyDiv.innerHTML = salesHistory.slice(0,20).map(s => 
+                `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
+            ).join('');
+        }
+
+        function resetProfitTracker() {
+            if (confirm("Reset profit tracker for new menu update?")) {
+                salesHistory = [];
+                updateProfitTracker();
+                updateLastUpdated();
+                alert("Profit tracker has been reset!");
+            }
+        }
+
+        // === REST OF YOUR EXISTING FUNCTIONS (import/export/copy etc.) ===
+        function importFile() { document.getElementById('fileInput').click(); }
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const imported = JSON.parse(ev.target.result);
+                    data = imported.data || imported;
+                    salesHistory = imported.salesHistory || [];
+                    data.forEach(item => { if (!item.addedDate) item.addedDate = new Date().toISOString(); });
+                    lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
+                    renderList();
+                    document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+                    alert("✅ Inventory + sales data loaded!");
+                } catch(err) { alert("Error loading file."); }
+            };
+            reader.readAsText(file);
+        });
+
+        function exportFile() {
+            if (data.length === 0) return alert("No data to export.");
+            const exportData = {
+                lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString(),
+                data: data,
+                salesHistory: salesHistory
+            };
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            const dateStr = new Date().toISOString().slice(0,10);
+            const blob = new Blob([jsonStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `never-had-that-inventory-${dateStr}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyMenuData() { /* unchanged from before */ 
+            if (data.length === 0) return alert("Add some items first!");
+            let output = "/* PASTE THIS INTO YOUR MAIN MENU HTML */\n\n";
+            const categories = {};
+            data.forEach(item => {
+                if (!categories[item.category]) categories[item.category] = [];
+                categories[item.category].push(item);
+            });
+            Object.keys(categories).forEach(cat => {
+                output += `// ${cat}\n`;
+                categories[cat].forEach(item => {
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    output += `addToCart(event, this, '${item.name}', ${retail}, '${item.grower}', '${item.desc}')\n`;
+                });
+                output += "\n";
+            });
+            document.getElementById('output').textContent = output;
+            navigator.clipboard.writeText(output).then(() => alert("✅ Menu data copied!"));
+        }
+
+        function copySMSMenu() {
+            if (data.length === 0) return alert("Add some items first!");
+            let text = "NEVER HAD THAT MENU\n===================\n\n";
+            text += "Last Updated: " + (lastUpdated ? lastUpdated.toLocaleDateString() : "Today") + "\n\n";
+
+            const uncategorized = data.filter(item => !item.category || item.category === "");
+            if (uncategorized.length > 0) {
+                text += "NEW / UNCATEGORIZED\n-------------------\n";
+                uncategorized.forEach(item => {
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}\n`;
+                    if (item.desc) text += `  ${item.desc}\n`;
+                    if (item.grower) text += `  by ${item.grower}\n`;
+                    text += "\n";
+                });
+            }
+
+            const grouped = {};
+            data.forEach(item => {
+                if (item.category && item.category !== "") {
+                    if (!grouped[item.category]) grouped[item.category] = [];
+                    grouped[item.category].push(item);
+                }
+            });
+            Object.keys(grouped).sort().forEach(cat => {
+                text += cat + "\n-------------------\n";
+                grouped[cat].forEach(item => {
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}\n`;
+                    if (item.desc) text += `  ${item.desc}\n`;
+                    if (item.grower) text += `  by ${item.grower}\n`;
+                    text += "\n";
+                });
+            });
+
+            text += "\nText us your order!\nCall/Text: (646) 688-6312\n21+ only • Fast & Discreet";
+
+            document.getElementById('output').textContent = text;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON.");
+            });
+
+            try {
+                const link = document.createElement('a');
+                link.href = `sms:?body=${encodeURIComponent(text)}`;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch(e) {}
+        }
+
+        window.onload = () => {
+            renderList();
+            document.getElementById('lastUpdated').textContent = "Last Updated: Never";
+        };
+    </script>
+</body>
+</html>
