@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Inventory Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap');
 
@@ -36,111 +37,46 @@
             color: var(--accent); 
         }
 
-        .last-updated { 
-            text-align: center; 
-            color: var(--text-light); 
-            font-size: 13px; 
-            margin-bottom: 20px; 
-        }
-        .note { 
-            text-align: center; 
-            color: var(--text-light); 
-            font-size: 13px; 
-            margin-bottom: 20px; 
-        }
+        .last-updated { text-align: center; color: var(--text-light); font-size: 13px; margin-bottom: 20px; }
+        .note { text-align: center; color: var(--text-light); font-size: 13px; margin-bottom: 20px; }
 
-        .controls-top { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 12px; 
-            margin-bottom: 16px; 
-        }
-        .controls-bottom { 
-            display: flex; 
-            justify-content: center; 
-            margin-bottom: 24px; 
-        }
+        .controls-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .controls-bottom { display: flex; justify-content: center; margin-bottom: 24px; }
 
         button {
-            background: #334155; 
-            color: white; 
-            border: none; 
-            padding: 14px 16px; 
-            border-radius: 8px;
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            font-size: 14px; 
-            min-height: 52px;
+            background: #334155; color: white; border: none; padding: 14px 16px; border-radius: 8px;
+            font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; min-height: 52px;
         }
-        button:hover { 
-            background: var(--accent); 
-            color: #0f172a; 
-            transform: translateY(-2px); 
-        }
-        .add-btn { 
-            background: #22d3ee; 
-            color: #0f172a; 
-            font-size: 16px; 
-            padding: 16px 24px; 
-            max-width: 320px; 
-        }
+        button:hover { background: var(--accent); color: #0f172a; transform: translateY(-2px); }
+        .add-btn { background: #22d3ee; color: #0f172a; font-size: 16px; padding: 16px 24px; max-width: 320px; }
 
         .category-header {
-            background: #1e2937; 
-            color: var(--accent); 
-            padding: 12px 16px; 
-            margin: 20px 0 8px;
-            border-radius: 8px; 
-            font-weight: 600; 
-            font-size: 15px; 
-            text-transform: uppercase;
-            letter-spacing: 1px; 
-            cursor: pointer; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
+            background: #1e2937; color: var(--accent); padding: 12px 16px; margin: 20px 0 8px;
+            border-radius: 8px; font-weight: 600; font-size: 15px; text-transform: uppercase;
+            letter-spacing: 1px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
 
         .product-list { margin-bottom: 30px; }
 
         .product-item {
-            background: var(--card); 
-            border-radius: 12px; 
-            margin-bottom: 12px; 
-            padding: 14px 16px;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
+            background: var(--card); border-radius: 12px; margin-bottom: 12px; padding: 14px 16px;
+            display: flex; justify-content: space-between; align-items: center;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
         }
 
         .product-info { flex: 1; }
-        .product-name { 
-            font-weight: 600; 
-            font-size: 16px; 
-            color: var(--text); 
-        }
-        .product-desc { 
-            font-size: 13px; 
-            color: var(--text-light); 
-        }
-        .product-meta { 
-            font-size: 13px; 
-            color: var(--text-light); 
-        }
-        .time-on-menu { 
-            font-size: 12px; 
-            color: #67e8f9; 
-            margin-top: 4px; 
-        }
+        .product-name { font-weight: 600; font-size: 16px; color: var(--text); }
+        .product-desc { font-size: 13px; color: var(--text-light); }
+        .product-meta { font-size: 13px; color: var(--text-light); }
+        .time-on-menu { font-size: 12px; color: #67e8f9; margin-top: 4px; }
 
-        .retail-price { 
-            font-weight: 700; 
-            color: #67e8f9; 
-            font-size: 17px; 
-            margin-right: 12px; 
-        }
+        .retail-price { font-weight: 700; color: #67e8f9; font-size: 17px; margin-right: 12px; }
+
+        /* Stock color warning */
+        .stock-normal { color: #94a3b8; }
+        .stock-yellow { color: #fbbf24; }
+        .stock-orange { color: #f97316; }
+        .stock-red { color: #ef4444; font-weight: 700; }
 
         .edit-btn {
             background: #22d3ee;
@@ -159,120 +95,44 @@
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
         }
 
-        .line1, .line2 { 
-            display: grid; 
-            gap: 12px; 
-            margin-bottom: 16px; 
-        }
+        .line1, .line2 { display: grid; gap: 12px; margin-bottom: 16px; }
         .line1 { grid-template-columns: 1fr 1fr; }
         .line2 { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 
-        label { 
-            display: block; 
-            font-size: 12px; 
-            color: var(--text-light); 
-            margin-bottom: 4px; 
-            font-weight: 500; 
-        }
+        label { display: block; font-size: 12px; color: var(--text-light); margin-bottom: 4px; font-weight: 500; }
         input, select {
-            background: #0f172a; 
-            color: white; 
-            border: 1px solid #475569; 
-            border-radius: 6px;
-            padding: 10px; 
-            width: 100%; 
-            font-size: 15px;
+            background: #0f172a; color: white; border: 1px solid #475569; border-radius: 6px;
+            padding: 10px; width: 100%; font-size: 15px;
         }
-        input:focus, select:focus { 
-            outline: none; 
-            border-color: var(--accent); 
-            box-shadow: 0 0 0 3px rgba(34,211,238,0.2); 
-        }
+        input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.2); }
 
-        .live-retail { 
-            font-weight: 700; 
-            color: #67e8f9; 
-            font-size: 18px; 
-            text-align: center; 
-            padding: 10px 0; 
-            background: #0f172a; 
-            border-radius: 6px; 
-        }
+        .live-retail { font-weight: 700; color: #67e8f9; font-size: 18px; text-align: center; padding: 10px 0; background: #0f172a; border-radius: 6px; }
 
-        .card-actions { 
-            text-align: right; 
-            margin-top: 16px; 
-            display: flex; 
-            gap: 12px; 
-            justify-content: flex-end; 
-        }
+        .card-actions { text-align: right; margin-top: 16px; display: flex; gap: 12px; justify-content: flex-end; }
         .save-btn { background: #22d3ee; color: #0f172a; padding: 10px 24px; }
         .delete-btn { background: #ef4444; color: white; padding: 10px 20px; }
 
         /* Profit sections */
         .profit-section {
-            background: #1e2937; 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin-top: 30px; 
-            border: 1px solid #334155;
+            background: #1e2937; border-radius: 12px; padding: 20px; margin-top: 30px; border: 1px solid #334155;
         }
-        .profit-total { 
-            font-size: 24px; 
-            font-weight: 700; 
-            color: var(--profit); 
-            text-align: center; 
-            margin-bottom: 16px; 
-        }
+        .profit-total { font-size: 24px; font-weight: 700; color: var(--profit); text-align: center; margin-bottom: 16px; }
 
-        .profit-breakdown table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-bottom: 20px; 
-        }
-        .profit-breakdown th, .profit-breakdown td { 
-            padding: 8px; 
-            text-align: left; 
-            border-bottom: 1px solid #334155; 
-        }
+        .profit-breakdown table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .profit-breakdown th, .profit-breakdown td { padding: 8px; text-align: left; border-bottom: 1px solid #334155; }
         .profit-breakdown th { color: var(--accent); }
 
-        .sales-history { 
-            max-height: 280px; 
-            overflow-y: auto; 
-            font-size: 13px; 
-        }
-        .sales-history div { 
-            padding: 8px; 
-            background: #0f172a; 
-            margin-bottom: 6px; 
-            border-radius: 6px; 
-        }
+        .sales-history { max-height: 280px; overflow-y: auto; font-size: 13px; }
+        .sales-history div { padding: 8px; background: #0f172a; margin-bottom: 6px; border-radius: 6px; }
 
-        .result { 
-            margin-top: 30px; 
-            background: #1e2937; 
-            border-radius: 12px; 
-            padding: 20px; 
-            color: #67e8f9; 
-            font-family: monospace; 
-            font-size: 13px; 
-            white-space: pre-wrap; 
-            max-height: 320px; 
-            overflow: auto; 
-            border: 1px solid #334155; 
-        }
+        .graph-container { margin-top: 20px; }
+        .filter-buttons { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .filter-btn { padding: 6px 12px; font-size: 13px; background: #334155; border: none; border-radius: 6px; cursor: pointer; }
+        .filter-btn.active { background: var(--accent); color: #0f172a; }
 
-        .user-manual { 
-            background: #1e2937; 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin-top: 30px; 
-            color: var(--text-light); 
-            font-size: 13px; 
-            line-height: 1.6; 
-            border: 1px solid #334155; 
-        }
+        .result { margin-top: 30px; background: #1e2937; border-radius: 12px; padding: 20px; color: #67e8f9; font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 320px; overflow: auto; border: 1px solid #334155; }
+
+        .user-manual { background: #1e2937; border-radius: 12px; padding: 20px; margin-top: 30px; color: var(--text-light); font-size: 13px; line-height: 1.6; border: 1px solid #334155; }
     </style>
 </head>
 <body>
@@ -298,10 +158,7 @@
         <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Profit Since Last Update</h3>
         <div id="currentProfitTotal" class="profit-total">$0</div>
         <div class="profit-breakdown">
-            <table id="currentProfitTable">
-                <thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead>
-                <tbody></tbody>
-            </table>
+            <table id="currentProfitTable"><thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody></tbody></table>
         </div>
         <div style="margin-top:16px;">
             <h4 style="margin:0 0 8px 0;color:#67e8f9;">Recent Sales (This Session)</h4>
@@ -313,7 +170,17 @@
     <div class="profit-section">
         <h3 style="margin:0 0 12px 0;color:#67e8f9;">📈 All-Time Sales History</h3>
         <div id="allTimeProfitTotal" class="profit-total">$0</div>
-        <div style="margin-top:16px;">
+
+        <div class="graph-container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterGraph(7)">Last 7 Days</button>
+                <button class="filter-btn" onclick="filterGraph(30)">Last 30 Days</button>
+                <button class="filter-btn" onclick="filterGraph(0)">All Time</button>
+            </div>
+            <canvas id="salesChart" height="180"></canvas>
+        </div>
+
+        <div style="margin-top:20px;">
             <h4 style="margin:0 0 8px 0;color:#67e8f9;">Full Sales Log</h4>
             <div id="allTimeSalesHistory" class="sales-history"></div>
         </div>
@@ -327,24 +194,16 @@
         <p><strong>Welcome to Never Had That Inventory Manager</strong></p>
         <ul>
             <li><strong>+ Add New Item</strong> — Adds a blank item at the very top of the list (no category by default).</li>
-            <li><strong>Edit Item</strong> — Tap "Edit" on any item. The item is replaced by the full edit card. While the edit card is open, all other "Edit" buttons are hidden to prevent mistakes.</li>
-            <li><strong>Stock Changes &amp; Sales Logging</strong> — When you lower the Stock number in the edit card and hit "Save & Close", the tool automatically calculates how many units were sold, logs the sale (revenue, cost, profit), and adds it to both the current session and all-time history.</li>
-            <li><strong>Profit Since Last Update</strong> — Shows only sales made in the current session. Resets automatically when you import a new JSON file so you can track today's activity cleanly.</li>
-            <li><strong>All-Time Sales History</strong> — Keeps every sale ever recorded. This data is saved when you Export JSON and persists across sessions.</li>
-            <li><strong>Category Headers</strong> — Tap to collapse/expand sections. Uncategorized (blank category) items always stay at the top above all expandable categories.</li>
-            <li><strong>Export JSON</strong> — Always export after making changes. This saves inventory, current session data, and all-time sales history.</li>
-            <li><strong>Import JSON</strong> — Loads your saved data. The "Profit Since Last Update" tracker will start at $0.</li>
-            <li><strong>Copy Menu Data</strong> — Generates code you can paste into your main delivery website.</li>
-            <li><strong>Copy SMS Menu</strong> — Copies a clean text version and opens your phone's SMS app with a blank "To:" field (the phone number is included in the message body for easy reference).</li>
+            <li><strong>Edit Item</strong> — Tap "Edit". The item is replaced by the full edit card **in its exact position**. Other Edit buttons are hidden while editing.</li>
+            <li><strong>Stock Changes &amp; Sales Logging</strong> — Lower the Stock number and hit "Save & Close" to auto-log the sale. Stock color changes: ≤10 yellow, ≤5 orange, 0 red.</li>
+            <li><strong>Profit Since Last Update</strong> — Shows only sales from this session. Resets automatically on import.</li>
+            <li><strong>All-Time Sales History</strong> — Persistent history with graph (filter by time period) and full log. Saved in JSON.</li>
+            <li><strong>Category Headers</strong> — Tap to collapse/expand. Uncategorized items stay at the top.</li>
+            <li><strong>Export JSON</strong> — Always export after changes to save everything.</li>
+            <li><strong>Import JSON</strong> — Loads data. Current session profit starts at $0.</li>
+            <li><strong>Copy Menu Data / Copy SMS Menu</strong> — Ready for website and texting.</li>
         </ul>
-        <p><strong>Best Practices:</strong></p>
-        <ul>
-            <li>Edit items at the end of the day or shift to accurately log sales.</li>
-            <li>Export JSON after every session — this is your backup.</li>
-            <li>Use the All-Time History to spot slow-moving items that may need price adjustments or removal.</li>
-            <li>When importing a previous JSON, the current session profit starts fresh at $0.</li>
-        </ul>
-        <p><strong>Tip:</strong> Only lowering stock logs a sale. Increasing stock does not create negative entries.</p>
+        <p><strong>Best Practices:</strong> Edit at end of day, export regularly, use graph to spot trends.</p>
     </div>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
@@ -352,9 +211,10 @@
     <script>
         let data = [];
         let lastUpdated = null;
-        let currentSales = [];   // This session only
-        let allTimeSales = [];   // Persistent history
+        let currentSales = [];
+        let allTimeSales = [];
         let collapsedCategories = new Set();
+        let salesChart = null;
 
         const rarityMarkup = {
             "Common Flower": 100, "Mid-Tier Flower": 120, "Small Batch Flower": 150,
@@ -373,15 +233,20 @@
             return diff === 0 ? "just added" : (diff === 1 ? "1 day" : diff + " days");
         }
 
+        function getStockColor(stock) {
+            if (stock <= 0) return "stock-red";
+            if (stock <= 5) return "stock-orange";
+            if (stock <= 10) return "stock-yellow";
+            return "stock-normal";
+        }
+
         function renderList() {
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
-            // Uncategorized at top
             const uncategorized = data.filter(item => !item.category || item.category === "");
             uncategorized.forEach(row => renderProductItem(row, container));
 
-            // Categorized
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -405,11 +270,13 @@
             });
 
             updateProfitDisplays();
+            updateSalesChart();
         }
 
         function renderProductItem(row, container) {
             const globalIndex = data.findIndex(item => item === row);
             const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+            const stockClass = getStockColor(row.inventory || 0);
 
             const div = document.createElement('div');
             div.className = 'product-item';
@@ -422,7 +289,7 @@
                 </div>
                 <div style="text-align:right; min-width: 90px;">
                     <div class="retail-price">$${retail}</div>
-                    <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                    <div class="${stockClass}" style="font-size:13px;">Stock: ${row.inventory || 0}</div>
                     <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
                 </div>
             `;
@@ -430,7 +297,6 @@
         }
 
         function editItem(index) {
-            // Hide all other edit buttons while editing
             document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'none');
 
             const row = data[index];
@@ -471,10 +337,15 @@
                 </div>
             `;
 
+            // Replace the specific product item in place
             const container = document.getElementById('productList');
-            const productItem = Array.from(container.children).find(el => el.classList.contains('product-item'));
-            if (productItem) productItem.parentNode.replaceChild(card, productItem);
-            else container.appendChild(card);
+            const allItems = Array.from(container.children);
+            const productItem = allItems[index]; // index corresponds to position in DOM for this render
+            if (productItem && productItem.classList.contains('product-item')) {
+                productItem.parentNode.replaceChild(card, productItem);
+            } else {
+                container.appendChild(card);
+            }
         }
 
         function refreshLiveFields(index) {
@@ -489,7 +360,6 @@
         }
 
         function closeEdit(index) {
-            // Restore all edit buttons
             document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'inline-block');
 
             const card = document.getElementById(`edit-card-${index}`);
@@ -552,7 +422,6 @@
         }
 
         function updateProfitDisplays() {
-            // Current session
             let currentProfit = 0;
             const currentPerItem = {};
             currentSales.forEach(s => {
@@ -578,7 +447,6 @@
                 `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
             ).join('');
 
-            // All-time
             let allTimeProfit = 0;
             allTimeSales.forEach(s => allTimeProfit += s.profit);
             document.getElementById('allTimeProfitTotal').innerHTML = `All-Time Profit<br><span style="font-size:28px;">$${allTimeProfit}</span>`;
@@ -586,6 +454,54 @@
             document.getElementById('allTimeSalesHistory').innerHTML = allTimeSales.slice(0,30).map(s => 
                 `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
             ).join('');
+        }
+
+        function updateSalesChart(days = 30) {
+            const ctx = document.getElementById('salesChart');
+            if (salesChart) salesChart.destroy();
+
+            const dailyProfit = {};
+            const cutoff = days > 0 ? Date.now() - (days * 86400000) : 0;
+
+            allTimeSales.forEach(s => {
+                const saleDate = new Date(s.date);
+                if (days > 0 && saleDate.getTime() < cutoff) return;
+                const dateKey = saleDate.toISOString().slice(0,10);
+                if (!dailyProfit[dateKey]) dailyProfit[dateKey] = 0;
+                dailyProfit[dateKey] += s.profit;
+            });
+
+            const labels = Object.keys(dailyProfit).sort();
+            const profits = labels.map(d => dailyProfit[d]);
+
+            salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Daily Profit',
+                        data: profits,
+                        borderColor: '#67e8f9',
+                        backgroundColor: 'rgba(103, 232, 249, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#334155' } },
+                        x: { grid: { color: '#334155' } }
+                    }
+                }
+            });
+        }
+
+        function filterGraph(days) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updateSalesChart(days);
         }
 
         function importFile() { document.getElementById('fileInput').click(); }
@@ -598,7 +514,7 @@
                     const imported = JSON.parse(ev.target.result);
                     data = imported.data || imported;
                     allTimeSales = imported.allTimeSales || imported.salesHistory || [];
-                    currentSales = [];   // Reset current session on import
+                    currentSales = [];
                     data.forEach(item => { if (!item.addedDate) item.addedDate = new Date().toISOString(); });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
