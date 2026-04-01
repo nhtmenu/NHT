@@ -299,7 +299,7 @@
         <h3>How to Use</h3>
         <ul>
             <li><strong>+ Add New Item</strong> — Add a new product (starts blank)</li>
-            <li><strong>Tap Edit</strong> on any item — opens full edit card with live price updates</li>
+            <li><strong>Tap Edit</strong> on any item — the item becomes the edit card</li>
             <li><strong>Delete Item</strong> — inside the edit card</li>
             <li><strong>Tap category headers</strong> — collapse/expand sections</li>
             <li><strong>Always Export JSON</strong> after changes to save your work</li>
@@ -345,11 +345,38 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
+            // 1. Show uncategorized (blank category) items FIRST at the very top
+            const uncategorized = data.filter(item => !item.category || item.category === "");
+            uncategorized.forEach((row) => {
+                const globalIndex = data.findIndex(item => item === row);
+                const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+
+                const div = document.createElement('div');
+                div.className = 'product-item';
+                div.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                        <div class="product-desc">${row.desc || ''}</div>
+                        <div class="product-meta">${row.grower || ''}</div>
+                        <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                    </div>
+                    <div style="text-align:right; min-width: 90px;">
+                        <div class="retail-price">$${retail}</div>
+                        <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                        <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            // 2. Then show categorized items under their expandable headers
             const grouped = {};
             data.forEach(item => {
-                const cat = item.category || "OTHER";
-                if (!grouped[cat]) grouped[cat] = [];
-                grouped[cat].push(item);
+                if (item.category && item.category !== "") {
+                    const cat = item.category;
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push(item);
+                }
             });
 
             const sortedCats = Object.keys(grouped).sort();
@@ -373,7 +400,7 @@
                 if (isCollapsed) return;
 
                 grouped[cat].forEach((row) => {
-                    const originalIndex = data.findIndex(item => item === row);
+                    const globalIndex = data.findIndex(item => item === row);
                     const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
 
                     const div = document.createElement('div');
@@ -388,7 +415,7 @@
                         <div style="text-align:right; min-width: 90px;">
                             <div class="retail-price">$${retail}</div>
                             <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
-                            <button class="edit-btn" onclick="editItem(${originalIndex}); event.stopImmediatePropagation();">Edit</button>
+                            <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
                         </div>
                     `;
                     container.appendChild(div);
@@ -469,10 +496,13 @@
             `;
 
             const container = document.getElementById('productList');
-            const productItem = container.children[index];
+            const productItem = Array.from(container.children).find((el, i) => {
+                return el.classList.contains('product-item') && data.findIndex(item => item === data[i]) === index;
+            });
             if (productItem) {
-                productItem.insertAdjacentElement('afterend', card);
-                productItem.style.display = 'none';
+                productItem.parentNode.replaceChild(card, productItem);
+            } else {
+                container.appendChild(card);
             }
         }
 
@@ -491,13 +521,26 @@
 
         function closeEdit(index) {
             const card = document.getElementById(`edit-card-${index}`);
-            if (card) card.remove();
-
-            const container = document.getElementById('productList');
-            Array.from(container.children).forEach(child => {
-                if (child.classList.contains('product-item')) child.style.display = 'flex';
-            });
-
+            if (card) {
+                const newItem = document.createElement('div');
+                newItem.className = 'product-item';
+                const row = data[index];
+                const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+                newItem.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                        <div class="product-desc">${row.desc || ''}</div>
+                        <div class="product-meta">${row.grower || ''}</div>
+                        <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                    </div>
+                    <div style="text-align:right; min-width: 90px;">
+                        <div class="retail-price">$${retail}</div>
+                        <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
+                        <button class="edit-btn" onclick="editItem(${index}); event.stopImmediatePropagation();">Edit</button>
+                    </div>
+                `;
+                card.parentNode.replaceChild(newItem, card);
+            }
             renderList();
             updateLastUpdated();
         }
@@ -505,8 +548,6 @@
         function deleteItem(index) {
             if (!confirm("Delete this item permanently?")) return;
             data.splice(index, 1);
-            const card = document.getElementById(`edit-card-${index}`);
-            if (card) card.remove();
             renderList();
             updateLastUpdated();
         }
@@ -525,8 +566,8 @@
         }
 
         function addRow() {
-            data.push({
-                category: "",                    // blank by default
+            data.unshift({
+                category: "",                    // blank = uncategorized, shows at top
                 name: "",
                 desc: "",
                 grower: "",
@@ -619,11 +660,28 @@
             text += "===================\n\n";
             text += "Last Updated: " + (lastUpdated ? lastUpdated.toLocaleDateString() : "Today") + "\n\n";
 
+            // Uncategorized first
+            const uncategorized = data.filter(item => !item.category || item.category === "");
+            if (uncategorized.length > 0) {
+                text += "UNCATEGORIZED / NEW\n";
+                text += "-------------------\n";
+                uncategorized.forEach(item => {
+                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}\n`;
+                    if (item.desc) text += `  ${item.desc}\n`;
+                    if (item.grower) text += `  by ${item.grower}\n`;
+                    text += "\n";
+                });
+            }
+
+            // Then categorized
             const grouped = {};
             data.forEach(item => {
-                const cat = item.category || "OTHER";
-                if (!grouped[cat]) grouped[cat] = [];
-                grouped[cat].push(item);
+                if (item.category && item.category !== "") {
+                    const cat = item.category;
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push(item);
+                }
             });
 
             const sortedCats = Object.keys(grouped).sort();
@@ -641,23 +699,13 @@
             });
 
             text += "\nText us your order!\n";
-            text += "Call/Text: (646) 688-6312\n";   // phone number included
+            text += "Call/Text: \n";
             text += "21+ only • Fast & Discreet";
 
             document.getElementById('output').textContent = text;
 
             navigator.clipboard.writeText(text).then(() => {
                 alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON to save your changes.");
-                
-                // Auto-open SMS app with pre-filled text and number
-                try {
-                    const link = document.createElement('a');
-                    link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
-                    link.style.display = 'none';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                } catch(e) {}
             });
         }
 
