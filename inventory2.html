@@ -28,133 +28,118 @@
             font-size: 15px;
         }
 
-        h1 {
-            font-family: 'Press Start 2P', system-ui;
-            text-align: center;
-            font-size: 20px;
-            margin: 0 0 8px;
-            color: var(--accent);
+        h1 { 
+            font-family: 'Press Start 2P', system-ui; 
+            text-align: center; 
+            font-size: 20px; 
+            margin: 0 0 8px; 
+            color: var(--accent); 
         }
 
-        .last-updated {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 13px;
-            margin-bottom: 20px;
+        .last-updated { 
+            text-align: center; 
+            color: var(--text-light); 
+            font-size: 13px; 
+            margin-bottom: 20px; 
+        }
+        .note { 
+            text-align: center; 
+            color: var(--text-light); 
+            font-size: 13px; 
+            margin-bottom: 20px; 
         }
 
-        .note {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 13px;
-            margin-bottom: 20px;
+        .controls-top { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 12px; 
+            margin-bottom: 16px; 
         }
-
-        .controls-top {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .controls-bottom {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 24px;
+        .controls-bottom { 
+            display: flex; 
+            justify-content: center; 
+            margin-bottom: 24px; 
         }
 
         button {
-            background: #334155;
-            color: white;
-            border: none;
-            padding: 14px 16px;
+            background: #334155; 
+            color: white; 
+            border: none; 
+            padding: 14px 16px; 
             border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-size: 14px; 
             min-height: 52px;
         }
-
-        button:hover {
-            background: var(--accent);
-            color: #0f172a;
-            transform: translateY(-2px);
+        button:hover { 
+            background: var(--accent); 
+            color: #0f172a; 
+            transform: translateY(-2px); 
         }
-
-        .add-btn {
-            background: #22d3ee;
-            color: #0f172a;
-            font-size: 16px;
-            padding: 16px 24px;
-            max-width: 320px;
+        .add-btn { 
+            background: #22d3ee; 
+            color: #0f172a; 
+            font-size: 16px; 
+            padding: 16px 24px; 
+            max-width: 320px; 
         }
 
         .category-header {
-            background: #1e2937;
-            color: var(--accent);
-            padding: 12px 16px;
-            margin: 20px 0 8px 0;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
+            background: #1e2937; 
+            color: var(--accent); 
+            padding: 12px 16px; 
+            margin: 20px 0 8px;
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 15px; 
             text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
         }
 
-        .category-header:hover {
-            background: #334155;
-        }
-
-        .product-list {
-            margin-bottom: 30px;
-        }
+        .product-list { margin-bottom: 30px; }
 
         .product-item {
-            background: var(--card);
-            border-radius: 12px;
-            margin-bottom: 12px;
+            background: var(--card); 
+            border-radius: 12px; 
+            margin-bottom: 12px; 
             padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
         }
 
-        .product-info {
-            flex: 1;
+        .product-info { flex: 1; }
+        .product-name { 
+            font-weight: 600; 
+            font-size: 16px; 
+            color: var(--text); 
+        }
+        .product-desc { 
+            font-size: 13px; 
+            color: var(--text-light); 
+        }
+        .product-meta { 
+            font-size: 13px; 
+            color: var(--text-light); 
+        }
+        .time-on-menu { 
+            font-size: 12px; 
+            color: #67e8f9; 
+            margin-top: 4px; 
         }
 
-        .product-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .product-desc {
-            font-size: 13px;
-            color: var(--text-light);
-        }
-
-        .product-meta {
-            font-size: 13px;
-            color: var(--text-light);
-        }
-
-        .time-on-menu {
-            font-size: 12px;
-            color: #67e8f9;
-            margin-top: 4px;
-        }
-
-        .retail-price {
-            font-weight: 700;
-            color: #67e8f9;
-            font-size: 17px;
-            margin-right: 12px;
+        .retail-price { 
+            font-weight: 700; 
+            color: #67e8f9; 
+            font-size: 17px; 
+            margin-right: 12px; 
         }
 
         .edit-btn {
@@ -167,155 +152,126 @@
         }
 
         .edit-card {
-            background: var(--card);
-            border-radius: 12px;
-            margin-bottom: 16px;
+            background: var(--card); 
+            border-radius: 12px; 
+            margin-bottom: 16px; 
             padding: 20px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
         }
 
-        .line1, .line2 {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 16px;
+        .line1, .line2 { 
+            display: grid; 
+            gap: 12px; 
+            margin-bottom: 16px; 
         }
+        .line1 { grid-template-columns: 1fr 1fr; }
+        .line2 { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 
-        .line1 {
-            grid-template-columns: 1fr 1fr;
+        label { 
+            display: block; 
+            font-size: 12px; 
+            color: var(--text-light); 
+            margin-bottom: 4px; 
+            font-weight: 500; 
         }
-
-        .line2 {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-
         input, select {
-            background: #0f172a;
-            color: white;
-            border: 1px solid #475569;
+            background: #0f172a; 
+            color: white; 
+            border: 1px solid #475569; 
             border-radius: 6px;
-            padding: 10px 10px;
-            width: 100%;
+            padding: 10px; 
+            width: 100%; 
             font-size: 15px;
         }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 3px rgba(34,211,238,0.2); 
         }
 
-        .live-retail {
-            font-weight: 700;
-            color: #67e8f9;
-            font-size: 18px;
-            text-align: center;
-            padding: 10px 0;
-            background: #0f172a;
-            border-radius: 6px;
+        .live-retail { 
+            font-weight: 700; 
+            color: #67e8f9; 
+            font-size: 18px; 
+            text-align: center; 
+            padding: 10px 0; 
+            background: #0f172a; 
+            border-radius: 6px; 
         }
 
-        .card-actions {
-            text-align: right;
-            margin-top: 16px;
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
+        .card-actions { 
+            text-align: right; 
+            margin-top: 16px; 
+            display: flex; 
+            gap: 12px; 
+            justify-content: flex-end; 
         }
+        .save-btn { background: #22d3ee; color: #0f172a; padding: 10px 24px; }
+        .delete-btn { background: #ef4444; color: white; padding: 10px 20px; }
 
-        .save-btn {
-            background: #22d3ee;
-            color: #0f172a;
-            padding: 10px 24px;
-        }
-
-        .delete-btn {
-            background: #ef4444;
-            color: white;
-            padding: 10px 20px;
-        }
-
-        /* Profit Tracker */
-        .profit-tracker {
-            background: #1e2937;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
+        /* Profit sections */
+        .profit-section {
+            background: #1e2937; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-top: 30px; 
             border: 1px solid #334155;
         }
-
-        .profit-total {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--profit);
-            text-align: center;
-            margin-bottom: 16px;
+        .profit-total { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: var(--profit); 
+            text-align: center; 
+            margin-bottom: 16px; 
         }
 
-        .profit-breakdown table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .profit-breakdown table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 20px; 
+        }
+        .profit-breakdown th, .profit-breakdown td { 
+            padding: 8px; 
+            text-align: left; 
+            border-bottom: 1px solid #334155; 
+        }
+        .profit-breakdown th { color: var(--accent); }
+
+        .sales-history { 
+            max-height: 280px; 
+            overflow-y: auto; 
+            font-size: 13px; 
+        }
+        .sales-history div { 
+            padding: 8px; 
+            background: #0f172a; 
+            margin-bottom: 6px; 
+            border-radius: 6px; 
         }
 
-        .profit-breakdown th, .profit-breakdown td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #334155;
+        .result { 
+            margin-top: 30px; 
+            background: #1e2937; 
+            border-radius: 12px; 
+            padding: 20px; 
+            color: #67e8f9; 
+            font-family: monospace; 
+            font-size: 13px; 
+            white-space: pre-wrap; 
+            max-height: 320px; 
+            overflow: auto; 
+            border: 1px solid #334155; 
         }
 
-        .profit-breakdown th {
-            color: var(--accent);
-        }
-
-        .sales-history {
-            max-height: 300px;
-            overflow-y: auto;
-            font-size: 13px;
-        }
-
-        .sales-history div {
-            padding: 8px;
-            background: #0f172a;
-            margin-bottom: 6px;
-            border-radius: 6px;
-        }
-
-        .result {
-            margin-top: 30px;
-            background: #1e2937;
-            border-radius: 12px;
-            padding: 20px;
-            color: #67e8f9;
-            font-family: monospace;
-            font-size: 13px;
-            white-space: pre-wrap;
-            max-height: 320px;
-            overflow: auto;
-            border: 1px solid #334155;
-        }
-
-        .user-manual {
-            background: #1e2937;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            color: var(--text-light);
-            font-size: 13px;
-            line-height: 1.6;
-            border: 1px solid #334155;
-        }
-
-        .user-manual h3 {
-            color: var(--accent);
-            margin-top: 0;
+        .user-manual { 
+            background: #1e2937; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-top: 30px; 
+            color: var(--text-light); 
+            font-size: 13px; 
+            line-height: 1.6; 
+            border: 1px solid #334155; 
         }
     </style>
 </head>
@@ -324,7 +280,6 @@
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
     <p class="note">Never Had That Delivery • Live Inventory Tool</p>
 
-    <!-- Top row: 4 square buttons -->
     <div class="controls-top">
         <button onclick="importFile()">📥 Import JSON</button>
         <button onclick="copyMenuData()">📋 Copy Menu Data</button>
@@ -332,47 +287,64 @@
         <button onclick="exportFile()">📤 Export JSON</button>
     </div>
 
-    <!-- Bottom: Add New Item -->
     <div class="controls-bottom">
         <button onclick="addRow()" class="add-btn">+ Add New Item</button>
     </div>
 
     <div id="productList" class="product-list"></div>
 
-    <!-- SALES & PROFIT TRACKER -->
-    <div class="profit-tracker">
-        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Sales & Profit Tracker</h3>
-        <div id="profitTotal" class="profit-total">$0.00</div>
-        
+    <!-- Profit Since Last Update -->
+    <div class="profit-section">
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Profit Since Last Update</h3>
+        <div id="currentProfitTotal" class="profit-total">$0</div>
         <div class="profit-breakdown">
-            <table id="profitTable">
-                <thead><tr><th>Item</th><th>Units Sold</th><th>Revenue</th><th>Profit</th></tr></thead>
+            <table id="currentProfitTable">
+                <thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
-
-        <div style="margin-top:20px;">
-            <h4 style="margin:0 0 8px 0;color:#67e8f9;">Recent Sales History</h4>
-            <div id="salesHistory" class="sales-history"></div>
+        <div style="margin-top:16px;">
+            <h4 style="margin:0 0 8px 0;color:#67e8f9;">Recent Sales (This Session)</h4>
+            <div id="currentSalesHistory" class="sales-history"></div>
         </div>
+    </div>
 
-        <button onclick="resetProfitTracker()" style="margin-top:16px;width:100%;background:#ef4444;">Reset Tracker (New Update)</button>
+    <!-- All-Time Sales History -->
+    <div class="profit-section">
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">📈 All-Time Sales History</h3>
+        <div id="allTimeProfitTotal" class="profit-total">$0</div>
+        <div style="margin-top:16px;">
+            <h4 style="margin:0 0 8px 0;color:#67e8f9;">Full Sales Log</h4>
+            <div id="allTimeSalesHistory" class="sales-history"></div>
+        </div>
     </div>
 
     <div id="output" class="result"></div>
 
-    <!-- Discrete User Manual -->
+    <!-- Detailed User Manual -->
     <div class="user-manual">
-        <h3>How to Use</h3>
+        <h3>Full User Guide</h3>
+        <p><strong>Welcome to Never Had That Inventory Manager</strong></p>
         <ul>
-            <li><strong>+ Add New Item</strong> — starts blank at the top</li>
-            <li><strong>Tap Edit</strong> — item becomes edit card (change stock → auto-logs sale)</li>
-            <li><strong>Delete Item</strong> — inside edit card</li>
-            <li><strong>Tap category headers</strong> — collapse/expand</li>
-            <li><strong>Export JSON</strong> after changes</li>
-            <li><strong>Copy SMS Menu</strong> — opens SMS ready to send</li>
+            <li><strong>+ Add New Item</strong> — Adds a blank item at the very top of the list (no category by default).</li>
+            <li><strong>Edit Item</strong> — Tap "Edit" on any item. The item is replaced by the full edit card. While the edit card is open, all other "Edit" buttons are hidden to prevent mistakes.</li>
+            <li><strong>Stock Changes &amp; Sales Logging</strong> — When you lower the Stock number in the edit card and hit "Save & Close", the tool automatically calculates how many units were sold, logs the sale (revenue, cost, profit), and adds it to both the current session and all-time history.</li>
+            <li><strong>Profit Since Last Update</strong> — Shows only sales made in the current session. Resets automatically when you import a new JSON file so you can track today's activity cleanly.</li>
+            <li><strong>All-Time Sales History</strong> — Keeps every sale ever recorded. This data is saved when you Export JSON and persists across sessions.</li>
+            <li><strong>Category Headers</strong> — Tap to collapse/expand sections. Uncategorized (blank category) items always stay at the top above all expandable categories.</li>
+            <li><strong>Export JSON</strong> — Always export after making changes. This saves inventory, current session data, and all-time sales history.</li>
+            <li><strong>Import JSON</strong> — Loads your saved data. The "Profit Since Last Update" tracker will start at $0.</li>
+            <li><strong>Copy Menu Data</strong> — Generates code you can paste into your main delivery website.</li>
+            <li><strong>Copy SMS Menu</strong> — Copies a clean text version and opens your phone's SMS app with a blank "To:" field (the phone number is included in the message body for easy reference).</li>
         </ul>
-        <p><strong>Tip:</strong> Lowering stock in edit card automatically logs sales & profit.</p>
+        <p><strong>Best Practices:</strong></p>
+        <ul>
+            <li>Edit items at the end of the day or shift to accurately log sales.</li>
+            <li>Export JSON after every session — this is your backup.</li>
+            <li>Use the All-Time History to spot slow-moving items that may need price adjustments or removal.</li>
+            <li>When importing a previous JSON, the current session profit starts fresh at $0.</li>
+        </ul>
+        <p><strong>Tip:</strong> Only lowering stock logs a sale. Increasing stock does not create negative entries.</p>
     </div>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
@@ -380,7 +352,8 @@
     <script>
         let data = [];
         let lastUpdated = null;
-        let salesHistory = [];        // new: global sales log
+        let currentSales = [];   // This session only
+        let allTimeSales = [];   // Persistent history
         let collapsedCategories = new Set();
 
         const rarityMarkup = {
@@ -396,7 +369,7 @@
 
         function daysAgo(dateStr) {
             if (!dateStr) return "just added";
-            const diff = Math.floor((new Date() - new Date(dateStr)) / (86400000));
+            const diff = Math.floor((new Date() - new Date(dateStr)) / 86400000);
             return diff === 0 ? "just added" : (diff === 1 ? "1 day" : diff + " days");
         }
 
@@ -404,11 +377,11 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
-            // 1. Uncategorized items at very top
+            // Uncategorized at top
             const uncategorized = data.filter(item => !item.category || item.category === "");
             uncategorized.forEach(row => renderProductItem(row, container));
 
-            // 2. Categorized items
+            // Categorized
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -422,17 +395,16 @@
                 const header = document.createElement('div');
                 header.className = 'category-header';
                 header.innerHTML = `${cat} <span style="font-size:18px;">${isCollapsed ? '▶' : '▼'}</span>`;
-                header.onclick = () => { 
+                header.onclick = () => {
                     isCollapsed ? collapsedCategories.delete(cat) : collapsedCategories.add(cat);
                     renderList();
                 };
                 container.appendChild(header);
                 if (isCollapsed) return;
-
                 grouped[cat].forEach(row => renderProductItem(row, container));
             });
 
-            updateProfitTracker();
+            updateProfitDisplays();
         }
 
         function renderProductItem(row, container) {
@@ -458,13 +430,16 @@
         }
 
         function editItem(index) {
+            // Hide all other edit buttons while editing
+            document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'none');
+
             const row = data[index];
             document.querySelectorAll('.edit-card').forEach(c => c.remove());
 
             const card = document.createElement('div');
             card.className = 'edit-card';
             card.id = `edit-card-${index}`;
-            card.dataset.oldStock = row.inventory || 0;   // remember old stock for sale calc
+            card.dataset.oldStock = row.inventory || 0;
 
             card.innerHTML = `
                 <div class="line1">
@@ -497,8 +472,9 @@
             `;
 
             const container = document.getElementById('productList');
-            const productItem = Array.from(container.children).find(el => el.classList.contains('product-item') && data.indexOf(row) === index);
+            const productItem = Array.from(container.children).find(el => el.classList.contains('product-item'));
             if (productItem) productItem.parentNode.replaceChild(card, productItem);
+            else container.appendChild(card);
         }
 
         function refreshLiveFields(index) {
@@ -513,6 +489,9 @@
         }
 
         function closeEdit(index) {
+            // Restore all edit buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'inline-block');
+
             const card = document.getElementById(`edit-card-${index}`);
             if (!card) return;
 
@@ -520,7 +499,6 @@
             const oldStock = parseFloat(card.dataset.oldStock) || 0;
             const newStock = parseFloat(row.inventory) || 0;
 
-            // AUTO-LOG SALE if stock was lowered
             if (newStock < oldStock) {
                 const unitsSold = oldStock - newStock;
                 const retailPrice = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
@@ -528,35 +506,17 @@
                 const cost = unitsSold * (row.wholesale || 0);
                 const profit = revenue - cost;
 
-                salesHistory.unshift({
+                const sale = {
                     date: new Date().toLocaleString(),
                     item: row.name || 'Unnamed',
                     units: unitsSold,
                     revenue: revenue,
                     profit: profit
-                });
+                };
 
-                // Keep only last 30 entries
-                if (salesHistory.length > 30) salesHistory.pop();
+                currentSales.unshift(sale);
+                allTimeSales.unshift(sale);
             }
-
-            const newItem = document.createElement('div');
-            newItem.className = 'product-item';
-            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
-            newItem.innerHTML = `
-                <div class="product-info">
-                    <div class="product-name">${row.name || 'Unnamed Item'}</div>
-                    <div class="product-desc">${row.desc || ''}</div>
-                    <div class="product-meta">${row.grower || ''}</div>
-                    <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
-                </div>
-                <div style="text-align:right; min-width: 90px;">
-                    <div class="retail-price">$${retail}</div>
-                    <div style="font-size:13px;color:#94a3b8;">Stock: ${row.inventory || 0}</div>
-                    <button class="edit-btn" onclick="editItem(${index}); event.stopImmediatePropagation();">Edit</button>
-                </div>
-            `;
-            card.parentNode.replaceChild(newItem, card);
 
             renderList();
             updateLastUpdated();
@@ -584,63 +544,50 @@
 
         function addRow() {
             data.unshift({
-                category: "",
-                name: "",
-                desc: "",
-                grower: "",
-                rarity: "Mid-Tier Flower",
-                wholesale: 0,
-                markup: 120,
-                retail: 0,
-                inventory: 0,
-                addedDate: new Date().toISOString()
+                category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
+                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString()
             });
             renderList();
             updateLastUpdated();
         }
 
-        function updateProfitTracker() {
-            let totalProfit = 0;
-            const perItem = {};
-
-            salesHistory.forEach(sale => {
-                totalProfit += sale.profit;
-                if (!perItem[sale.item]) perItem[sale.item] = {units:0, revenue:0, profit:0};
-                perItem[sale.item].units += sale.units;
-                perItem[sale.item].revenue += sale.revenue;
-                perItem[sale.item].profit += sale.profit;
+        function updateProfitDisplays() {
+            // Current session
+            let currentProfit = 0;
+            const currentPerItem = {};
+            currentSales.forEach(s => {
+                currentProfit += s.profit;
+                if (!currentPerItem[s.item]) currentPerItem[s.item] = {units:0, revenue:0, profit:0};
+                currentPerItem[s.item].units += s.units;
+                currentPerItem[s.item].revenue += s.revenue;
+                currentPerItem[s.item].profit += s.profit;
             });
 
-            // Grand total
-            document.getElementById('profitTotal').innerHTML = `Total Profit Since Last Update<br><span style="font-size:32px;">$${totalProfit.toFixed(0)}</span>`;
+            document.getElementById('currentProfitTotal').innerHTML = `Profit This Session<br><span style="font-size:32px;">$${currentProfit}</span>`;
 
-            // Per-item table
-            const tbody = document.querySelector('#profitTable tbody');
-            tbody.innerHTML = '';
-            Object.keys(perItem).forEach(item => {
-                const row = perItem[item];
+            const currentTbody = document.querySelector('#currentProfitTable tbody');
+            currentTbody.innerHTML = '';
+            Object.keys(currentPerItem).forEach(item => {
+                const r = currentPerItem[item];
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${item}</td><td>${row.units}</td><td>$${row.revenue}</td><td style="color:#67e8f9;">$${row.profit}</td>`;
-                tbody.appendChild(tr);
+                tr.innerHTML = `<td>${item}</td><td>${r.units}</td><td>$${r.revenue}</td><td style="color:#67e8f9;">$${r.profit}</td>`;
+                currentTbody.appendChild(tr);
             });
 
-            // Sales history
-            const historyDiv = document.getElementById('salesHistory');
-            historyDiv.innerHTML = salesHistory.slice(0,20).map(s => 
+            document.getElementById('currentSalesHistory').innerHTML = currentSales.slice(0,15).map(s => 
+                `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
+            ).join('');
+
+            // All-time
+            let allTimeProfit = 0;
+            allTimeSales.forEach(s => allTimeProfit += s.profit);
+            document.getElementById('allTimeProfitTotal').innerHTML = `All-Time Profit<br><span style="font-size:28px;">$${allTimeProfit}</span>`;
+
+            document.getElementById('allTimeSalesHistory').innerHTML = allTimeSales.slice(0,30).map(s => 
                 `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
             ).join('');
         }
 
-        function resetProfitTracker() {
-            if (confirm("Reset profit tracker for new menu update?")) {
-                salesHistory = [];
-                updateProfitTracker();
-                updateLastUpdated();
-                alert("Profit tracker has been reset!");
-            }
-        }
-
-        // === REST OF YOUR EXISTING FUNCTIONS (import/export/copy etc.) ===
         function importFile() { document.getElementById('fileInput').click(); }
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -650,23 +597,23 @@
                 try {
                     const imported = JSON.parse(ev.target.result);
                     data = imported.data || imported;
-                    salesHistory = imported.salesHistory || [];
+                    allTimeSales = imported.allTimeSales || imported.salesHistory || [];
+                    currentSales = [];   // Reset current session on import
                     data.forEach(item => { if (!item.addedDate) item.addedDate = new Date().toISOString(); });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
                     document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
-                    alert("✅ Inventory + sales data loaded!");
+                    alert("✅ Inventory loaded!\nCurrent session profit tracker reset to $0.");
                 } catch(err) { alert("Error loading file."); }
             };
             reader.readAsText(file);
         });
 
         function exportFile() {
-            if (data.length === 0) return alert("No data to export.");
             const exportData = {
                 lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString(),
                 data: data,
-                salesHistory: salesHistory
+                allTimeSales: allTimeSales
             };
             const jsonStr = JSON.stringify(exportData, null, 2);
             const dateStr = new Date().toISOString().slice(0,10);
@@ -679,7 +626,7 @@
             URL.revokeObjectURL(url);
         }
 
-        function copyMenuData() { /* unchanged from before */ 
+        function copyMenuData() {
             if (data.length === 0) return alert("Add some items first!");
             let output = "/* PASTE THIS INTO YOUR MAIN MENU HTML */\n\n";
             const categories = {};
@@ -738,7 +685,7 @@
 
             document.getElementById('output').textContent = text;
             navigator.clipboard.writeText(text).then(() => {
-                alert("✅ SMS menu copied to clipboard!\n\nDon't forget to Export JSON.");
+                alert("✅ SMS menu copied!\n\nDon't forget to Export JSON.");
             });
 
             try {
