@@ -59,8 +59,13 @@
         .product-list { margin-bottom: 30px; }
 
         .product-item {
-            background: var(--card); border-radius: 12px; margin-bottom: 12px; padding: 14px 16px;
-            display: flex; justify-content: space-between; align-items: center;
+            background: var(--card); 
+            border-radius: 12px; 
+            margin-bottom: 12px; 
+            padding: 14px 16px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
         }
 
@@ -71,6 +76,7 @@
         .time-on-menu { font-size: 12px; margin-top: 4px; }
 
         .retail-price { font-weight: 700; color: #67e8f9; font-size: 17px; margin-right: 12px; }
+        .clearance-price { font-weight: 700; color: #ef4444; font-size: 17px; margin-right: 12px; }
 
         .stock-normal { color: #94a3b8; }
         .stock-yellow { color: #fbbf24; }
@@ -81,6 +87,41 @@
         .time-yellow { color: #fbbf24; }
         .time-orange { color: #f97316; }
         .time-red { color: #ef4444; }
+
+        .sale-flag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+        .sale-flag-green { background: #4ade80; color: #0f172a; }
+        .sale-flag-yellow { background: #fbbf24; color: #0f172a; }
+        .sale-flag-red { background: #ef4444; color: white; }
+
+        .stock-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .stock-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #334155;
+            color: white;
+            border-radius: 50%;
+            font-size: 16px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .stock-btn:hover { background: var(--accent); color: #0f172a; }
 
         .edit-btn {
             background: #22d3ee;
@@ -111,6 +152,7 @@
         input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.2); }
 
         .live-retail { font-weight: 700; color: #67e8f9; font-size: 18px; text-align: center; padding: 10px 0; background: #0f172a; border-radius: 6px; }
+        .live-clearance { font-weight: 700; color: #ef4444; font-size: 18px; text-align: center; padding: 10px 0; background: #0f172a; border-radius: 6px; }
 
         .card-actions { text-align: right; margin-top: 16px; display: flex; gap: 12px; justify-content: flex-end; }
         .save-btn { background: #22d3ee; color: #0f172a; padding: 10px 24px; }
@@ -190,9 +232,9 @@
 
     <div id="productList" class="product-list"></div>
 
-    <!-- Current Session Profits -->
+    <!-- Current Profits -->
     <div class="profit-section">
-        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Current Session Profits (Since Last Import)</h3>
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Current Profits</h3>
         <div id="currentProfitTotal" class="profit-total">$0</div>
         <div class="profit-breakdown">
             <table id="currentProfitTable"><thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody></tbody></table>
@@ -203,7 +245,7 @@
         </div>
     </div>
 
-    <!-- All-Time Sales History - Enhanced -->
+    <!-- All-Time Sales History -->
     <div class="profit-section">
         <h3 style="margin:0 0 12px 0;color:#67e8f9;">📈 All-Time Sales History</h3>
         
@@ -211,6 +253,8 @@
             <strong style="color:#67e8f9; font-size:22px;" id="allTimeProfitTotal">$0</strong><br>
             <span style="color:#94a3b8; font-size:13px;">Total All-Time Profit</span>
         </div>
+
+        <div id="currentViewTotal" style="text-align:center; margin-bottom:16px; font-size:18px; color:#67e8f9; font-weight:600;"></div>
 
         <div class="tab-header">
             <button class="tab-btn active" onclick="switchTab(0)">Sales Trend</button>
@@ -244,17 +288,14 @@
 
     <div class="user-manual">
         <h3 style="color:#ef4444; font-weight:bold;">⚠️ ALWAYS EXPORT JSON AFTER ANY CHANGES TO SAVE YOUR DATA ⚠️</h3>
-        
-        <p><strong>How to Use This Tool</strong></p>
+        <p><strong>Quick Start Guide</strong></p>
         <ul>
-            <li><strong>Add New Item</strong> — Click the big button. New items start blank and appear at the top until you assign a category.</li>
-            <li><strong>Edit an Item</strong> — Tap "Edit". The edit card replaces the item in its exact position.</li>
-            <li><strong>Stock Colors</strong> — Stock number turns yellow at 10 or less, orange at 5 or less, red at 0.</li>
-            <li><strong>Time on Menu Colors</strong> — "On menu" text changes: green (fresh), yellow (8-14 days), orange (15-30 days), red (30+ days — needs attention).</li>
-            <li><strong>Last Edited</strong> — Shows when you last saved changes to the item.</li>
-            <li><strong>Current Session Profits</strong> — Tracks sales from changes you make in this session only (resets on import).</li>
-            <li><strong>All-Time Sales History</strong> — Total profit + line chart (with Quarter/Year views) + pie chart + scrollable log.</li>
-            <li><strong>Export JSON</strong> — Click this after every session. This is how you save your data.</li>
+            <li><strong>Import your JSON</strong> to load current inventory.</li>
+            <li><strong>Quick stock updates</strong> — Use + and - buttons on any item (stock > 0 only for menu copy).</li>
+            <li><strong>Full edit</strong> — Tap "Edit" for name, description, weight, origin, rarity, clearance toggle (with date), etc.</li>
+            <li><strong>Performance flags</strong> — Green (sold ≤7 days), Yellow (7-29 days), Red (30+ days or never sold).</li>
+            <li><strong>Copy functions</strong> — "Copy Menu Data" and "Copy SMS Menu" exclude out-of-stock items.</li>
+            <li><strong>Export JSON</strong> — Do this after every session to save changes.</li>
         </ul>
     </div>
 
@@ -269,12 +310,21 @@
         let salesChart = null;
         let pieChart = null;
         let activeTab = 0;
+        let currentFilterDays = 0;
 
         const rarityMarkup = {
-            "Common Flower": 100, "Mid-Tier Flower": 120, "Small Batch Flower": 150,
-            "Rare Flower": 180, "Exclusive Flower": 220, "Pre-Roll": 250,
-            "Edible": 200, "Concentrate/Hash": 160, "VAPE": 180
+            "Common Flower": 100, 
+            "Mid-Tier Flower": 120, 
+            "Small Batch Flower": 150,
+            "Rare Flower": 180, 
+            "Exclusive Flower": 220, 
+            "Pre-Roll": 250,
+            "Edible": 200, 
+            "Concentrate/Hash": 160, 
+            "Vape": 180   // Fixed: now consistent title case
         };
+
+        const usStates = ["","Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
 
         function updateLastUpdated() {
             lastUpdated = new Date();
@@ -301,6 +351,20 @@
             return "stock-normal";
         }
 
+        function getSaleFlag(daysSinceLastSale) {
+            if (daysSinceLastSale === null) return `<span class="sale-flag sale-flag-red">NEW</span>`;
+            if (daysSinceLastSale <= 7) return `<span class="sale-flag sale-flag-green">${daysSinceLastSale}d</span>`;
+            if (daysSinceLastSale < 30) return `<span class="sale-flag sale-flag-yellow">${daysSinceLastSale}d</span>`;
+            return `<span class="sale-flag sale-flag-red">${daysSinceLastSale}d</span>`;
+        }
+
+        function getDaysSinceLastSale(itemName) {
+            const salesForItem = allTimeSales.filter(s => s.item === itemName);
+            if (salesForItem.length === 0) return null;
+            const latest = salesForItem.reduce((latest, s) => new Date(s.date).getTime() > latest ? new Date(s.date).getTime() : latest, 0);
+            return Math.floor((Date.now() - latest) / 86400000);
+        }
+
         function renderList() {
             const container = document.getElementById('productList');
             container.innerHTML = '';
@@ -322,7 +386,8 @@
                 header.className = 'category-header';
                 header.innerHTML = `${cat} <span style="font-size:18px;">${isCollapsed ? '▶' : '▼'}</span>`;
                 header.onclick = () => {
-                    isCollapsed ? collapsedCategories.delete(cat) : collapsedCategories.add(cat);
+                    if (collapsedCategories.has(cat)) collapsedCategories.delete(cat);
+                    else collapsedCategories.add(cat);
                     renderList();
                 };
                 container.appendChild(header);
@@ -331,34 +396,77 @@
             });
 
             updateProfitDisplays();
-            updateSalesChart();
+            updateSalesChart(currentFilterDays);
             updatePieChart();
         }
 
         function renderProductItem(row, container) {
             const globalIndex = data.findIndex(item => item === row);
-            const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+            const isClearance = row.clearance === true;
+            const retail = isClearance ? (row.wholesale || 0) : Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
             const stockClass = getStockColor(row.inventory || 0);
             const days = row.addedDate ? Math.floor((new Date() - new Date(row.addedDate)) / 86400000) : 0;
             const timeClass = getTimeColor(days);
+            const daysSinceSale = getDaysSinceLastSale(row.name);
+            const saleFlag = getSaleFlag(daysSinceSale);
 
             const div = document.createElement('div');
             div.className = 'product-item';
             div.dataset.globalIndex = globalIndex;
             div.innerHTML = `
                 <div class="product-info">
-                    <div class="product-name">${row.name || 'Unnamed Item'}</div>
+                    <div class="product-name">${row.name || 'Unnamed Item'} ${saleFlag}</div>
                     <div class="product-desc">${row.desc || ''}</div>
-                    <div class="product-meta">${row.grower || ''}</div>
+                    <div class="product-meta">${row.grower || ''} • ${row.weight || ''} • ${row.origin || ''}</div>
                     <div class="time-on-menu ${timeClass}">On menu: ${daysAgo(row.addedDate)}</div>
+                    ${isClearance && row.clearanceDate ? `<div style="font-size:11px;color:#ef4444;">Cleared on: ${new Date(row.clearanceDate).toLocaleDateString()}</div>` : ''}
                 </div>
-                <div style="text-align:right; min-width: 90px;">
-                    <div class="retail-price">$${retail}</div>
-                    <div class="${stockClass}" style="font-size:13px;">Stock: ${row.inventory || 0}</div>
-                    <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
+                <div style="text-align:right; min-width:120px;">
+                    ${isClearance ? 
+                        `<div class="clearance-price">CLEARANCE $${retail}</div>` : 
+                        `<div class="retail-price">$${retail}</div>`
+                    }
+                    <div class="${stockClass}" style="font-weight:600; font-size:15px;">Stock: ${row.inventory || 0}</div>
+                    <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
+                        <button class="stock-btn" onclick="changeStock(${globalIndex}, -1); event.stopImmediatePropagation();">-</button>
+                        <button class="stock-btn" onclick="changeStock(${globalIndex}, 1); event.stopImmediatePropagation();">+</button>
+                        <button class="edit-btn" onclick="editItem(${globalIndex}); event.stopImmediatePropagation();">Edit</button>
+                    </div>
                 </div>
             `;
             container.appendChild(div);
+        }
+
+        function changeStock(index, delta) {
+            const row = data[index];
+            const oldStock = row.inventory || 0;
+            let newStock = oldStock + delta;
+            if (newStock < 0) newStock = 0;
+
+            row.inventory = newStock;
+            row.lastEdited = new Date().toISOString();
+
+            if (delta < 0 && newStock < oldStock) {
+                const unitsSold = oldStock - newStock;
+                const retailPrice = row.clearance ? (row.wholesale || 0) : Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+                const revenue = unitsSold * retailPrice;
+                const cost = unitsSold * (row.wholesale || 0);
+                const profit = revenue - cost;
+
+                const sale = {
+                    date: new Date().toISOString().slice(0,10),
+                    item: row.name || 'Unnamed',
+                    units: unitsSold,
+                    revenue: revenue,
+                    profit: profit
+                };
+
+                currentSales.unshift(sale);
+                allTimeSales.unshift(sale);
+            }
+
+            renderList();
+            updateLastUpdated();
         }
 
         function editItem(index) {
@@ -384,9 +492,15 @@
                     </select></div>
                     <div><label>Product</label><input value="${row.name||''}" onchange="updateCell(${index},'name',this.value)"></div>
                     <div style="grid-column:span 2"><label>Description</label><input value="${row.desc||''}" onchange="updateCell(${index},'desc',this.value)"></div>
-                    <div><label>Grower</label><input value="${row.grower||''}" onchange="updateCell(${index},'grower',this.value)"></div>
                 </div>
                 <div class="line2">
+                    <div><label>Grower</label><input value="${row.grower||''}" onchange="updateCell(${index},'grower',this.value)"></div>
+                    <div><label>Weight (e.g. 3.5g)</label><input value="${row.weight||''}" onchange="updateCell(${index},'weight',this.value)"></div>
+                    <div><label>Origin (State)</label>
+                        <select onchange="updateCell(${index}, 'origin', this.value)">
+                            ${usStates.map(state => `<option value="${state}" ${row.origin === state ? 'selected' : ''}>${state}</option>`).join('')}
+                        </select>
+                    </div>
                     <div><label>Rarity</label><select onchange="setRarity(${index},this.value);refreshLiveFields(${index});">
                         ${Object.keys(rarityMarkup).map(r=>`<option value="${r}" ${row.rarity===r?'selected':''}>${r}</option>`).join('')}
                     </select></div>
@@ -395,6 +509,16 @@
                     <div><label>Retail $</label><div id="live-retail-${index}" class="live-retail">$${Math.round((row.wholesale||0)*(1+((row.markup||120)/100)))}</div></div>
                     <div><label>Stock</label><input type="number" id="stock-input-${index}" value="${row.inventory||0}" onchange="updateCell(${index},'inventory',Number(this.value));refreshLiveFields(${index});"></div>
                 </div>
+                <div style="margin:16px 0 8px 0;">
+                    <label style="display:flex; align-items:center; gap:12px; font-size:14px; cursor:pointer;">
+                        <div class="toggle">
+                            <input type="checkbox" id="clearance-toggle-${index}" ${row.clearance ? 'checked' : ''} onchange="toggleClearance(${index}, this.checked)">
+                            <span class="slider"></span>
+                        </div>
+                        <span style="vertical-align:middle;">Clearance Mode (overrides price to wholesale)</span>
+                    </label>
+                </div>
+                ${row.clearanceDate ? `<div style="font-size:12px;color:#ef4444;">Cleared on: ${new Date(row.clearanceDate).toLocaleString()}</div>` : ''}
                 <div style="font-size:12px;color:#64748b;margin:12px 0;">
                     Added: ${row.addedDate?new Date(row.addedDate).toLocaleDateString():'just now'}<br>
                     Last Edited: ${row.lastEdited ? new Date(row.lastEdited).toLocaleString() : 'Never'}
@@ -407,27 +531,42 @@
 
             const container = document.getElementById('productList');
             const productItem = container.querySelector(`[data-global-index="${index}"]`);
-            if (productItem) {
-                productItem.parentNode.replaceChild(card, productItem);
+            if (productItem) productItem.parentNode.replaceChild(card, productItem);
+            else container.appendChild(card);
+
+            setTimeout(() => refreshLiveFields(index), 10);
+        }
+
+        function toggleClearance(index, isChecked) {
+            const row = data[index];
+            row.clearance = isChecked;
+            if (isChecked) {
+                row.clearanceDate = new Date().toISOString();
             } else {
-                container.appendChild(card);
+                delete row.clearanceDate;
             }
+            refreshLiveFields(index);
         }
 
         function refreshLiveFields(index) {
             const row = data[index];
+            const isClearance = row.clearance === true;
             const wholesale = parseFloat(row.wholesale) || 0;
-            const markup = parseFloat(row.markup) || 120;
-            const retail = Math.round(wholesale * (1 + markup / 100));
+            const markup = isClearance ? 0 : (parseFloat(row.markup) || 120);
+            const retail = isClearance ? wholesale : Math.round(wholesale * (1 + markup / 100));
+
             const markupInput = document.getElementById(`markup-input-${index}`);
-            if (markupInput) markupInput.value = markup;
+            if (markupInput) markupInput.value = isClearance ? 0 : markup;
+
             const retailEl = document.getElementById(`live-retail-${index}`);
-            if (retailEl) retailEl.textContent = `$${retail}`;
+            if (retailEl) {
+                retailEl.className = isClearance ? "live-clearance" : "live-retail";
+                retailEl.textContent = isClearance ? `CLEARANCE — $${retail}` : `$${retail}`;
+            }
         }
 
         function closeEdit(index) {
             document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'inline-block');
-
             const card = document.getElementById(`edit-card-${index}`);
             if (!card) return;
 
@@ -435,23 +574,26 @@
             const oldStock = parseFloat(card.dataset.oldStock) || 0;
             const newStock = parseFloat(row.inventory) || 0;
 
-            row.lastEdited = new Date().toISOString();
+            let hasChanges = (newStock !== oldStock);
+
+            if (hasChanges) {
+                row.lastEdited = new Date().toISOString();
+            }
 
             if (newStock < oldStock) {
                 const unitsSold = oldStock - newStock;
-                const retailPrice = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
+                const retailPrice = row.clearance ? (row.wholesale || 0) : Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
                 const revenue = unitsSold * retailPrice;
                 const cost = unitsSold * (row.wholesale || 0);
                 const profit = revenue - cost;
 
-                const sale = {
-                    date: new Date().toLocaleString(),
-                    item: row.name || 'Unnamed',
-                    units: unitsSold,
-                    revenue: revenue,
-                    profit: profit
+                const sale = { 
+                    date: new Date().toISOString().slice(0,10), 
+                    item: row.name || 'Unnamed', 
+                    units: unitsSold, 
+                    revenue: revenue, 
+                    profit: profit 
                 };
-
                 currentSales.unshift(sale);
                 allTimeSales.unshift(sale);
             }
@@ -475,37 +617,34 @@
 
         function setRarity(index, rarity) {
             data[index].rarity = rarity;
-            data[index].markup = rarityMarkup[rarity] || 120;
+            if (!data[index].clearance) data[index].markup = rarityMarkup[rarity] || 120;
             updateLastUpdated();
             refreshLiveFields(index);
         }
 
         function addRow() {
             data.unshift({
-                category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
+                category: "", name: "", desc: "", grower: "", weight: "", origin: "", rarity: "Mid-Tier Flower",
                 wholesale: 0, markup: 120, inventory: 0, addedDate: new Date().toISOString(),
-                lastEdited: new Date().toISOString()
+                lastEdited: new Date().toISOString(), clearance: false
             });
             renderList();
             updateLastUpdated();
         }
 
         function updateProfitDisplays() {
-            // Current session
-            let currentProfit = 0;
+            let currentProfit = currentSales.reduce((sum, s) => sum + (s.profit || 0), 0);
+            document.getElementById('currentProfitTotal').innerHTML = `Profit This Session<br><span style="font-size:32px;">$${currentProfit}</span>`;
+
+            const currentTbody = document.querySelector('#currentProfitTable tbody');
+            currentTbody.innerHTML = '';
             const currentPerItem = {};
             currentSales.forEach(s => {
-                currentProfit += s.profit || 0;
                 if (!currentPerItem[s.item]) currentPerItem[s.item] = {units:0, revenue:0, profit:0};
                 currentPerItem[s.item].units += s.units || 0;
                 currentPerItem[s.item].revenue += s.revenue || 0;
                 currentPerItem[s.item].profit += s.profit || 0;
             });
-
-            document.getElementById('currentProfitTotal').innerHTML = `Profit This Session<br><span style="font-size:32px;">$${currentProfit}</span>`;
-
-            const currentTbody = document.querySelector('#currentProfitTable tbody');
-            currentTbody.innerHTML = '';
             Object.keys(currentPerItem).forEach(item => {
                 const r = currentPerItem[item];
                 const tr = document.createElement('tr');
@@ -520,11 +659,9 @@
                 ).join('') : 
                 '<div style="color:#64748b; padding:12px;">No sales in this session yet. Lower stock on any item to generate profit data.</div>';
 
-            // All-Time Total Profit
             let allTimeProfit = allTimeSales.reduce((sum, s) => sum + (s.profit || 0), 0);
             document.getElementById('allTimeProfitTotal').textContent = '$' + allTimeProfit.toLocaleString();
 
-            // All-Time Sales Log
             const allTimeLog = document.getElementById('allTimeSalesHistory');
             allTimeLog.innerHTML = allTimeSales.length ? 
                 allTimeSales.slice(0,100).map(s => 
@@ -533,9 +670,26 @@
                 '<div style="color:#64748b; padding:12px;">No sales recorded yet. Lower stock on items to generate sales data.</div>';
         }
 
+        function calculateViewTotal(days) {
+            if (days === 0) return allTimeSales.reduce((sum, s) => sum + (s.profit || 0), 0);
+            const cutoff = Date.now() - (days * 86400000);
+            return allTimeSales.reduce((sum, s) => {
+                const saleDate = new Date(s.date || Date.now()).getTime();
+                return saleDate >= cutoff ? sum + (s.profit || 0) : sum;
+            }, 0);
+        }
+
+        function updateViewTotalDisplay(days) {
+            const total = calculateViewTotal(days);
+            const label = days === 0 ? "All Time" : days === 7 ? "7-Day" : days === 30 ? "30-Day" : days === 90 ? "Quarter" : "Year";
+            document.getElementById('currentViewTotal').innerHTML = `<strong>${label} Total: <span style="color:#67e8f9;">$${total.toLocaleString()}</span></strong>`;
+        }
+
         function updateSalesChart(days = 0) {
+            currentFilterDays = days;
+            updateViewTotalDisplay(days);
+
             const ctx = document.getElementById('salesChart');
-            if (!ctx) return;
             if (salesChart) salesChart.destroy();
 
             const dailyProfit = {};
@@ -545,8 +699,7 @@
                 const saleDate = new Date(s.date || Date.now());
                 if (days > 0 && saleDate.getTime() < cutoff) return;
                 const dateKey = saleDate.toISOString().slice(0,10);
-                if (!dailyProfit[dateKey]) dailyProfit[dateKey] = 0;
-                dailyProfit[dateKey] += s.profit || 0;
+                dailyProfit[dateKey] = (dailyProfit[dateKey] || 0) + (s.profit || 0);
             });
 
             const labels = Object.keys(dailyProfit).sort();
@@ -556,37 +709,25 @@
                 type: 'line',
                 data: {
                     labels: labels.length ? labels : ['No data'],
-                    datasets: [{
-                        label: 'Daily Profit',
-                        data: profits.length ? profits : [0],
-                        borderColor: '#67e8f9',
-                        backgroundColor: 'rgba(103, 232, 249, 0.2)',
-                        tension: 0.3,
-                        fill: true
-                    }]
+                    datasets: [{ label: 'Daily Profit', data: profits.length ? profits : [0], borderColor: '#67e8f9', backgroundColor: 'rgba(103, 232, 249, 0.2)', tension: 0.3, fill: true }]
                 },
                 options: {
                     responsive: true,
                     plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: '#334155' } },
-                        x: { grid: { color: '#334155' } }
-                    }
+                    scales: { y: { beginAtZero: true, grid: { color: '#334155' } }, x: { grid: { color: '#334155' } } }
                 }
             });
         }
 
         function updatePieChart() {
             const ctx = document.getElementById('categoryPieChart');
-            if (!ctx) return;
             if (pieChart) pieChart.destroy();
 
             const catProfit = {};
             allTimeSales.forEach(s => {
                 const item = data.find(i => i.name === s.item);
                 const cat = item ? (item.category || "Uncategorized") : "Uncategorized";
-                if (!catProfit[cat]) catProfit[cat] = 0;
-                catProfit[cat] += s.profit || 0;
+                catProfit[cat] = (catProfit[cat] || 0) + (s.profit || 0);
             });
 
             const labels = Object.keys(catProfit);
@@ -596,22 +737,14 @@
                 type: 'pie',
                 data: {
                     labels: labels.length ? labels : ["No Data"],
-                    datasets: [{
-                        data: profits.length ? profits : [1],
-                        backgroundColor: ['#67e8f9', '#f97316', '#22d3ee', '#fbbf24', '#a78bfa', '#ec4899']
-                    }]
+                    datasets: [{ data: profits.length ? profits : [1], backgroundColor: ['#67e8f9', '#f97316', '#22d3ee', '#fbbf24', '#a78bfa', '#ec4899'] }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { position: 'bottom' } }
-                }
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
             });
 
             let html = '<div style="display:flex;flex-wrap:wrap;gap:12px;">';
             if (labels.length) {
-                labels.forEach((cat, i) => {
-                    html += `<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">${cat}: <strong>$${profits[i]}</strong></div>`;
-                });
+                labels.forEach((cat, i) => html += `<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">${cat}: <strong>$${profits[i]}</strong></div>`);
             } else {
                 html += '<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">No sales data yet</div>';
             }
@@ -646,13 +779,18 @@
                     data.forEach(item => { 
                         if (!item.addedDate) item.addedDate = new Date().toISOString();
                         if (!item.lastEdited) item.lastEdited = item.addedDate;
+                        if (item.clearance === undefined) item.clearance = false;
                     });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
+
+                    collapsedCategories.clear();
+                    const cats = new Set(data.filter(item => item.category && item.category !== "").map(item => item.category));
+                    cats.forEach(cat => collapsedCategories.add(cat));
+
                     renderList();
                     document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
-                    alert("✅ Inventory loaded successfully!\nCurrent session profit tracker reset to $0.");
+                    alert("✅ Inventory loaded successfully!\nAll categories start collapsed.\nCurrent profits reset to $0.");
                 } catch(err) {
-                    console.error("Import error:", err);
                     alert("Error loading file. Please check the JSON format.\n\nError: " + err.message);
                 }
             };
@@ -681,19 +819,23 @@
             let output = "/* PASTE THIS INTO YOUR MAIN MENU HTML */\n\n";
             const categories = {};
             data.forEach(item => {
-                if (!categories[item.category]) categories[item.category] = [];
-                categories[item.category].push(item);
+                if (item.inventory > 0) {
+                    if (!categories[item.category]) categories[item.category] = [];
+                    categories[item.category].push(item);
+                }
             });
             Object.keys(categories).forEach(cat => {
                 output += `// ${cat}\n`;
                 categories[cat].forEach(item => {
-                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
-                    output += `addToCart(event, this, '${item.name}', ${retail}, '${item.grower}', '${item.desc}')\n`;
+                    const isClearance = item.clearance === true;
+                    const retail = isClearance ? (item.wholesale || 0) : Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    const clearanceNote = isClearance ? " [CLEARANCE]" : "";
+                    output += `addToCart(event, this, '${item.name}', ${retail}, '${item.grower}', '${item.desc}', '${item.origin || ''}', '${item.weight || ''}'${clearanceNote})\n`;
                 });
                 output += "\n";
             });
             document.getElementById('output').textContent = output;
-            navigator.clipboard.writeText(output).then(() => alert("✅ Menu data copied!"));
+            navigator.clipboard.writeText(output).then(() => alert("✅ Menu data copied! (Out-of-stock items excluded)"));
         }
 
         function copySMSMenu() {
@@ -701,21 +843,23 @@
             let text = "NEVER HAD THAT MENU\n===================\n\n";
             text += "Last Updated: " + (lastUpdated ? lastUpdated.toLocaleDateString() : "Today") + "\n\n";
 
-            const uncategorized = data.filter(item => !item.category || item.category === "");
+            const uncategorized = data.filter(item => (!item.category || item.category === "") && item.inventory > 0);
             if (uncategorized.length > 0) {
                 text += "NEW / UNCATEGORIZED\n-------------------\n";
                 uncategorized.forEach(item => {
-                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
-                    text += `${item.name} - $${retail}\n`;
+                    const retail = item.clearance ? (item.wholesale || 0) : Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}${item.clearance ? ' [CLEARANCE]' : ''}\n`;
                     if (item.desc) text += `  ${item.desc}\n`;
                     if (item.grower) text += `  by ${item.grower}\n`;
+                    if (item.weight) text += `  Weight: ${item.weight}\n`;
+                    if (item.origin) text += `  Origin: ${item.origin}\n`;
                     text += "\n";
                 });
             }
 
             const grouped = {};
             data.forEach(item => {
-                if (item.category && item.category !== "") {
+                if (item.inventory > 0 && item.category && item.category !== "") {
                     if (!grouped[item.category]) grouped[item.category] = [];
                     grouped[item.category].push(item);
                 }
@@ -723,10 +867,12 @@
             Object.keys(grouped).sort().forEach(cat => {
                 text += cat + "\n-------------------\n";
                 grouped[cat].forEach(item => {
-                    const retail = Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
-                    text += `${item.name} - $${retail}\n`;
+                    const retail = item.clearance ? (item.wholesale || 0) : Math.round(item.wholesale * (1 + (item.markup || 120) / 100));
+                    text += `${item.name} - $${retail}${item.clearance ? ' [CLEARANCE]' : ''}\n`;
                     if (item.desc) text += `  ${item.desc}\n`;
                     if (item.grower) text += `  by ${item.grower}\n`;
+                    if (item.weight) text += `  Weight: ${item.weight}\n`;
+                    if (item.origin) text += `  Origin: ${item.origin}\n`;
                     text += "\n";
                 });
             });
@@ -734,18 +880,7 @@
             text += "\nText us your order!\nCall/Text: (646) 688-6312\n21+ only • Fast & Discreet";
 
             document.getElementById('output').textContent = text;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("✅ SMS menu copied!\n\nDon't forget to Export JSON.");
-            });
-
-            try {
-                const link = document.createElement('a');
-                link.href = `sms:?body=${encodeURIComponent(text)}`;
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch(e) {}
+            navigator.clipboard.writeText(text).then(() => alert("✅ SMS menu copied! (Out-of-stock items excluded)"));
         }
 
         window.onload = () => {
