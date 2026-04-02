@@ -125,13 +125,35 @@
         .profit-breakdown th, .profit-breakdown td { padding: 8px; text-align: left; border-bottom: 1px solid #334155; }
         .profit-breakdown th { color: var(--accent); }
 
-        .sales-history { max-height: 280px; overflow-y: auto; font-size: 13px; }
-        .sales-history div { padding: 8px; background: #0f172a; margin-bottom: 6px; border-radius: 6px; }
+        .sales-history { 
+            max-height: 320px; 
+            overflow-y: auto; 
+            font-size: 13px; 
+            background: #0f172a; 
+            padding: 8px; 
+            border-radius: 8px; 
+        }
+        .sales-history div { padding: 8px; background: #1e2937; margin-bottom: 6px; border-radius: 6px; }
 
         .graph-container { margin-top: 20px; }
-        .filter-buttons { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-        .filter-btn { padding: 6px 12px; font-size: 13px; background: #334155; border: none; border-radius: 6px; cursor: pointer; }
-        .filter-btn.active { background: var(--accent); color: #0f172a; }
+        .filter-buttons { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 12px; 
+            flex-wrap: wrap; 
+        }
+        .filter-btn { 
+            padding: 6px 12px; 
+            font-size: 13px; 
+            background: #334155; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+        }
+        .filter-btn.active { 
+            background: var(--accent); 
+            color: #0f172a; 
+        }
 
         .tab-header {
             display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #334155;
@@ -168,9 +190,9 @@
 
     <div id="productList" class="product-list"></div>
 
-    <!-- Profit Since Last Update -->
+    <!-- Current Session Profits -->
     <div class="profit-section">
-        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Profit Since Last Update (This Session)</h3>
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Current Session Profits (Since Last Import)</h3>
         <div id="currentProfitTotal" class="profit-total">$0</div>
         <div class="profit-breakdown">
             <table id="currentProfitTable"><thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody></tbody></table>
@@ -181,9 +203,14 @@
         </div>
     </div>
 
-    <!-- All-Time Sales History -->
+    <!-- All-Time Sales History - Enhanced -->
     <div class="profit-section">
         <h3 style="margin:0 0 12px 0;color:#67e8f9;">📈 All-Time Sales History</h3>
+        
+        <div style="text-align:center; margin-bottom:16px;">
+            <strong style="color:#67e8f9; font-size:22px;" id="allTimeProfitTotal">$0</strong><br>
+            <span style="color:#94a3b8; font-size:13px;">Total All-Time Profit</span>
+        </div>
 
         <div class="tab-header">
             <button class="tab-btn active" onclick="switchTab(0)">Sales Trend</button>
@@ -193,8 +220,10 @@
         <div id="tab0">
             <div class="graph-container">
                 <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterGraph(7)">Last 7 Days</button>
-                    <button class="filter-btn" onclick="filterGraph(30)">Last 30 Days</button>
+                    <button class="filter-btn active" onclick="filterGraph(7)">7 Days</button>
+                    <button class="filter-btn" onclick="filterGraph(30)">30 Days</button>
+                    <button class="filter-btn" onclick="filterGraph(90)">Quarter</button>
+                    <button class="filter-btn" onclick="filterGraph(365)">Year</button>
                     <button class="filter-btn" onclick="filterGraph(0)">All Time</button>
                 </div>
                 <canvas id="salesChart" height="180"></canvas>
@@ -223,8 +252,8 @@
             <li><strong>Stock Colors</strong> — Stock number turns yellow at 10 or less, orange at 5 or less, red at 0.</li>
             <li><strong>Time on Menu Colors</strong> — "On menu" text changes: green (fresh), yellow (8-14 days), orange (15-30 days), red (30+ days — needs attention).</li>
             <li><strong>Last Edited</strong> — Shows when you last saved changes to the item.</li>
-            <li><strong>Profit Since Last Update</strong> — Tracks sales from changes you make in this session only.</li>
-            <li><strong>All-Time Sales History</strong> — Persistent history with line chart and pie chart (switch tabs).</li>
+            <li><strong>Current Session Profits</strong> — Tracks sales from changes you make in this session only (resets on import).</li>
+            <li><strong>All-Time Sales History</strong> — Total profit + line chart (with Quarter/Year views) + pie chart + scrollable log.</li>
             <li><strong>Export JSON</strong> — Click this after every session. This is how you save your data.</li>
         </ul>
     </div>
@@ -276,11 +305,9 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
-            // Uncategorized at top
             const uncategorized = data.filter(item => !item.category || item.category === "");
             uncategorized.forEach(row => renderProductItem(row, container));
 
-            // Grouped categories
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -464,6 +491,7 @@
         }
 
         function updateProfitDisplays() {
+            // Current session
             let currentProfit = 0;
             const currentPerItem = {};
             currentSales.forEach(s => {
@@ -485,12 +513,27 @@
                 currentTbody.appendChild(tr);
             });
 
-            document.getElementById('currentSalesHistory').innerHTML = currentSales.slice(0,15).map(s => 
-                `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
-            ).join('');
+            const currentLog = document.getElementById('currentSalesHistory');
+            currentLog.innerHTML = currentSales.length ? 
+                currentSales.slice(0,15).map(s => 
+                    `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
+                ).join('') : 
+                '<div style="color:#64748b; padding:12px;">No sales in this session yet. Lower stock on any item to generate profit data.</div>';
+
+            // All-Time Total Profit
+            let allTimeProfit = allTimeSales.reduce((sum, s) => sum + (s.profit || 0), 0);
+            document.getElementById('allTimeProfitTotal').textContent = '$' + allTimeProfit.toLocaleString();
+
+            // All-Time Sales Log
+            const allTimeLog = document.getElementById('allTimeSalesHistory');
+            allTimeLog.innerHTML = allTimeSales.length ? 
+                allTimeSales.slice(0,100).map(s => 
+                    `<div><strong>${s.date || 'Unknown date'}</strong> — ${s.item || 'Item'} ×${s.units || 0} → <span style="color:#67e8f9;">+$${s.profit || 0}</span></div>`
+                ).join('') : 
+                '<div style="color:#64748b; padding:12px;">No sales recorded yet. Lower stock on items to generate sales data.</div>';
         }
 
-        function updateSalesChart(days = 30) {
+        function updateSalesChart(days = 0) {
             const ctx = document.getElementById('salesChart');
             if (!ctx) return;
             if (salesChart) salesChart.destroy();
@@ -499,7 +542,7 @@
             const cutoff = days > 0 ? Date.now() - (days * 86400000) : 0;
 
             allTimeSales.forEach(s => {
-                const saleDate = new Date(s.date);
+                const saleDate = new Date(s.date || Date.now());
                 if (days > 0 && saleDate.getTime() < cutoff) return;
                 const dateKey = saleDate.toISOString().slice(0,10);
                 if (!dailyProfit[dateKey]) dailyProfit[dateKey] = 0;
@@ -512,10 +555,10 @@
             salesChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels.length ? labels : ['No data'],
                     datasets: [{
                         label: 'Daily Profit',
-                        data: profits,
+                        data: profits.length ? profits : [0],
                         borderColor: '#67e8f9',
                         backgroundColor: 'rgba(103, 232, 249, 0.2)',
                         tension: 0.3,
@@ -578,7 +621,7 @@
 
         function filterGraph(days) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) event.target.classList.add('active');
             updateSalesChart(days);
         }
 
