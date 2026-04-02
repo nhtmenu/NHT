@@ -72,7 +72,6 @@
 
         .retail-price { font-weight: 700; color: #67e8f9; font-size: 17px; margin-right: 12px; }
 
-        /* Stock & Time color warnings */
         .stock-normal { color: #94a3b8; }
         .stock-yellow { color: #fbbf24; }
         .stock-orange { color: #f97316; }
@@ -117,7 +116,6 @@
         .save-btn { background: #22d3ee; color: #0f172a; padding: 10px 24px; }
         .delete-btn { background: #ef4444; color: white; padding: 10px 20px; }
 
-        /* Profit sections */
         .profit-section {
             background: #1e2937; border-radius: 12px; padding: 20px; margin-top: 30px; border: 1px solid #334155;
         }
@@ -192,7 +190,6 @@
             <button class="tab-btn" onclick="switchTab(1)">Category Performance</button>
         </div>
 
-        <!-- Tab 0: Line Chart -->
         <div id="tab0">
             <div class="graph-container">
                 <div class="filter-buttons">
@@ -208,7 +205,6 @@
             </div>
         </div>
 
-        <!-- Tab 1: Pie Chart -->
         <div id="tab1" style="display:none;">
             <canvas id="categoryPieChart" height="220"></canvas>
             <div id="categoryBreakdown" style="margin-top:20px;"></div>
@@ -217,32 +213,19 @@
 
     <div id="output" class="result"></div>
 
-    <!-- User-focused manual -->
     <div class="user-manual">
         <h3 style="color:#ef4444; font-weight:bold;">⚠️ ALWAYS EXPORT JSON AFTER ANY CHANGES TO SAVE YOUR DATA ⚠️</h3>
         
         <p><strong>How to Use This Tool</strong></p>
         <ul>
             <li><strong>Add New Item</strong> — Click the big button. New items start blank and appear at the top until you assign a category.</li>
-            <li><strong>Edit an Item</strong> — Tap "Edit". The edit card replaces the item in its exact position. Change stock to log a sale automatically.</li>
+            <li><strong>Edit an Item</strong> — Tap "Edit". The edit card replaces the item in its exact position.</li>
             <li><strong>Stock Colors</strong> — Stock number turns yellow at 10 or less, orange at 5 or less, red at 0.</li>
             <li><strong>Time on Menu Colors</strong> — "On menu" text changes: green (fresh), yellow (8-14 days), orange (15-30 days), red (30+ days — needs attention).</li>
-            <li><strong>Last Edited</strong> — Shows when you last saved changes to the item (visible in edit card).</li>
-            <li><strong>Profit Since Last Update</strong> — Tracks sales and profit from changes you make in this session only. Resets when you import a new file.</li>
-            <li><strong>All-Time Sales History</strong> — Shows everything ever sold. Use the tabs to switch between the line chart (sales trend) and pie chart (profit by category).</li>
-            <li><strong>Category Headers</strong> — Tap to collapse or expand sections.</li>
-            <li><strong>Export JSON</strong> — Click this after every session. This is how you save your inventory and all sales data.</li>
-            <li><strong>Import JSON</strong> — Load a previous save. Current session profit starts at $0.</li>
-            <li><strong>Copy Menu Data</strong> — Use this to update your main website menu.</li>
-            <li><strong>Copy SMS Menu</strong> — Copies the menu text and opens your SMS app (phone number appears in the message body).</li>
-        </ul>
-
-        <p><strong>Quick Tips</strong></p>
-        <ul>
-            <li>Lower stock when items sell — this logs the sale automatically.</li>
-            <li>Export JSON before closing the tool.</li>
-            <li>Check red time-on-menu items — they have been sitting too long.</li>
-            <li>Use the pie chart to see which categories make the most profit.</li>
+            <li><strong>Last Edited</strong> — Shows when you last saved changes to the item.</li>
+            <li><strong>Profit Since Last Update</strong> — Tracks sales from changes you make in this session only.</li>
+            <li><strong>All-Time Sales History</strong> — Persistent history with line chart and pie chart (switch tabs).</li>
+            <li><strong>Export JSON</strong> — Click this after every session. This is how you save your data.</li>
         </ul>
     </div>
 
@@ -482,11 +465,11 @@
             let currentProfit = 0;
             const currentPerItem = {};
             currentSales.forEach(s => {
-                currentProfit += s.profit;
+                currentProfit += s.profit || 0;
                 if (!currentPerItem[s.item]) currentPerItem[s.item] = {units:0, revenue:0, profit:0};
-                currentPerItem[s.item].units += s.units;
-                currentPerItem[s.item].revenue += s.revenue;
-                currentPerItem[s.item].profit += s.profit;
+                currentPerItem[s.item].units += s.units || 0;
+                currentPerItem[s.item].revenue += s.revenue || 0;
+                currentPerItem[s.item].profit += s.profit || 0;
             });
 
             document.getElementById('currentProfitTotal').innerHTML = `Profit This Session<br><span style="font-size:32px;">$${currentProfit}</span>`;
@@ -505,7 +488,7 @@
             ).join('');
 
             let allTimeProfit = 0;
-            allTimeSales.forEach(s => allTimeProfit += s.profit);
+            allTimeSales.forEach(s => allTimeProfit += s.profit || 0);
             document.getElementById('allTimeProfitTotal').innerHTML = `All-Time Profit<br><span style="font-size:28px;">$${allTimeProfit}</span>`;
 
             document.getElementById('allTimeSalesHistory').innerHTML = allTimeSales.slice(0,30).map(s => 
@@ -525,7 +508,7 @@
                 if (days > 0 && saleDate.getTime() < cutoff) return;
                 const dateKey = saleDate.toISOString().slice(0,10);
                 if (!dailyProfit[dateKey]) dailyProfit[dateKey] = 0;
-                dailyProfit[dateKey] += s.profit;
+                dailyProfit[dateKey] += s.profit || 0;
             });
 
             const labels = Object.keys(dailyProfit).sort();
@@ -564,7 +547,7 @@
                 const item = data.find(i => i.name === s.item);
                 const cat = item ? (item.category || "Uncategorized") : "Uncategorized";
                 if (!catProfit[cat]) catProfit[cat] = 0;
-                catProfit[cat] += s.profit;
+                catProfit[cat] += s.profit || 0;
             });
 
             const labels = Object.keys(catProfit);
@@ -573,9 +556,9 @@
             pieChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: labels,
+                    labels: labels.length ? labels : ["No Data"],
                     datasets: [{
-                        data: profits,
+                        data: profits.length ? profits : [1],
                         backgroundColor: ['#67e8f9', '#f97316', '#22d3ee', '#fbbf24', '#a78bfa', '#ec4899']
                     }]
                 },
@@ -586,9 +569,13 @@
             });
 
             let html = '<div style="display:flex;flex-wrap:wrap;gap:12px;">';
-            labels.forEach((cat, i) => {
-                html += `<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">${cat}: <strong>$${profits[i]}</strong></div>`;
-            });
+            if (labels.length) {
+                labels.forEach((cat, i) => {
+                    html += `<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">${cat}: <strong>$${profits[i]}</strong></div>`;
+                });
+            } else {
+                html += '<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">No sales data yet</div>';
+            }
             html += '</div>';
             document.getElementById('categoryBreakdown').innerHTML = html;
         }
@@ -644,8 +631,8 @@
             reader.onload = function(ev) {
                 try {
                     const imported = JSON.parse(ev.target.result);
-                    data = imported.data || imported;
-                    allTimeSales = imported.allTimeSales || imported.salesHistory || [];
+                    data = imported.data || [];
+                    allTimeSales = imported.allTimeSales || [];
                     currentSales = [];
                     data.forEach(item => { 
                         if (!item.addedDate) item.addedDate = new Date().toISOString();
@@ -654,8 +641,11 @@
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
                     document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
-                    alert("✅ Inventory loaded!\nCurrent session profit tracker reset to $0.");
-                } catch(err) { alert("Error loading file."); }
+                    alert("✅ Inventory loaded successfully!\nCurrent session profit tracker reset to $0.");
+                } catch(err) {
+                    console.error("Import error:", err);
+                    alert("Error loading file. Please check the JSON format.\n\nError: " + err.message);
+                }
             };
             reader.readAsText(file);
         });
