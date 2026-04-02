@@ -9,8 +9,9 @@
       "rarity": "Mid-Tier Flower",
       "wholesale": 35,
       "markup": 140,
-      "inventory": 18,
-      "addedDate": "2026-03-28T10:00:00.000Z"
+      "inventory": 12,
+      "addedDate": "2026-03-28T10:00:00.000Z",
+      "lastEdited": "2026-03-31T18:45:00.000Z"
     },
     {
       "category": "",
@@ -20,8 +21,9 @@
       "rarity": "Small Batch Flower",
       "wholesale": 45,
       "markup": 160,
-      "inventory": 7,
-      "addedDate": "2026-03-30T09:15:00.000Z"
+      "inventory": 3,
+      "addedDate": "2026-03-30T09:15:00.000Z",
+      "lastEdited": "2026-04-01T08:20:00.000Z"
     },
     {
       "category": "FLOWER",
@@ -32,7 +34,8 @@
       "wholesale": 25,
       "markup": 120,
       "inventory": 42,
-      "addedDate": "2026-03-25T12:00:00.000Z"
+      "addedDate": "2026-01-15T12:00:00.000Z",
+      "lastEdited": "2026-03-25T14:30:00.000Z"
     },
     {
       "category": "FLOWER",
@@ -42,8 +45,21 @@
       "rarity": "Mid-Tier Flower",
       "wholesale": 38,
       "markup": 145,
-      "inventory": 12,
-      "addedDate": "2026-03-27T08:30:00.000Z"
+      "inventory": 8,
+      "addedDate": "2026-02-10T08:30:00.000Z",
+      "lastEdited": "2026-03-27T11:15:00.000Z"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Wedding Cake",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Jungle Boys",
+      "rarity": "Rare Flower",
+      "wholesale": 48,
+      "markup": 170,
+      "inventory": 22,
+      "addedDate": "2026-01-20T10:00:00.000Z",
+      "lastEdited": "2026-03-29T16:40:00.000Z"
     },
     {
       "category": "HASH",
@@ -53,8 +69,21 @@
       "rarity": "Rare Flower",
       "wholesale": 65,
       "markup": 180,
-      "inventory": 8,
-      "addedDate": "2026-03-29T14:45:00.000Z"
+      "inventory": 4,
+      "addedDate": "2026-02-05T14:45:00.000Z",
+      "lastEdited": "2026-03-31T19:10:00.000Z"
+    },
+    {
+      "category": "HASH",
+      "name": "Bubble Hash",
+      "desc": "45-micron ice water",
+      "grower": "Fu's Flowers",
+      "rarity": "Exclusive Flower",
+      "wholesale": 55,
+      "markup": 200,
+      "inventory": 11,
+      "addedDate": "2026-01-25T09:00:00.000Z",
+      "lastEdited": "2026-03-28T13:25:00.000Z"
     },
     {
       "category": "VAPE",
@@ -64,8 +93,21 @@
       "rarity": "VAPE",
       "wholesale": 18,
       "markup": 190,
-      "inventory": 25,
-      "addedDate": "2026-03-26T11:20:00.000Z"
+      "inventory": 28,
+      "addedDate": "2026-02-15T11:20:00.000Z",
+      "lastEdited": "2026-03-26T14:50:00.000Z"
+    },
+    {
+      "category": "VAPE",
+      "name": "Runtz Cart",
+      "desc": "1g disposable",
+      "grower": "Jungle Boys",
+      "rarity": "VAPE",
+      "wholesale": 20,
+      "markup": 185,
+      "inventory": 6,
+      "addedDate": "2026-03-01T10:00:00.000Z",
+      "lastEdited": "2026-03-30T17:35:00.000Z"
     },
     {
       "category": "EDIBLE",
@@ -76,10 +118,47 @@
       "wholesale": 12,
       "markup": 220,
       "inventory": 35,
-      "addedDate": "2026-03-24T16:00:00.000Z"
+      "addedDate": "2026-01-10T16:00:00.000Z",
+      "lastEdited": "2026-03-24T12:10:00.000Z"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Chocolate Bar",
+      "desc": "Dark chocolate 200mg",
+      "grower": "Doja",
+      "rarity": "Edible",
+      "wholesale": 22,
+      "markup": 210,
+      "inventory": 19,
+      "addedDate": "2026-02-20T13:00:00.000Z",
+      "lastEdited": "2026-03-29T15:20:00.000Z"
+    },
+    {
+      "category": "BONUS",
+      "name": "Pre-Roll Pack",
+      "desc": "5x 1g infused",
+      "grower": "Jungle Boys",
+      "rarity": "Pre-Roll",
+      "wholesale": 28,
+      "markup": 250,
+      "inventory": 0,
+      "addedDate": "2026-01-05T09:00:00.000Z",
+      "lastEdited": "2026-03-31T20:00:00.000Z"
+    },
+    {
+      "category": "BONUS",
+      "name": "Kief Jar",
+      "desc": "Full spectrum",
+      "grower": "Fu's Flowers",
+      "rarity": "Exclusive Flower",
+      "wholesale": 40,
+      "markup": 230,
+      "inventory": 9,
+      "addedDate": "2026-02-28T14:00:00.000Z",
+      "lastEdited": "2026-03-27T10:45:00.000Z"
     }
   ],
-  "salesHistory": [
+  "allTimeSales": [
     {"date": "2026-01-15T14:20:00", "item": "Blue Dream", "units": 2, "revenue": 70, "profit": 30},
     {"date": "2026-01-18T11:45:00", "item": "Gelato", "units": 1, "revenue": 70, "profit": 35},
     {"date": "2026-01-22T19:10:00", "item": "Gummies 10pk", "units": 3, "revenue": 66, "profit": 33},
@@ -103,6 +182,7 @@
     {"date": "2026-03-29T14:25:00", "item": "Gummies 10pk", "units": 10, "revenue": 220, "profit": 110},
     {"date": "2026-03-31T19:10:00", "item": "Jungle Cake", "units": 3, "revenue": 216, "profit": 135},
     {"date": "2026-04-01T08:45:00", "item": "Runtz", "units": 2, "revenue": 152, "profit": 76},
-    {"date": "2026-04-01T09:30:00", "item": "Gelato", "units": 4, "revenue": 280, "profit": 140}
+    {"date": "2026-04-01T09:30:00", "item": "Gelato", "units": 4, "revenue": 280, "profit": 140},
+    {"date": "2026-04-01T10:00:00", "item": "Wedding Cake", "units": 2, "revenue": 192, "profit": 96}
   ]
 }
