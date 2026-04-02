@@ -264,9 +264,9 @@
         <div id="tab0">
             <div class="graph-container">
                 <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterGraph(7)">7 Days</button>
+                    <button class="filter-btn" onclick="filterGraph(7)">7 Days</button>
                     <button class="filter-btn" onclick="filterGraph(30)">30 Days</button>
-                    <button class="filter-btn" onclick="filterGraph(90)">Quarter</button>
+                    <button class="filter-btn active" onclick="filterGraph(90)">Quarter</button>
                     <button class="filter-btn" onclick="filterGraph(365)">Year</button>
                     <button class="filter-btn" onclick="filterGraph(0)">All Time</button>
                 </div>
@@ -310,7 +310,7 @@
         let salesChart = null;
         let pieChart = null;
         let activeTab = 0;
-        let currentFilterDays = 0;
+        let currentFilterDays = 90; // Quarter by default
 
         const rarityMarkup = {
             "Common Flower": 100, 
@@ -321,7 +321,7 @@
             "Pre-Roll": 250,
             "Edible": 200, 
             "Concentrate/Hash": 160, 
-            "Vape": 180   // Fixed: now consistent title case
+            "Vape": 180
         };
 
         const usStates = ["","Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
@@ -685,7 +685,7 @@
             document.getElementById('currentViewTotal').innerHTML = `<strong>${label} Total: <span style="color:#67e8f9;">$${total.toLocaleString()}</span></strong>`;
         }
 
-        function updateSalesChart(days = 0) {
+        function updateSalesChart(days = 90) {
             currentFilterDays = days;
             updateViewTotalDisplay(days);
 
@@ -702,19 +702,29 @@
                 dailyProfit[dateKey] = (dailyProfit[dateKey] || 0) + (s.profit || 0);
             });
 
-            const labels = Object.keys(dailyProfit).sort();
-            const profits = labels.map(d => dailyProfit[d]);
+            const labels = Object.keys(dailyProfit).sort().reverse().slice(0, 30); // Limit to last 30 points for readability
+            const profits = labels.map(d => dailyProfit[d] || 0);
 
             salesChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels.length ? labels : ['No data'],
-                    datasets: [{ label: 'Daily Profit', data: profits.length ? profits : [0], borderColor: '#67e8f9', backgroundColor: 'rgba(103, 232, 249, 0.2)', tension: 0.3, fill: true }]
+                    labels: labels.length ? labels : ['No data yet'],
+                    datasets: [{
+                        label: 'Daily Profit',
+                        data: profits.length ? profits : [0],
+                        borderColor: '#67e8f9',
+                        backgroundColor: 'rgba(103, 232, 249, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
                 },
                 options: {
                     responsive: true,
                     plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, grid: { color: '#334155' } }, x: { grid: { color: '#334155' } } }
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#334155' } },
+                        x: { grid: { color: '#334155' } }
+                    }
                 }
             });
         }
@@ -788,8 +798,10 @@
                     cats.forEach(cat => collapsedCategories.add(cat));
 
                     renderList();
+                    // Default to Quarter after import
+                    updateSalesChart(90);
                     document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
-                    alert("✅ Inventory loaded successfully!\nAll categories start collapsed.\nCurrent profits reset to $0.");
+                    alert("✅ Inventory loaded successfully!\nShowing Quarter view by default.");
                 } catch(err) {
                     alert("Error loading file. Please check the JSON format.\n\nError: " + err.message);
                 }
@@ -880,11 +892,24 @@
             text += "\nText us your order!\nCall/Text: (646) 688-6312\n21+ only • Fast & Discreet";
 
             document.getElementById('output').textContent = text;
-            navigator.clipboard.writeText(text).then(() => alert("✅ SMS menu copied! (Out-of-stock items excluded)"));
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✅ SMS menu copied to clipboard!\nOpening messaging app...");
+            });
+
+            try {
+                const smsLink = `sms:?body=${encodeURIComponent(text)}`;
+                const link = document.createElement('a');
+                link.href = smsLink;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch(e) {}
         }
 
         window.onload = () => {
             renderList();
+            updateSalesChart(90); // Quarter by default
             document.getElementById('lastUpdated').textContent = "Last Updated: Never";
         };
     </script>
