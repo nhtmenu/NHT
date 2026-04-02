@@ -68,15 +68,20 @@
         .product-name { font-weight: 600; font-size: 16px; color: var(--text); }
         .product-desc { font-size: 13px; color: var(--text-light); }
         .product-meta { font-size: 13px; color: var(--text-light); }
-        .time-on-menu { font-size: 12px; color: #67e8f9; margin-top: 4px; }
+        .time-on-menu { font-size: 12px; margin-top: 4px; }
 
         .retail-price { font-weight: 700; color: #67e8f9; font-size: 17px; margin-right: 12px; }
 
-        /* Stock color warning */
+        /* Stock & Time color warnings */
         .stock-normal { color: #94a3b8; }
         .stock-yellow { color: #fbbf24; }
         .stock-orange { color: #f97316; }
         .stock-red { color: #ef4444; font-weight: 700; }
+
+        .time-normal { color: #86efac; }
+        .time-yellow { color: #fbbf24; }
+        .time-orange { color: #f97316; }
+        .time-red { color: #ef4444; }
 
         .edit-btn {
             background: #22d3ee;
@@ -130,6 +135,18 @@
         .filter-btn { padding: 6px 12px; font-size: 13px; background: #334155; border: none; border-radius: 6px; cursor: pointer; }
         .filter-btn.active { background: var(--accent); color: #0f172a; }
 
+        .tab-header {
+            display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #334155;
+        }
+        .tab-btn {
+            padding: 8px 16px; font-size: 14px; background: #334155; border: none; border-radius: 6px 6px 0 0; cursor: pointer;
+        }
+        .tab-btn.active { 
+            background: #1e2937; 
+            border-bottom: 3px solid var(--accent); 
+            color: var(--accent);
+        }
+
         .result { margin-top: 30px; background: #1e2937; border-radius: 12px; padding: 20px; color: #67e8f9; font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 320px; overflow: auto; border: 1px solid #334155; }
 
         .user-manual { background: #1e2937; border-radius: 12px; padding: 20px; margin-top: 30px; color: var(--text-light); font-size: 13px; line-height: 1.6; border: 1px solid #334155; }
@@ -169,41 +186,64 @@
     <!-- All-Time Sales History -->
     <div class="profit-section">
         <h3 style="margin:0 0 12px 0;color:#67e8f9;">📈 All-Time Sales History</h3>
-        <div id="allTimeProfitTotal" class="profit-total">$0</div>
 
-        <div class="graph-container">
-            <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterGraph(7)">Last 7 Days</button>
-                <button class="filter-btn" onclick="filterGraph(30)">Last 30 Days</button>
-                <button class="filter-btn" onclick="filterGraph(0)">All Time</button>
-            </div>
-            <canvas id="salesChart" height="180"></canvas>
+        <div class="tab-header">
+            <button class="tab-btn active" onclick="switchTab(0)">Sales Trend</button>
+            <button class="tab-btn" onclick="switchTab(1)">Category Performance</button>
         </div>
 
-        <div style="margin-top:20px;">
-            <h4 style="margin:0 0 8px 0;color:#67e8f9;">Full Sales Log</h4>
-            <div id="allTimeSalesHistory" class="sales-history"></div>
+        <!-- Tab 0: Line Chart -->
+        <div id="tab0">
+            <div class="graph-container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterGraph(7)">Last 7 Days</button>
+                    <button class="filter-btn" onclick="filterGraph(30)">Last 30 Days</button>
+                    <button class="filter-btn" onclick="filterGraph(0)">All Time</button>
+                </div>
+                <canvas id="salesChart" height="180"></canvas>
+            </div>
+            <div style="margin-top:20px;">
+                <h4 style="margin:0 0 8px 0;color:#67e8f9;">Full Sales Log</h4>
+                <div id="allTimeSalesHistory" class="sales-history"></div>
+            </div>
+        </div>
+
+        <!-- Tab 1: Pie Chart -->
+        <div id="tab1" style="display:none;">
+            <canvas id="categoryPieChart" height="220"></canvas>
+            <div id="categoryBreakdown" style="margin-top:20px;"></div>
         </div>
     </div>
 
     <div id="output" class="result"></div>
 
-    <!-- Detailed User Manual -->
+    <!-- User-focused manual -->
     <div class="user-manual">
-        <h3>Full User Guide</h3>
-        <p><strong>Welcome to Never Had That Inventory Manager</strong></p>
+        <h3 style="color:#ef4444; font-weight:bold;">⚠️ ALWAYS EXPORT JSON AFTER ANY CHANGES TO SAVE YOUR DATA ⚠️</h3>
+        
+        <p><strong>How to Use This Tool</strong></p>
         <ul>
-            <li><strong>+ Add New Item</strong> — Adds a blank item at the very top of the list (no category by default).</li>
-            <li><strong>Edit Item</strong> — Tap "Edit". The item is replaced by the full edit card **in its exact position**. Other Edit buttons are hidden while editing.</li>
-            <li><strong>Stock Changes &amp; Sales Logging</strong> — Lower the Stock number and hit "Save & Close" to auto-log the sale. Stock color changes: ≤10 yellow, ≤5 orange, 0 red.</li>
-            <li><strong>Profit Since Last Update</strong> — Shows only sales from this session. Resets automatically on import.</li>
-            <li><strong>All-Time Sales History</strong> — Persistent history with graph (filter by time period) and full log. Saved in JSON.</li>
-            <li><strong>Category Headers</strong> — Tap to collapse/expand. Uncategorized items stay at the top.</li>
-            <li><strong>Export JSON</strong> — Always export after changes to save everything.</li>
-            <li><strong>Import JSON</strong> — Loads data. Current session profit starts at $0.</li>
-            <li><strong>Copy Menu Data / Copy SMS Menu</strong> — Ready for website and texting.</li>
+            <li><strong>Add New Item</strong> — Click the big button. New items start blank and appear at the top until you assign a category.</li>
+            <li><strong>Edit an Item</strong> — Tap "Edit". The edit card replaces the item in its exact position. Change stock to log a sale automatically.</li>
+            <li><strong>Stock Colors</strong> — Stock number turns yellow at 10 or less, orange at 5 or less, red at 0.</li>
+            <li><strong>Time on Menu Colors</strong> — "On menu" text changes: green (fresh), yellow (8-14 days), orange (15-30 days), red (30+ days — needs attention).</li>
+            <li><strong>Last Edited</strong> — Shows when you last saved changes to the item (visible in edit card).</li>
+            <li><strong>Profit Since Last Update</strong> — Tracks sales and profit from changes you make in this session only. Resets when you import a new file.</li>
+            <li><strong>All-Time Sales History</strong> — Shows everything ever sold. Use the tabs to switch between the line chart (sales trend) and pie chart (profit by category).</li>
+            <li><strong>Category Headers</strong> — Tap to collapse or expand sections.</li>
+            <li><strong>Export JSON</strong> — Click this after every session. This is how you save your inventory and all sales data.</li>
+            <li><strong>Import JSON</strong> — Load a previous save. Current session profit starts at $0.</li>
+            <li><strong>Copy Menu Data</strong> — Use this to update your main website menu.</li>
+            <li><strong>Copy SMS Menu</strong> — Copies the menu text and opens your SMS app (phone number appears in the message body).</li>
         </ul>
-        <p><strong>Best Practices:</strong> Edit at end of day, export regularly, use graph to spot trends.</p>
+
+        <p><strong>Quick Tips</strong></p>
+        <ul>
+            <li>Lower stock when items sell — this logs the sale automatically.</li>
+            <li>Export JSON before closing the tool.</li>
+            <li>Check red time-on-menu items — they have been sitting too long.</li>
+            <li>Use the pie chart to see which categories make the most profit.</li>
+        </ul>
     </div>
 
     <input type="file" id="fileInput" accept=".json" style="display:none;">
@@ -215,6 +255,8 @@
         let allTimeSales = [];
         let collapsedCategories = new Set();
         let salesChart = null;
+        let pieChart = null;
+        let activeTab = 0;
 
         const rarityMarkup = {
             "Common Flower": 100, "Mid-Tier Flower": 120, "Small Batch Flower": 150,
@@ -231,6 +273,13 @@
             if (!dateStr) return "just added";
             const diff = Math.floor((new Date() - new Date(dateStr)) / 86400000);
             return diff === 0 ? "just added" : (diff === 1 ? "1 day" : diff + " days");
+        }
+
+        function getTimeColor(days) {
+            if (days <= 7) return "time-normal";
+            if (days <= 14) return "time-yellow";
+            if (days <= 30) return "time-orange";
+            return "time-red";
         }
 
         function getStockColor(stock) {
@@ -271,21 +320,25 @@
 
             updateProfitDisplays();
             updateSalesChart();
+            updatePieChart();
         }
 
         function renderProductItem(row, container) {
             const globalIndex = data.findIndex(item => item === row);
             const retail = Math.round(row.wholesale * (1 + (row.markup || 120) / 100));
             const stockClass = getStockColor(row.inventory || 0);
+            const days = row.addedDate ? Math.floor((new Date() - new Date(row.addedDate)) / 86400000) : 0;
+            const timeClass = getTimeColor(days);
 
             const div = document.createElement('div');
             div.className = 'product-item';
+            div.dataset.globalIndex = globalIndex;
             div.innerHTML = `
                 <div class="product-info">
                     <div class="product-name">${row.name || 'Unnamed Item'}</div>
                     <div class="product-desc">${row.desc || ''}</div>
                     <div class="product-meta">${row.grower || ''}</div>
-                    <div class="time-on-menu">On menu: ${daysAgo(row.addedDate)}</div>
+                    <div class="time-on-menu ${timeClass}">On menu: ${daysAgo(row.addedDate)}</div>
                 </div>
                 <div style="text-align:right; min-width: 90px;">
                     <div class="retail-price">$${retail}</div>
@@ -330,18 +383,19 @@
                     <div><label>Retail $</label><div id="live-retail-${index}" class="live-retail">$${Math.round((row.wholesale||0)*(1+((row.markup||120)/100)))}</div></div>
                     <div><label>Stock</label><input type="number" id="stock-input-${index}" value="${row.inventory||0}" onchange="updateCell(${index},'inventory',Number(this.value));refreshLiveFields(${index});"></div>
                 </div>
-                <div style="font-size:12px;color:#64748b;margin:12px 0;">Added: ${row.addedDate?new Date(row.addedDate).toLocaleDateString():'just now'}</div>
+                <div style="font-size:12px;color:#64748b;margin:12px 0;">
+                    Added: ${row.addedDate?new Date(row.addedDate).toLocaleDateString():'just now'}<br>
+                    Last Edited: ${row.lastEdited ? new Date(row.lastEdited).toLocaleString() : 'Never'}
+                </div>
                 <div class="card-actions">
                     <button class="delete-btn" onclick="deleteItem(${index})">Delete Item</button>
                     <button class="save-btn" onclick="closeEdit(${index})">Save & Close</button>
                 </div>
             `;
 
-            // Replace the specific product item in place
             const container = document.getElementById('productList');
-            const allItems = Array.from(container.children);
-            const productItem = allItems[index]; // index corresponds to position in DOM for this render
-            if (productItem && productItem.classList.contains('product-item')) {
+            const productItem = container.querySelector(`[data-global-index="${index}"]`);
+            if (productItem) {
                 productItem.parentNode.replaceChild(card, productItem);
             } else {
                 container.appendChild(card);
@@ -368,6 +422,8 @@
             const row = data[index];
             const oldStock = parseFloat(card.dataset.oldStock) || 0;
             const newStock = parseFloat(row.inventory) || 0;
+
+            row.lastEdited = new Date().toISOString();
 
             if (newStock < oldStock) {
                 const unitsSold = oldStock - newStock;
@@ -415,7 +471,8 @@
         function addRow() {
             data.unshift({
                 category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
-                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString()
+                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString(),
+                lastEdited: new Date().toISOString()
             });
             renderList();
             updateLastUpdated();
@@ -498,10 +555,85 @@
             });
         }
 
+        function updatePieChart() {
+            const ctx = document.getElementById('categoryPieChart');
+            if (pieChart) pieChart.destroy();
+
+            const catProfit = {};
+            allTimeSales.forEach(s => {
+                const item = data.find(i => i.name === s.item);
+                const cat = item ? (item.category || "Uncategorized") : "Uncategorized";
+                if (!catProfit[cat]) catProfit[cat] = 0;
+                catProfit[cat] += s.profit;
+            });
+
+            const labels = Object.keys(catProfit);
+            const profits = Object.values(catProfit);
+
+            pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: profits,
+                        backgroundColor: ['#67e8f9', '#f97316', '#22d3ee', '#fbbf24', '#a78bfa', '#ec4899']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            let html = '<div style="display:flex;flex-wrap:wrap;gap:12px;">';
+            labels.forEach((cat, i) => {
+                html += `<div style="background:#0f172a;padding:8px 12px;border-radius:6px;">${cat}: <strong>$${profits[i]}</strong></div>`;
+            });
+            html += '</div>';
+            document.getElementById('categoryBreakdown').innerHTML = html;
+        }
+
         function filterGraph(days) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             updateSalesChart(days);
+        }
+
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === tab));
+            document.getElementById('tab0').style.display = tab === 0 ? 'block' : 'none';
+            document.getElementById('tab1').style.display = tab === 1 ? 'block' : 'none';
+        }
+
+        function deleteItem(index) {
+            if (!confirm("Delete this item permanently?")) return;
+            data.splice(index, 1);
+            renderList();
+            updateLastUpdated();
+        }
+
+        function updateCell(index, field, value) {
+            data[index][field] = value;
+            updateLastUpdated();
+            refreshLiveFields(index);
+        }
+
+        function setRarity(index, rarity) {
+            data[index].rarity = rarity;
+            data[index].markup = rarityMarkup[rarity] || 120;
+            updateLastUpdated();
+            refreshLiveFields(index);
+        }
+
+        function addRow() {
+            data.unshift({
+                category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
+                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString(),
+                lastEdited: new Date().toISOString()
+            });
+            renderList();
+            updateLastUpdated();
         }
 
         function importFile() { document.getElementById('fileInput').click(); }
@@ -515,7 +647,10 @@
                     data = imported.data || imported;
                     allTimeSales = imported.allTimeSales || imported.salesHistory || [];
                     currentSales = [];
-                    data.forEach(item => { if (!item.addedDate) item.addedDate = new Date().toISOString(); });
+                    data.forEach(item => { 
+                        if (!item.addedDate) item.addedDate = new Date().toISOString();
+                        if (!item.lastEdited) item.lastEdited = item.addedDate;
+                    });
                     lastUpdated = imported.lastUpdated ? new Date(imported.lastUpdated) : new Date();
                     renderList();
                     document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
