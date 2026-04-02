@@ -498,6 +498,7 @@
 
         function updateSalesChart(days = 30) {
             const ctx = document.getElementById('salesChart');
+            if (!ctx) return;
             if (salesChart) salesChart.destroy();
 
             const dailyProfit = {};
@@ -540,6 +541,7 @@
 
         function updatePieChart() {
             const ctx = document.getElementById('categoryPieChart');
+            if (!ctx) return;
             if (pieChart) pieChart.destroy();
 
             const catProfit = {};
