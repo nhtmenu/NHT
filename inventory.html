@@ -170,7 +170,7 @@
 
     <!-- Profit Since Last Update -->
     <div class="profit-section">
-        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Profit Since Last Update</h3>
+        <h3 style="margin:0 0 12px 0;color:#67e8f9;">💰 Profit Since Last Update (This Session)</h3>
         <div id="currentProfitTotal" class="profit-total">$0</div>
         <div class="profit-breakdown">
             <table id="currentProfitTable"><thead><tr><th>Item</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody></tbody></table>
@@ -276,9 +276,11 @@
             const container = document.getElementById('productList');
             container.innerHTML = '';
 
+            // Uncategorized at top
             const uncategorized = data.filter(item => !item.category || item.category === "");
             uncategorized.forEach(row => renderProductItem(row, container));
 
+            // Grouped categories
             const grouped = {};
             data.forEach(item => {
                 if (item.category && item.category !== "") {
@@ -454,7 +456,7 @@
         function addRow() {
             data.unshift({
                 category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
-                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString(),
+                wholesale: 0, markup: 120, inventory: 0, addedDate: new Date().toISOString(),
                 lastEdited: new Date().toISOString()
             });
             renderList();
@@ -484,14 +486,6 @@
             });
 
             document.getElementById('currentSalesHistory').innerHTML = currentSales.slice(0,15).map(s => 
-                `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
-            ).join('');
-
-            let allTimeProfit = 0;
-            allTimeSales.forEach(s => allTimeProfit += s.profit || 0);
-            document.getElementById('allTimeProfitTotal').innerHTML = `All-Time Profit<br><span style="font-size:28px;">$${allTimeProfit}</span>`;
-
-            document.getElementById('allTimeSalesHistory').innerHTML = allTimeSales.slice(0,30).map(s => 
                 `<div><strong>${s.date}</strong> — ${s.item} ×${s.units} → <span style="color:#67e8f9;">+$${s.profit}</span></div>`
             ).join('');
         }
@@ -593,36 +587,6 @@
             document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === tab));
             document.getElementById('tab0').style.display = tab === 0 ? 'block' : 'none';
             document.getElementById('tab1').style.display = tab === 1 ? 'block' : 'none';
-        }
-
-        function deleteItem(index) {
-            if (!confirm("Delete this item permanently?")) return;
-            data.splice(index, 1);
-            renderList();
-            updateLastUpdated();
-        }
-
-        function updateCell(index, field, value) {
-            data[index][field] = value;
-            updateLastUpdated();
-            refreshLiveFields(index);
-        }
-
-        function setRarity(index, rarity) {
-            data[index].rarity = rarity;
-            data[index].markup = rarityMarkup[rarity] || 120;
-            updateLastUpdated();
-            refreshLiveFields(index);
-        }
-
-        function addRow() {
-            data.unshift({
-                category: "", name: "", desc: "", grower: "", rarity: "Mid-Tier Flower",
-                wholesale: 0, markup: 120, retail: 0, inventory: 0, addedDate: new Date().toISOString(),
-                lastEdited: new Date().toISOString()
-            });
-            renderList();
-            updateLastUpdated();
         }
 
         function importFile() { document.getElementById('fileInput').click(); }
