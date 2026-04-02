@@ -38,54 +38,6 @@
       "lastEdited": "2026-03-25T14:30:00.000Z"
     },
     {
-      "category": "FLOWER",
-      "name": "Runtz",
-      "desc": "Runtz x Zkittlez",
-      "grower": "Doja",
-      "rarity": "Mid-Tier Flower",
-      "wholesale": 38,
-      "markup": 145,
-      "inventory": 8,
-      "addedDate": "2026-02-10T08:30:00.000Z",
-      "lastEdited": "2026-03-27T11:15:00.000Z"
-    },
-    {
-      "category": "FLOWER",
-      "name": "Wedding Cake",
-      "desc": "Wedding Cake x Triangle Kush",
-      "grower": "Jungle Boys",
-      "rarity": "Rare Flower",
-      "wholesale": 48,
-      "markup": 170,
-      "inventory": 22,
-      "addedDate": "2026-01-20T10:00:00.000Z",
-      "lastEdited": "2026-03-29T16:40:00.000Z"
-    },
-    {
-      "category": "HASH",
-      "name": "Live Rosin",
-      "desc": "Full melt 6-star",
-      "grower": "Jungle Boys",
-      "rarity": "Rare Flower",
-      "wholesale": 65,
-      "markup": 180,
-      "inventory": 4,
-      "addedDate": "2026-02-05T14:45:00.000Z",
-      "lastEdited": "2026-03-31T19:10:00.000Z"
-    },
-    {
-      "category": "HASH",
-      "name": "Bubble Hash",
-      "desc": "45-micron ice water",
-      "grower": "Fu's Flowers",
-      "rarity": "Exclusive Flower",
-      "wholesale": 55,
-      "markup": 200,
-      "inventory": 11,
-      "addedDate": "2026-01-25T09:00:00.000Z",
-      "lastEdited": "2026-03-28T13:25:00.000Z"
-    },
-    {
       "category": "VAPE",
       "name": "Gelato Cart",
       "desc": "1g disposable",
@@ -93,96 +45,46 @@
       "rarity": "VAPE",
       "wholesale": 18,
       "markup": 190,
-      "inventory": 28,
+      "inventory": 6,
       "addedDate": "2026-02-15T11:20:00.000Z",
       "lastEdited": "2026-03-26T14:50:00.000Z"
-    },
-    {
-      "category": "VAPE",
-      "name": "Runtz Cart",
-      "desc": "1g disposable",
-      "grower": "Jungle Boys",
-      "rarity": "VAPE",
-      "wholesale": 20,
-      "markup": 185,
-      "inventory": 6,
-      "addedDate": "2026-03-01T10:00:00.000Z",
-      "lastEdited": "2026-03-30T17:35:00.000Z"
-    },
-    {
-      "category": "EDIBLE",
-      "name": "Gummies 10pk",
-      "desc": "Mixed fruit 100mg",
-      "grower": "Fu's Flowers",
-      "rarity": "Edible",
-      "wholesale": 12,
-      "markup": 220,
-      "inventory": 35,
-      "addedDate": "2026-01-10T16:00:00.000Z",
-      "lastEdited": "2026-03-24T12:10:00.000Z"
-    },
-    {
-      "category": "EDIBLE",
-      "name": "Chocolate Bar",
-      "desc": "Dark chocolate 200mg",
-      "grower": "Doja",
-      "rarity": "Edible",
-      "wholesale": 22,
-      "markup": 210,
-      "inventory": 19,
-      "addedDate": "2026-02-20T13:00:00.000Z",
-      "lastEdited": "2026-03-29T15:20:00.000Z"
-    },
-    {
-      "category": "BONUS",
-      "name": "Pre-Roll Pack",
-      "desc": "5x 1g infused",
-      "grower": "Jungle Boys",
-      "rarity": "Pre-Roll",
-      "wholesale": 28,
-      "markup": 250,
-      "inventory": 0,
-      "addedDate": "2026-01-05T09:00:00.000Z",
-      "lastEdited": "2026-03-31T20:00:00.000Z"
-    },
-    {
-      "category": "BONUS",
-      "name": "Kief Jar",
-      "desc": "Full spectrum",
-      "grower": "Fu's Flowers",
-      "rarity": "Exclusive Flower",
-      "wholesale": 40,
-      "markup": 230,
-      "inventory": 9,
-      "addedDate": "2026-02-28T14:00:00.000Z",
-      "lastEdited": "2026-03-27T10:45:00.000Z"
     }
   ],
   "allTimeSales": [
-    {"date": "2026-01-15T14:20:00", "item": "Blue Dream", "units": 2, "revenue": 70, "profit": 30},
-    {"date": "2026-01-18T11:45:00", "item": "Gelato", "units": 1, "revenue": 70, "profit": 35},
-    {"date": "2026-01-22T19:10:00", "item": "Gummies 10pk", "units": 3, "revenue": 66, "profit": 33},
-    {"date": "2026-01-28T16:30:00", "item": "Runtz", "units": 1, "revenue": 76, "profit": 38},
-    {"date": "2026-02-03T13:55:00", "item": "Blue Dream", "units": 4, "revenue": 140, "profit": 60},
-    {"date": "2026-02-08T18:40:00", "item": "Gelato Cart", "units": 2, "revenue": 72, "profit": 36},
-    {"date": "2026-02-12T10:25:00", "item": "Gummies 10pk", "units": 5, "revenue": 110, "profit": 55},
-    {"date": "2026-02-17T21:15:00", "item": "Jungle Cake", "units": 1, "revenue": 72, "profit": 45},
-    {"date": "2026-02-22T15:50:00", "item": "Live Rosin", "units": 1, "revenue": 130, "profit": 65},
-    {"date": "2026-02-27T12:30:00", "item": "Runtz", "units": 3, "revenue": 228, "profit": 114},
-    {"date": "2026-03-02T19:05:00", "item": "Gelato", "units": 3, "revenue": 210, "profit": 105},
-    {"date": "2026-03-05T14:40:00", "item": "Blue Dream", "units": 6, "revenue": 210, "profit": 90},
-    {"date": "2026-03-08T17:20:00", "item": "Gelato Cart", "units": 4, "revenue": 144, "profit": 72},
-    {"date": "2026-03-11T11:55:00", "item": "Gummies 10pk", "units": 8, "revenue": 176, "profit": 88},
-    {"date": "2026-03-14T20:10:00", "item": "Jungle Cake", "units": 2, "revenue": 144, "profit": 90},
-    {"date": "2026-03-17T16:45:00", "item": "Runtz", "units": 4, "revenue": 304, "profit": 152},
-    {"date": "2026-03-20T13:30:00", "item": "Live Rosin", "units": 2, "revenue": 260, "profit": 130},
-    {"date": "2026-03-23T18:50:00", "item": "Gelato", "units": 5, "revenue": 350, "profit": 175},
-    {"date": "2026-03-25T09:15:00", "item": "Blue Dream", "units": 7, "revenue": 245, "profit": 105},
-    {"date": "2026-03-27T21:40:00", "item": "Gelato Cart", "units": 6, "revenue": 216, "profit": 108},
-    {"date": "2026-03-29T14:25:00", "item": "Gummies 10pk", "units": 10, "revenue": 220, "profit": 110},
-    {"date": "2026-03-31T19:10:00", "item": "Jungle Cake", "units": 3, "revenue": 216, "profit": 135},
-    {"date": "2026-04-01T08:45:00", "item": "Runtz", "units": 2, "revenue": 152, "profit": 76},
-    {"date": "2026-04-01T09:30:00", "item": "Gelato", "units": 4, "revenue": 280, "profit": 140},
-    {"date": "2026-04-01T10:00:00", "item": "Wedding Cake", "units": 2, "revenue": 192, "profit": 96}
+    {
+      "date": "2026-03-28T14:20:00",
+      "item": "Gelato",
+      "units": 3,
+      "revenue": 210,
+      "profit": 105
+    },
+    {
+      "date": "2026-03-30T18:45:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 144,
+      "profit": 90
+    },
+    {
+      "date": "2026-03-25T12:30:00",
+      "item": "Blue Dream",
+      "units": 5,
+      "revenue": 175,
+      "profit": 75
+    },
+    {
+      "date": "2026-03-26T15:10:00",
+      "item": "Gelato Cart",
+      "units": 4,
+      "revenue": 144,
+      "profit": 72
+    },
+    {
+      "date": "2026-03-31T19:10:00",
+      "item": "Gelato",
+      "units": 2,
+      "revenue": 140,
+      "profit": 70
+    }
   ]
 }
