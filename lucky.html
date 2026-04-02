@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lucky Propagation 🌱</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap');
+        :root { --bg: #0f172a; --card: #1e2937; --accent: #22d3ee; --text: #e2e8f0; --text-light: #94a3b8; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; line-height: 1.6; font-size: 15px; }
+        h1 { font-family: 'Press Start 2P', system-ui; text-align: center; font-size: 20px; margin: 0 0 8px; color: var(--accent); }
+        .last-updated { text-align: center; color: var(--text-light); font-size: 13px; margin-bottom: 20px; }
+        .note { text-align: center; color: var(--text-light); font-size: 13px; margin-bottom: 20px; }
+        .controls-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .controls-bottom { display: flex; justify-content: center; margin-bottom: 24px; }
+        button { background: #334155; color: white; border: none; padding: 14px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; min-height: 52px; }
+        button:hover { background: var(--accent); color: #0f172a; transform: translateY(-2px); }
+        .add-btn { background: #22d3ee; color: #0f172a; font-size: 16px; padding: 16px 24px; max-width: 320px; }
+        .product-list { margin-bottom: 30px; }
+        .product-item { 
+            background: var(--card); 
+            border-radius: 12px; 
+            margin-bottom: 12px; 
+            padding: 14px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); 
+        }
+        .product-info { flex: 1; padding-right: 12px; }
+        .product-name { font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 4px; }
+        .product-desc { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
+        .trait-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .trait-badge { 
+            display: inline-block; 
+            padding: 2px 8px; 
+            border-radius: 9999px; 
+            font-size: 11px; 
+            font-weight: 500; 
+        }
+        .high { background: #4ade80; color: #0f172a; }
+        .medium { background: #fbbf24; color: #0f172a; }
+        .low { background: #f87171; color: #0f172a; }
+        .neutral { background: #64748b; color: #e2e8f0; }
+        .time-on-menu { font-size: 12px; margin-top: 6px; color: var(--text-light); }
+        .time-normal { color: #86efac; } .time-red { color: #ef4444; }
+        .edit-btn { background: #22d3ee; color: #0f172a; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .tab-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #334155; flex-wrap: wrap; }
+        .tab-btn { padding: 10px 18px; font-size: 14px; background: #334155; border: none; border-radius: 6px 6px 0 0; cursor: pointer; }
+        .tab-btn.active { background: #1e2937; border-bottom: 3px solid var(--accent); color: var(--accent); }
+        .result { margin-top: 30px; background: #1e2937; border-radius: 12px; padding: 20px; color: #67e8f9; font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 320px; overflow: auto; border: 1px solid #334155; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .modal-content { 
+            background: #1e2937; 
+            color: #e2e8f0; 
+            padding: 24px; 
+            border-radius: 12px; 
+            max-width: 920px; 
+            margin: 20px auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        select, input, textarea { 
+            background: #0f172a; 
+            color: #e2e8f0; 
+            border: 1px solid #475569; 
+            border-radius: 6px; 
+            padding: 10px; 
+            width: 100%; 
+            margin-bottom: 12px; 
+        }
+        label { 
+            display: block; 
+            font-size: 13px; 
+            color: var(--text-light); 
+            margin-bottom: 6px; 
+            font-weight: 500; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Lucky Propagation 🌱</h1>
+    <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
+    <p class="note">Genetic Library • Mother Cycle • Clone Timeline</p>
+
+    <div class="controls-top">
+        <button onclick="showGeneticLibrary()">🌱 Genetic Library</button>
+        <button onclick="importFile()">📥 Import JSON</button>
+        <button onclick="exportFile()">📤 Export JSON</button>
+        <button onclick="copyPropagationSMS()">📱 Quick SMS List</button>
+    </div>
+
+    <div class="tab-header" id="main-tabs">
+        <button class="tab-btn active" onclick="switchTab(1)">📊 Dashboard</button>
+        <button class="tab-btn" onclick="switchTab(2)">👩‍🌾 Mothers</button>
+        <button class="tab-btn" onclick="switchTab(3)">🌱 Clones</button>
+    </div>
+
+    <div class="controls-bottom" id="add-controls">
+        <button onclick="addNewItem()" class="add-btn" id="add-btn-text">+ Add New</button>
+    </div>
+
+    <div id="productList" class="product-list"></div>
+
+    <div id="dashboard-view" style="display: none;">
+        <div class="dashboard-grid">
+            <div style="background:#1e2937;padding:20px;border-radius:12px;">
+                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Mothers Due for Rotation</h3>
+                <div id="due-mothers" style="font-size:28px;font-weight:700;color:#f97316;">0</div>
+            </div>
+            <div style="background:#1e2937;padding:20px;border-radius:12px;">
+                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Active Clone Batches</h3>
+                <div id="active-clones" style="font-size:28px;font-weight:700;color:#67e8f9;">0</div>
+            </div>
+            <div style="background:#1e2937;padding:20px;border-radius:12px;">
+                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Rare Backups</h3>
+                <div id="rare-backups" style="font-size:28px;font-weight:700;color:#a78bfa;">0</div>
+            </div>
+        </div>
+        <canvas id="timelineChart" height="220" style="margin-top:24px;"></canvas>
+        <div id="alert-list" style="margin-top:24px;"></div>
+    </div>
+
+    <div id="output" class="result"></div>
+
+    <div class="user-manual">
+        <h3 style="color:#22d3ee;">🌱 Quick Tips</h3>
+        <ul>
+            <li>Genetic cards show compact color-coded traits.</li>
+            <li>Manage Mother → Take Clones Now lets you choose quantity.</li>
+        </ul>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display:none;">
+
+    <script>
+        let genetics = [];
+        let mothers = [];
+        let clones = [];
+        let currentTab = 1;
+        let lastUpdated = null;
+        let timelineChart = null;
+
+        const clonePhases = ["Cutting", "Rooting", "Rooted", "Veg/Transplanted", "Solo Cup / Ready"];
+
+        function updateLastUpdated() {
+            lastUpdated = new Date();
+            document.getElementById('lastUpdated').textContent = `Last Updated: ${lastUpdated.toLocaleString()}`;
+        }
+
+        function saveToLocal() {
+            localStorage.setItem('luckyPropagationData', JSON.stringify({genetics, mothers, clones}));
+        }
+
+        function loadFromLocal() {
+            const saved = localStorage.getItem('luckyPropagationData');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                genetics = parsed.genetics || [];
+                mothers = parsed.mothers || [];
+                clones = parsed.clones || [];
+            }
+        }
+
+        function renderList() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+            if (currentTab === 2) { // Mothers
+                document.getElementById('add-btn-text').innerHTML = '+ Add Mother';
+                mothers.forEach((m, i) => {
+                    const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
+                    const daysOld = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
+                    const colorClass = daysOld > 90 ? 'time-red' : 'time-normal';
+                    const div = document.createElement('div');
+                    div.className = 'product-item';
+                    div.innerHTML = `
+                        <div class="product-info">
+                            <div class="product-name">${m.tag} — ${genetic.name}</div>
+                            <div class="product-desc">Health: ${m.health} • Location: ${m.location || '—'}</div>
+                            <div class="product-meta">Last clone: ${m.lastCloneDate || 'Never'}</div>
+                            <div class="time-on-menu ${colorClass}">Cycle: ${daysOld} days</div>
+                        </div>
+                        <button class="edit-btn" onclick="editMother(${i}); event.stopImmediatePropagation();">Manage</button>
+                    `;
+                    container.appendChild(div);
+                });
+                if (mothers.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No mothers yet.</div>`;
+            } else if (currentTab === 3) { // Clones
+                document.getElementById('add-btn-text').innerHTML = '+ Take Clones';
+                clones.forEach((c, i) => {
+                    const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+                    const div = document.createElement('div');
+                    div.className = 'product-item';
+                    div.innerHTML = `
+                        <div class="product-info">
+                            <div class="product-name">Batch #${c.id} — ${genetic.name}</div>
+                            <div class="product-desc">Phase: ${c.status} • Qty: ${c.quantity}</div>
+                            <div class="product-meta">Cut: ${c.cutDate} • From: ${c.motherTag || '—'}</div>
+                            <div class="time-on-menu">${c.isBackup ? '🧬 BACKUP' : ''}</div>
+                        </div>
+                        <button class="edit-btn" onclick="editClone(${i}); event.stopImmediatePropagation();">Update Phase</button>
+                    `;
+                    container.appendChild(div);
+                });
+                if (clones.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No clones yet. Use + Take Clones or Manage a mother.</div>`;
+            }
+        }
+
+        function showGeneticLibrary() {
+            currentTab = 0;
+            document.getElementById('productList').style.display = 'block';
+            document.getElementById('dashboard-view').style.display = 'none';
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('add-controls').style.display = 'flex';
+            document.getElementById('add-btn-text').innerHTML = '+ Add New Genetic';
+            renderGeneticLibrary();
+        }
+
+        function renderGeneticLibrary() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+            genetics.forEach((g, i) => {
+                const div = document.createElement('div');
+                div.className = 'product-item';
+                const badges = `
+                    ${g.vigor ? `<span class="trait-badge ${g.vigor === 'High' ? 'high' : g.vigor === 'Medium' ? 'medium' : 'low'}">${g.vigor} Vigor</span>` : ''}
+                    ${g.rootingEase ? `<span class="trait-badge neutral">${g.rootingEase}</span>` : ''}
+                    ${g.flowerType ? `<span class="trait-badge neutral">${g.flowerType}</span>` : ''}
+                    ${g.yieldPotential ? `<span class="trait-badge ${g.yieldPotential === 'High' ? 'high' : g.yieldPotential === 'Medium' ? 'medium' : 'low'}">${g.yieldPotential} Yield</span>` : ''}
+                    ${g.thc ? `<span class="trait-badge neutral">THC ${g.thc}</span>` : ''}
+                    ${g.floweringWeeks ? `<span class="trait-badge neutral">${g.floweringWeeks}w</span>` : ''}
+                `;
+                div.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${g.name || 'Unnamed Strain'}</div>
+                        <div class="product-desc">${g.lineage || ''}</div>
+                        <div class="trait-badges">${badges}</div>
+                    </div>
+                    <button class="edit-btn" onclick="editGenetic(${i}); event.stopImmediatePropagation();">Edit</button>
+                `;
+                container.appendChild(div);
+            });
+            if (genetics.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No genetics yet. Click + Add New Genetic.</div>`;
+        }
+
+        function addNewItem() {
+            if (currentTab === 0) addGenetic();
+            else if (currentTab === 2) addMother();
+            else if (currentTab === 3) takeClonesFromMotherPrompt();
+        }
+
+        function addGenetic() {
+            const newG = { id: Date.now(), name: "", lineage: "", createdDate: new Date().toISOString().split('T')[0],
+                vigor: "", rootingEase: "", flowerType: "", yieldPotential: "", structure: "", pestResistance: "", moldResistance: "",
+                floweringWeeks: "", thc: "", cbd: "", terpenes: "", notes: "" };
+            genetics.unshift(newG);
+            editGenetic(0);
+        }
+
+        function editGenetic(index) {
+            const g = genetics[index];
+            const modalHTML = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:20px;">Edit Genetic — ${g.name || 'New Strain'}</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><label>Strain Name</label><input value="${g.name||''}" onchange="genetics[${index}].name=this.value;updateLastUpdated();"></div>
+                    <div><label>Lineage</label><input value="${g.lineage||''}" onchange="genetics[${index}].lineage=this.value;updateLastUpdated();"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;">
+                    <div><label>Vigor</label><select onchange="genetics[${index}].vigor=this.value;updateLastUpdated();"><option value="">Select</option><option value="High" ${g.vigor==='High'?'selected':''}>High</option><option value="Medium" ${g.vigor==='Medium'?'selected':''}>Medium</option><option value="Low" ${g.vigor==='Low'?'selected':''}>Low</option></select></div>
+                    <div><label>Rooting Ease</label><select onchange="genetics[${index}].rootingEase=this.value;updateLastUpdated();"><option value="">Select</option><option value="Easy (5-10 days)" ${g.rootingEase==='Easy (5-10 days)'?'selected':''}>Easy (5-10 days)</option><option value="Moderate (10-14 days)" ${g.rootingEase==='Moderate (10-14 days)'?'selected':''}>Moderate (10-14 days)</option><option value="Difficult (14+ days)" ${g.rootingEase==='Difficult (14+ days)'?'selected':''}>Difficult (14+ days)</option></select></div>
+                    <div><label>Flower Type</label><select onchange="genetics[${index}].flowerType=this.value;updateLastUpdated();"><option value="">Select</option><option value="Indica" ${g.flowerType==='Indica'?'selected':''}>Indica</option><option value="Sativa" ${g.flowerType==='Sativa'?'selected':''}>Sativa</option><option value="Hybrid" ${g.flowerType==='Hybrid'?'selected':''}>Hybrid</option></select></div>
+                    <div><label>Yield</label><select onchange="genetics[${index}].yieldPotential=this.value;updateLastUpdated();"><option value="">Select</option><option value="High" ${g.yieldPotential==='High'?'selected':''}>High</option><option value="Medium" ${g.yieldPotential==='Medium'?'selected':''}>Medium</option><option value="Low" ${g.yieldPotential==='Low'?'selected':''}>Low</option></select></div>
+                    <div><label>Structure</label><select onchange="genetics[${index}].structure=this.value;updateLastUpdated();"><option value="">Select</option><option value="Bushy" ${g.structure==='Bushy'?'selected':''}>Bushy</option><option value="Stretchy" ${g.structure==='Stretchy'?'selected':''}>Stretchy</option><option value="Compact" ${g.structure==='Compact'?'selected':''}>Compact</option></select></div>
+                    <div><label>Flowering Weeks</label><select onchange="genetics[${index}].floweringWeeks=this.value;updateLastUpdated();"><option value="">Select</option><option value="7-8" ${g.floweringWeeks==='7-8'?'selected':''}>7-8</option><option value="8-9" ${g.floweringWeeks==='8-9'?'selected':''}>8-9</option><option value="9-10" ${g.floweringWeeks==='9-10'?'selected':''}>9-10</option><option value="10-11" ${g.floweringWeeks==='10-11'?'selected':''}>10-11</option></select></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><label>THC %</label><input value="${g.thc||''}" onchange="genetics[${index}].thc=this.value;updateLastUpdated();"></div>
+                    <div><label>CBD %</label><input value="${g.cbd||''}" onchange="genetics[${index}].cbd=this.value;updateLastUpdated();"></div>
+                </div>
+                <div style="margin-top:16px;"><label>Key Terpenes</label><input value="${g.terpenes||''}" onchange="genetics[${index}].terpenes=this.value;updateLastUpdated();" style="width:100%;"></div>
+                <div style="margin-top:16px;"><label>Full Notes</label><textarea style="height:100px;width:100%;" onchange="genetics[${index}].notes=this.value;updateLastUpdated();">${g.notes||''}</textarea></div>
+                <div style="margin-top:24px;text-align:right;">
+                    <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save & Return</button>
+                </div>
+            </div>`;
+            showModal(modalHTML);
+        }
+
+        function addMother() {
+            if (genetics.length === 0) return alert("Add genetics in the Library first.");
+            let options = genetics.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+            const modalHTML = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:16px;">Add New Mother</h3>
+                <select id="genetic-select" style="margin-bottom:16px;">${options}</select>
+                <input id="mother-tag" placeholder="Mother Tag (e.g. MOM-BD-001)" style="margin-bottom:16px;">
+                <div style="text-align:right;">
+                    <button onclick="createMother()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Create Mother</button>
+                </div>
+            </div>`;
+            showModal(modalHTML);
+        }
+
+        function createMother() {
+            const geneticId = parseInt(document.getElementById('genetic-select').value);
+            const tag = document.getElementById('mother-tag').value.trim() || `MOM-${String(Date.now()).slice(-4)}`;
+            const newM = { id: Date.now(), geneticId, tag, startDate: new Date().toISOString().split('T')[0], lastCloneDate: "", lastPruneDate: "", health: "Good", location: "", notes: "" };
+            mothers.unshift(newM);
+            hideModal();
+            switchTab(2);
+            updateLastUpdated();
+            saveToLocal();
+        }
+
+        function editMother(i) {
+            const m = mothers[i];
+            const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
+            const modalHTML = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:20px;">Manage Mother — ${m.tag} (${genetic.name})</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><label>Health</label><select onchange="mothers[${i}].health=this.value;updateLastUpdated();"><option value="Good" ${m.health==='Good'?'selected':''}>Good</option><option value="Fair" ${m.health==='Fair'?'selected':''}>Fair</option><option value="Poor" ${m.health==='Poor'?'selected':''}>Poor</option></select></div>
+                    <div><label>Location</label><input value="${m.location||''}" onchange="mothers[${i}].location=this.value;updateLastUpdated();"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+                    <div><label>Last Clone Date</label><input type="date" value="${m.lastCloneDate||''}" onchange="mothers[${i}].lastCloneDate=this.value;updateLastUpdated();"></div>
+                    <div><label>Last Prune Date</label><input type="date" value="${m.lastPruneDate||''}" onchange="mothers[${i}].lastPruneDate=this.value;updateLastUpdated();"></div>
+                </div>
+                <div style="margin-top:16px;"><label>Notes</label><textarea style="height:120px;width:100%;" onchange="mothers[${i}].notes=this.value;updateLastUpdated();">${m.notes||''}</textarea></div>
+                <div style="margin-top:24px;text-align:right;">
+                    <button onclick="takeClonesFromMotherPrompt(${i})" style="background:#67e8f9;color:#0f172a;padding:12px 24px;border-radius:8px;margin-right:12px;">Take Clones Now</button>
+                    <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save & Return</button>
+                </div>
+            </div>`;
+            showModal(modalHTML);
+        }
+
+        function takeClonesFromMotherPrompt(motherIndex) {
+            const mother = mothers[motherIndex];
+            const modalHTML = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:16px;">Take Clones from ${mother.tag}</h3>
+                <input id="clone-qty" type="number" value="12" placeholder="Number of clones" style="margin-bottom:16px;">
+                <div style="text-align:right;">
+                    <button onclick="takeClonesFromMother(${motherIndex})" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Take Clones</button>
+                </div>
+            </div>`;
+            showModal(modalHTML);
+        }
+
+        function takeClonesFromMother(motherIndex) {
+            const qtyInput = document.getElementById('clone-qty');
+            const qty = qtyInput ? parseInt(qtyInput.value) || 12 : 12;
+            const mother = mothers[motherIndex];
+            const newClone = { 
+                id: Date.now(), 
+                geneticId: mother.geneticId, 
+                motherId: mother.id, 
+                motherTag: mother.tag, 
+                cutDate: new Date().toISOString().split('T')[0], 
+                rootedDate: "", 
+                status: "Cutting", 
+                quantity: qty, 
+                isBackup: false, 
+                progressNotes: "" 
+            };
+            clones.unshift(newClone);
+            mother.lastCloneDate = newClone.cutDate;
+            hideModal();
+            switchTab(3);
+            updateLastUpdated();
+            saveToLocal();
+        }
+
+        function takeClonesFromMotherPrompt() {
+            if (mothers.length === 0) return alert("No mothers available.");
+            let options = mothers.map((m, idx) => {
+                const gen = genetics.find(g => g.id === m.geneticId) || {name: ''};
+                return `<option value="${idx}">${m.tag} — ${gen.name}</option>`;
+            }).join('');
+            const html = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:16px;">Select Mother to Take Clones From</h3>
+                <select id="mother-select" style="margin-bottom:16px;">${options}</select>
+                <input id="clone-qty" type="number" value="12" style="margin-bottom:16px;">
+                <div style="text-align:right;">
+                    <button onclick="createCloneFromSelected()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Take Clones</button>
+                </div>
+            </div>`;
+            showModal(html);
+        }
+
+        function createCloneFromSelected() {
+            const idx = parseInt(document.getElementById('mother-select').value);
+            const qty = parseInt(document.getElementById('clone-qty').value) || 10;
+            const mother = mothers[idx];
+            const newClone = { id: Date.now(), geneticId: mother.geneticId, motherId: mother.id, motherTag: mother.tag, cutDate: new Date().toISOString().split('T')[0], rootedDate: "", status: "Cutting", quantity: qty, isBackup: false, progressNotes: "" };
+            clones.unshift(newClone);
+            mother.lastCloneDate = newClone.cutDate;
+            hideModal();
+            switchTab(3);
+            updateLastUpdated();
+            saveToLocal();
+        }
+
+        function editClone(i) {
+            const c = clones[i];
+            const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+            const html = `
+            <div class="modal-content">
+                <h3 style="color:#22d3ee;margin-bottom:20px;">Update Clone Batch — ${genetic.name}</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><label>Current Phase</label><select onchange="clones[${i}].status=this.value;updateLastUpdated();">${clonePhases.map(p => `<option value="${p}" ${c.status===p?'selected':''}>${p}</option>`).join('')}</select></div>
+                    <div><label>Quantity</label><input type="number" value="${c.quantity}" onchange="clones[${i}].quantity=Number(this.value);updateLastUpdated();"></div>
+                </div>
+                <div style="margin-top:16px;"><label>Progress Notes</label><textarea style="height:100px;width:100%;" onchange="clones[${i}].progressNotes=this.value;updateLastUpdated();">${c.progressNotes||''}</textarea></div>
+                <div style="margin-top:24px;text-align:right;">
+                    <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save</button>
+                </div>
+            </div>`;
+            showModal(html);
+        }
+
+        function copyPropagationSMS() {
+            let text = "🌱 LUCKY PROPAGATION READY LIST\n\n";
+            const readyMothers = mothers.filter(m => {
+                const days = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
+                return days > 30;
+            });
+            if (readyMothers.length) {
+                text += "MOTHERS READY FOR SNIPS:\n";
+                readyMothers.forEach(m => {
+                    const gen = genetics.find(g => g.id === m.geneticId) || {name:''};
+                    text += `• ${m.tag} — ${gen.name}\n`;
+                });
+                text += "\n";
+            }
+            clonePhases.forEach(phase => {
+                const inPhase = clones.filter(c => c.status === phase);
+                if (inPhase.length) {
+                    text += `${phase.toUpperCase()}:\n`;
+                    inPhase.forEach(c => {
+                        const gen = genetics.find(g => g.id === c.geneticId) || {name:''};
+                        text += `• ${gen.name} ×${c.quantity} (${c.cutDate})\n`;
+                    });
+                    text += "\n";
+                }
+            });
+            navigator.clipboard.writeText(text).then(() => alert("✅ Ready list copied to clipboard!"));
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i+1 === tab));
+            document.getElementById('productList').style.display = (tab === 2 || tab === 3) ? 'block' : 'none';
+            document.getElementById('dashboard-view').style.display = (tab === 1) ? 'block' : 'none';
+            document.getElementById('add-controls').style.display = (tab === 1) ? 'none' : 'flex';
+            if (tab === 1) renderDashboard();
+            else if (tab === 2 || tab === 3) renderList();
+        }
+
+        function renderDashboard() {
+            const due = mothers.filter(m => {
+                const days = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
+                return days > 90;
+            }).length;
+            document.getElementById('due-mothers').textContent = due;
+            const active = clones.filter(c => !["Solo Cup / Ready"].includes(c.status)).length;
+            document.getElementById('active-clones').textContent = active;
+            const backups = clones.filter(c => c.isBackup).length;
+            document.getElementById('rare-backups').textContent = backups;
+            let alertHTML = due > 0 ? `<div style="background:#f97316;color:#0f172a;padding:12px;border-radius:8px;">⚠️ ${due} mothers overdue for rotation (rotate every 3-6 months).</div>` : `<div style="color:#67e8f9;">All cycles look healthy! 🌱</div>`;
+            document.getElementById('alert-list').innerHTML = alertHTML;
+        }
+
+        function showModal(html) {
+            let modal = document.getElementById('modal-overlay');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'modal-overlay';
+                modal.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;';
+                document.body.appendChild(modal);
+            }
+            modal.innerHTML = `<div class="modal-content">${html}</div>`;
+            modal.style.display = 'flex';
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('modal-overlay');
+            if (modal) modal.style.display = 'none';
+            if (currentTab === 0) renderGeneticLibrary();
+            else renderList();
+            saveToLocal();
+        }
+
+        function importFile() { document.getElementById('fileInput').click(); }
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const imported = JSON.parse(ev.target.result);
+                    genetics = imported.genetics || [];
+                    mothers = imported.mothers || [];
+                    clones = imported.clones || [];
+                    updateLastUpdated();
+                    saveToLocal();
+                    alert("✅ Imported successfully!");
+                    switchTab(1);
+                } catch(err) { alert("Error importing JSON"); }
+            };
+            reader.readAsText(file);
+        });
+
+        function exportFile() {
+            const exportData = { genetics, mothers, clones, lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString() };
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([jsonStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lucky-propagation-${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert("✅ Exported!");
+        }
+
+        window.onload = () => {
+            loadFromLocal();
+            if (genetics.length === 0) {
+                genetics = [{
+                    id: Date.now(),
+                    name: "Blue Dream",
+                    lineage: "Blueberry x Haze",
+                    createdDate: "2025-04-01",
+                    vigor: "High",
+                    rootingEase: "Easy (5-10 days)",
+                    flowerType: "Hybrid",
+                    yieldPotential: "High",
+                    structure: "Bushy",
+                    pestResistance: "Medium",
+                    moldResistance: "High",
+                    floweringWeeks: "8-9",
+                    thc: "18-24%",
+                    cbd: "0.5-1%",
+                    terpenes: "Myrcene, Pinene, Caryophyllene",
+                    notes: "Reliable mother for perpetual veg and clone backups."
+                }];
+            }
+            switchTab(1);
+            updateLastUpdated();
+        };
+    </script>
+</body>
+</html>
