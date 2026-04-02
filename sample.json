@@ -1,90 +1,3274 @@
 {
-  "lastUpdated": "2026-04-01T10:15:00.000Z",
+  "lastUpdated": "2026-04-01T22:15:00.000Z",
   "data": [
     {
       "category": "",
-      "name": "Gelato",
-      "desc": "Gelato x Biscotti",
-      "grower": "Doja",
-      "rarity": "Mid-Tier Flower",
-      "wholesale": 35,
-      "markup": 140,
-      "inventory": 12,
-      "addedDate": "2026-03-28T10:00:00.000Z",
-      "lastEdited": "2026-03-31T18:45:00.000Z"
+      "name": "Chocolate Bar #1",
+      "desc": "Dark chocolate 200mg",
+      "grower": "Fu's Flowers",
+      "rarity": "Edible",
+      "wholesale": 24,
+      "markup": 200,
+      "inventory": 8,
+      "addedDate": "2024-07-24T00:00:00",
+      "lastEdited": "2024-09-17T00:00:00"
+    },
+    {
+      "category": "",
+      "name": "Pre-Roll Pack",
+      "desc": "5x 1g infused",
+      "grower": "Exotic Genetix",
+      "rarity": "Pre-Roll",
+      "wholesale": 24,
+      "markup": 250,
+      "inventory": 1,
+      "addedDate": "2024-07-14T00:00:00",
+      "lastEdited": "2026-02-22T00:00:00"
     },
     {
       "category": "",
       "name": "Jungle Cake",
       "desc": "Jungle Boys exclusive",
-      "grower": "Jungle Boys",
+      "grower": "Doja",
       "rarity": "Small Batch Flower",
-      "wholesale": 45,
-      "markup": 160,
-      "inventory": 3,
-      "addedDate": "2026-03-30T09:15:00.000Z",
-      "lastEdited": "2026-04-01T08:20:00.000Z"
+      "wholesale": 46,
+      "markup": 150,
+      "inventory": 45,
+      "addedDate": "2024-11-10T00:00:00",
+      "lastEdited": "2025-08-05T00:00:00"
+    },
+    {
+      "category": "",
+      "name": "Chocolate Bar",
+      "desc": "Dark chocolate 200mg",
+      "grower": "Jungle Boys",
+      "rarity": "Edible",
+      "wholesale": 17,
+      "markup": 200,
+      "inventory": 10,
+      "addedDate": "2025-10-11T00:00:00",
+      "lastEdited": "2026-03-24T00:00:00"
+    },
+    {
+      "category": "",
+      "name": "Pre-Roll Pack",
+      "desc": "5x 1g infused",
+      "grower": "Jungle Boys",
+      "rarity": "Pre-Roll",
+      "wholesale": 26,
+      "markup": 250,
+      "inventory": 5,
+      "addedDate": "2025-06-07T00:00:00",
+      "lastEdited": "2026-03-23T00:00:00"
+    },
+    {
+      "category": "",
+      "name": "Bubble Hash #6",
+      "desc": "45-micron ice water",
+      "grower": "Seed Junky",
+      "rarity": "Exclusive Flower",
+      "wholesale": 58,
+      "markup": 220,
+      "inventory": 2,
+      "addedDate": "2024-07-09T00:00:00",
+      "lastEdited": "2025-08-10T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Pre-Roll Pack #7",
+      "desc": "5x 1g infused",
+      "grower": "Exotic Genetix",
+      "rarity": "Pre-Roll",
+      "wholesale": 25,
+      "markup": 250,
+      "inventory": 35,
+      "addedDate": "2025-10-02T00:00:00",
+      "lastEdited": "2026-03-08T00:00:00"
+    },
+    {
+      "category": "BONUS",
+      "name": "Wedding Cake #8",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Doja",
+      "rarity": "Rare Flower",
+      "wholesale": 50,
+      "markup": 180,
+      "inventory": 18,
+      "addedDate": "2025-04-06T00:00:00",
+      "lastEdited": "2025-11-18T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Jungle Cake",
+      "desc": "Jungle Boys exclusive",
+      "grower": "Connected",
+      "rarity": "Small Batch Flower",
+      "wholesale": 51,
+      "markup": 150,
+      "inventory": 10,
+      "addedDate": "2024-07-13T00:00:00",
+      "lastEdited": "2025-09-05T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Live Rosin #10",
+      "desc": "Full melt 6-star",
+      "grower": "Connected",
+      "rarity": "Rare Flower",
+      "wholesale": 62,
+      "markup": 180,
+      "inventory": 38,
+      "addedDate": "2024-11-01T00:00:00",
+      "lastEdited": "2025-08-31T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Chocolate Bar",
+      "desc": "Dark chocolate 200mg",
+      "grower": "Jungle Boys",
+      "rarity": "Edible",
+      "wholesale": 24,
+      "markup": 200,
+      "inventory": 43,
+      "addedDate": "2025-09-29T00:00:00",
+      "lastEdited": "2026-03-26T00:00:00"
     },
     {
       "category": "FLOWER",
+      "name": "Live Rosin #12",
+      "desc": "Full melt 6-star",
+      "grower": "Exotic Genetix",
+      "rarity": "Rare Flower",
+      "wholesale": 68,
+      "markup": 180,
+      "inventory": 4,
+      "addedDate": "2024-11-21T00:00:00",
+      "lastEdited": "2025-01-22T00:00:00"
+    },
+    {
+      "category": "BONUS",
+      "name": "Runtz",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Exotic Genetix",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 47,
+      "markup": 120,
+      "inventory": 9,
+      "addedDate": "2025-02-17T00:00:00",
+      "lastEdited": "2025-10-22T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Wedding Cake #14",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Exotic Genetix",
+      "rarity": "Rare Flower",
+      "wholesale": 55,
+      "markup": 180,
+      "inventory": 23,
+      "addedDate": "2024-12-09T00:00:00",
+      "lastEdited": "2026-03-23T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Runtz #15",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Doja",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 37,
+      "markup": 120,
+      "inventory": 40,
+      "addedDate": "2025-09-04T00:00:00",
+      "lastEdited": "2026-03-29T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
       "name": "Blue Dream",
+      "desc": "Blue Dream x Blueberry",
+      "grower": "Seed Junky",
+      "rarity": "Common Flower",
+      "wholesale": 34,
+      "markup": 100,
+      "inventory": 33,
+      "addedDate": "2025-12-02T00:00:00",
+      "lastEdited": "2026-03-07T00:00:00"
+    },
+    {
+      "category": "BONUS",
+      "name": "Wedding Cake",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Seed Junky",
+      "rarity": "Rare Flower",
+      "wholesale": 51,
+      "markup": 180,
+      "inventory": 41,
+      "addedDate": "2024-04-12T00:00:00",
+      "lastEdited": "2024-09-06T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Live Rosin",
+      "desc": "Full melt 6-star",
+      "grower": "Connected",
+      "rarity": "Rare Flower",
+      "wholesale": 68,
+      "markup": 180,
+      "inventory": 32,
+      "addedDate": "2025-01-26T00:00:00",
+      "lastEdited": "2026-03-26T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Kief Jar #19",
+      "desc": "Full spectrum",
+      "grower": "Jungle Boys",
+      "rarity": "Exclusive Flower",
+      "wholesale": 41,
+      "markup": 220,
+      "inventory": 9,
+      "addedDate": "2025-09-02T00:00:00",
+      "lastEdited": "2026-01-18T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Live Rosin",
+      "desc": "Full melt 6-star",
+      "grower": "Jungle Boys",
+      "rarity": "Rare Flower",
+      "wholesale": 75,
+      "markup": 180,
+      "inventory": 1,
+      "addedDate": "2025-10-05T00:00:00",
+      "lastEdited": "2026-03-02T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Jungle Cake",
+      "desc": "Jungle Boys exclusive",
+      "grower": "Seed Junky",
+      "rarity": "Small Batch Flower",
+      "wholesale": 42,
+      "markup": 150,
+      "inventory": 5,
+      "addedDate": "2025-02-09T00:00:00",
+      "lastEdited": "2025-11-11T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Pre-Roll Pack #22",
+      "desc": "5x 1g infused",
+      "grower": "Fu's Flowers",
+      "rarity": "Pre-Roll",
+      "wholesale": 38,
+      "markup": 250,
+      "inventory": 35,
+      "addedDate": "2024-06-10T00:00:00",
+      "lastEdited": "2026-01-06T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Blue Dream #23",
+      "desc": "Blue Dream x Blueberry",
+      "grower": "Connected",
+      "rarity": "Common Flower",
+      "wholesale": 26,
+      "markup": 100,
+      "inventory": 45,
+      "addedDate": "2025-09-23T00:00:00",
+      "lastEdited": "2026-03-25T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Wedding Cake #24",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Exotic Genetix",
+      "rarity": "Rare Flower",
+      "wholesale": 46,
+      "markup": 180,
+      "inventory": 15,
+      "addedDate": "2026-02-17T00:00:00",
+      "lastEdited": "2026-03-17T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Runtz",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Fu's Flowers",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 40,
+      "markup": 120,
+      "inventory": 0,
+      "addedDate": "2025-03-13T00:00:00",
+      "lastEdited": "2025-05-03T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Jungle Cake #26",
+      "desc": "Jungle Boys exclusive",
+      "grower": "Jungle Boys",
+      "rarity": "Small Batch Flower",
+      "wholesale": 42,
+      "markup": 150,
+      "inventory": 32,
+      "addedDate": "2024-11-21T00:00:00",
+      "lastEdited": "2025-02-28T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Runtz",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Connected",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 48,
+      "markup": 120,
+      "inventory": 15,
+      "addedDate": "2026-02-15T00:00:00",
+      "lastEdited": "2026-03-25T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Kief Jar",
+      "desc": "Full spectrum",
+      "grower": "Connected",
+      "rarity": "Exclusive Flower",
+      "wholesale": 48,
+      "markup": 220,
+      "inventory": 22,
+      "addedDate": "2025-05-22T00:00:00",
+      "lastEdited": "2026-01-01T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Bubble Hash",
+      "desc": "45-micron ice water",
+      "grower": "Connected",
+      "rarity": "Exclusive Flower",
+      "wholesale": 53,
+      "markup": 220,
+      "inventory": 3,
+      "addedDate": "2025-07-23T00:00:00",
+      "lastEdited": "2025-10-16T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Bubble Hash",
+      "desc": "45-micron ice water",
+      "grower": "Seed Junky",
+      "rarity": "Exclusive Flower",
+      "wholesale": 64,
+      "markup": 220,
+      "inventory": 8,
+      "addedDate": "2024-07-21T00:00:00",
+      "lastEdited": "2025-05-01T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Bubble Hash #31",
+      "desc": "45-micron ice water",
+      "grower": "Doja",
+      "rarity": "Exclusive Flower",
+      "wholesale": 64,
+      "markup": 220,
+      "inventory": 35,
+      "addedDate": "2025-01-11T00:00:00",
+      "lastEdited": "2026-03-24T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Jungle Cake",
+      "desc": "Jungle Boys exclusive",
+      "grower": "Doja",
+      "rarity": "Small Batch Flower",
+      "wholesale": 47,
+      "markup": 150,
+      "inventory": 10,
+      "addedDate": "2026-01-28T00:00:00",
+      "lastEdited": "2026-03-05T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Bubble Hash",
+      "desc": "45-micron ice water",
+      "grower": "Doja",
+      "rarity": "Exclusive Flower",
+      "wholesale": 55,
+      "markup": 220,
+      "inventory": 24,
+      "addedDate": "2025-08-06T00:00:00",
+      "lastEdited": "2026-03-04T00:00:00"
+    },
+    {
+      "category": "EDIBLE",
+      "name": "Gelato",
+      "desc": "Gelato x Biscotti",
+      "grower": "Connected",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 45,
+      "markup": 120,
+      "inventory": 9,
+      "addedDate": "2024-12-28T00:00:00",
+      "lastEdited": "2026-03-22T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Runtz",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Seed Junky",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 34,
+      "markup": 120,
+      "inventory": 20,
+      "addedDate": "2024-11-09T00:00:00",
+      "lastEdited": "2025-02-06T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Gelato #36",
+      "desc": "Gelato x Biscotti",
+      "grower": "Seed Junky",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 35,
+      "markup": 120,
+      "inventory": 3,
+      "addedDate": "2025-11-20T00:00:00",
+      "lastEdited": "2026-03-15T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Runtz Cart",
+      "desc": "1g disposable",
+      "grower": "Connected",
+      "rarity": "VAPE",
+      "wholesale": 22,
+      "markup": 180,
+      "inventory": 25,
+      "addedDate": "2024-10-08T00:00:00",
+      "lastEdited": "2025-01-16T00:00:00"
+    },
+    {
+      "category": "BONUS",
+      "name": "Jungle Cake",
+      "desc": "Jungle Boys exclusive",
+      "grower": "Exotic Genetix",
+      "rarity": "Small Batch Flower",
+      "wholesale": 50,
+      "markup": 150,
+      "inventory": 16,
+      "addedDate": "2024-12-09T00:00:00",
+      "lastEdited": "2025-02-17T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Runtz",
+      "desc": "Runtz x Zkittlez",
+      "grower": "Connected",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 42,
+      "markup": 120,
+      "inventory": 29,
+      "addedDate": "2024-12-01T00:00:00",
+      "lastEdited": "2025-09-28T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Live Rosin",
+      "desc": "Full melt 6-star",
+      "grower": "Seed Junky",
+      "rarity": "Rare Flower",
+      "wholesale": 63,
+      "markup": 180,
+      "inventory": 4,
+      "addedDate": "2024-04-10T00:00:00",
+      "lastEdited": "2025-08-22T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Runtz Cart #41",
+      "desc": "1g disposable",
+      "grower": "Doja",
+      "rarity": "VAPE",
+      "wholesale": 22,
+      "markup": 180,
+      "inventory": 23,
+      "addedDate": "2025-09-01T00:00:00",
+      "lastEdited": "2026-03-27T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Wedding Cake",
+      "desc": "Wedding Cake x Triangle Kush",
+      "grower": "Connected",
+      "rarity": "Rare Flower",
+      "wholesale": 43,
+      "markup": 180,
+      "inventory": 42,
+      "addedDate": "2025-06-23T00:00:00",
+      "lastEdited": "2026-03-09T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Runtz Cart",
+      "desc": "1g disposable",
+      "grower": "Doja",
+      "rarity": "VAPE",
+      "wholesale": 18,
+      "markup": 180,
+      "inventory": 35,
+      "addedDate": "2026-02-09T00:00:00",
+      "lastEdited": "2026-03-03T00:00:00"
+    },
+    {
+      "category": "VAPE",
+      "name": "Blue Dream #44",
       "desc": "Blue Dream x Blueberry",
       "grower": "Fu's Flowers",
       "rarity": "Common Flower",
-      "wholesale": 25,
-      "markup": 120,
-      "inventory": 42,
-      "addedDate": "2026-01-15T12:00:00.000Z",
-      "lastEdited": "2026-03-25T14:30:00.000Z"
+      "wholesale": 28,
+      "markup": 100,
+      "inventory": 32,
+      "addedDate": "2025-01-14T00:00:00",
+      "lastEdited": "2025-09-16T00:00:00"
     },
     {
       "category": "VAPE",
       "name": "Gelato Cart",
       "desc": "1g disposable",
-      "grower": "Doja",
+      "grower": "Jungle Boys",
       "rarity": "VAPE",
-      "wholesale": 18,
-      "markup": 190,
-      "inventory": 6,
-      "addedDate": "2026-02-15T11:20:00.000Z",
-      "lastEdited": "2026-03-26T14:50:00.000Z"
+      "wholesale": 14,
+      "markup": 180,
+      "inventory": 0,
+      "addedDate": "2024-05-23T00:00:00",
+      "lastEdited": "2024-09-24T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Live Rosin #46",
+      "desc": "Full melt 6-star",
+      "grower": "Seed Junky",
+      "rarity": "Rare Flower",
+      "wholesale": 73,
+      "markup": 180,
+      "inventory": 35,
+      "addedDate": "2026-01-13T00:00:00",
+      "lastEdited": "2026-03-26T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Gelato",
+      "desc": "Gelato x Biscotti",
+      "grower": "Jungle Boys",
+      "rarity": "Mid-Tier Flower",
+      "wholesale": 34,
+      "markup": 120,
+      "inventory": 27,
+      "addedDate": "2024-06-17T00:00:00",
+      "lastEdited": "2024-12-16T00:00:00"
+    },
+    {
+      "category": "FLOWER",
+      "name": "Blue Dream #48",
+      "desc": "Blue Dream x Blueberry",
+      "grower": "Doja",
+      "rarity": "Common Flower",
+      "wholesale": 31,
+      "markup": 100,
+      "inventory": 13,
+      "addedDate": "2025-02-10T00:00:00",
+      "lastEdited": "2026-03-20T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Chocolate Bar #49",
+      "desc": "Dark chocolate 200mg",
+      "grower": "Exotic Genetix",
+      "rarity": "Edible",
+      "wholesale": 21,
+      "markup": 200,
+      "inventory": 15,
+      "addedDate": "2026-02-12T00:00:00",
+      "lastEdited": "2026-03-20T00:00:00"
+    },
+    {
+      "category": "HASH",
+      "name": "Blue Dream",
+      "desc": "Blue Dream x Blueberry",
+      "grower": "Jungle Boys",
+      "rarity": "Common Flower",
+      "wholesale": 33,
+      "markup": 100,
+      "inventory": 42,
+      "addedDate": "2025-05-28T00:00:00",
+      "lastEdited": "2025-07-22T00:00:00"
     }
   ],
   "allTimeSales": [
     {
-      "date": "2026-03-28T14:20:00",
-      "item": "Gelato",
-      "units": 3,
-      "revenue": 210,
-      "profit": 105
-    },
-    {
-      "date": "2026-03-30T18:45:00",
-      "item": "Jungle Cake",
-      "units": 2,
-      "revenue": 144,
-      "profit": 90
-    },
-    {
-      "date": "2026-03-25T12:30:00",
+      "date": "2024-04-17T00:00:00",
       "item": "Blue Dream",
       "units": 5,
-      "revenue": 175,
+      "revenue": 330,
+      "profit": 165
+    },
+    {
+      "date": "2024-04-20T00:00:00",
+      "item": "Gelato Cart",
+      "units": 2,
+      "revenue": 78,
+      "profit": 50
+    },
+    {
+      "date": "2024-04-22T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 824,
+      "profit": 448
+    },
+    {
+      "date": "2024-04-22T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 4,
+      "revenue": 336,
+      "profit": 240
+    },
+    {
+      "date": "2024-04-26T00:00:00",
+      "item": "Live Rosin",
+      "units": 4,
+      "revenue": 840,
+      "profit": 540
+    },
+    {
+      "date": "2024-04-27T00:00:00",
+      "item": "Jungle Cake",
+      "units": 8,
+      "revenue": 920,
+      "profit": 552
+    },
+    {
+      "date": "2024-04-27T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 5,
+      "revenue": 665,
+      "profit": 475
+    },
+    {
+      "date": "2024-05-08T00:00:00",
+      "item": "Blue Dream",
+      "units": 5,
+      "revenue": 340,
+      "profit": 170
+    },
+    {
+      "date": "2024-05-15T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 5,
+      "revenue": 700,
+      "profit": 450
+    },
+    {
+      "date": "2024-05-16T00:00:00",
+      "item": "Pre-Roll Pack #7",
+      "units": 7,
+      "revenue": 616,
+      "profit": 441
+    },
+    {
+      "date": "2024-05-20T00:00:00",
+      "item": "Jungle Cake",
+      "units": 5,
+      "revenue": 625,
+      "profit": 375
+    },
+    {
+      "date": "2024-05-26T00:00:00",
+      "item": "Wedding Cake",
+      "units": 7,
+      "revenue": 840,
+      "profit": 539
+    },
+    {
+      "date": "2024-05-26T00:00:00",
+      "item": "Gelato",
+      "units": 6,
+      "revenue": 450,
+      "profit": 246
+    },
+    {
+      "date": "2024-05-27T00:00:00",
+      "item": "Runtz Cart",
+      "units": 4,
+      "revenue": 248,
+      "profit": 160
+    },
+    {
+      "date": "2024-05-28T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 184,
+      "profit": 100
+    },
+    {
+      "date": "2024-06-05T00:00:00",
+      "item": "Runtz",
+      "units": 6,
+      "revenue": 450,
+      "profit": 246
+    },
+    {
+      "date": "2024-06-14T00:00:00",
+      "item": "Gelato",
+      "units": 4,
+      "revenue": 396,
+      "profit": 216
+    },
+    {
+      "date": "2024-06-22T00:00:00",
+      "item": "Jungle Cake",
+      "units": 7,
+      "revenue": 805,
+      "profit": 483
+    },
+    {
+      "date": "2024-06-24T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 5,
+      "revenue": 525,
+      "profit": 315
+    },
+    {
+      "date": "2024-06-25T00:00:00",
+      "item": "Kief Jar",
+      "units": 2,
+      "revenue": 308,
+      "profit": 212
+    },
+    {
+      "date": "2024-06-30T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1470,
+      "profit": 945
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "item": "Jungle Cake",
+      "units": 4,
+      "revenue": 512,
+      "profit": 308
+    },
+    {
+      "date": "2024-07-05T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 7,
+      "revenue": 931,
+      "profit": 665
+    },
+    {
+      "date": "2024-07-05T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 5,
+      "revenue": 700,
+      "profit": 450
+    },
+    {
+      "date": "2024-07-23T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 4,
+      "revenue": 524,
+      "profit": 360
+    },
+    {
+      "date": "2024-07-26T00:00:00",
+      "item": "Gelato #36",
+      "units": 1,
+      "revenue": 77,
+      "profit": 42
+    },
+    {
+      "date": "2024-07-27T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 350,
+      "profit": 224
+    },
+    {
+      "date": "2024-07-27T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 750,
+      "profit": 450
+    },
+    {
+      "date": "2024-07-28T00:00:00",
+      "item": "Bubble Hash",
+      "units": 8,
+      "revenue": 1360,
+      "profit": 936
+    },
+    {
+      "date": "2024-08-02T00:00:00",
+      "item": "Runtz Cart",
+      "units": 5,
+      "revenue": 310,
+      "profit": 200
+    },
+    {
+      "date": "2024-08-04T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 3,
+      "revenue": 186,
+      "profit": 93
+    },
+    {
+      "date": "2024-08-04T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 8,
+      "revenue": 1232,
+      "profit": 792
+    },
+    {
+      "date": "2024-08-13T00:00:00",
+      "item": "Jungle Cake",
+      "units": 4,
+      "revenue": 460,
+      "profit": 276
+    },
+    {
+      "date": "2024-08-15T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 4,
+      "revenue": 252,
+      "profit": 168
+    },
+    {
+      "date": "2024-08-28T00:00:00",
+      "item": "Live Rosin",
+      "units": 2,
+      "revenue": 352,
+      "profit": 226
+    },
+    {
+      "date": "2024-08-29T00:00:00",
+      "item": "Runtz Cart",
+      "units": 6,
+      "revenue": 300,
+      "profit": 192
+    },
+    {
+      "date": "2024-09-03T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 5,
+      "revenue": 930,
+      "profit": 640
+    },
+    {
+      "date": "2024-09-03T00:00:00",
+      "item": "Live Rosin",
+      "units": 4,
+      "revenue": 840,
+      "profit": 540
+    },
+    {
+      "date": "2024-09-07T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 3,
+      "revenue": 186,
+      "profit": 93
+    },
+    {
+      "date": "2024-09-07T00:00:00",
+      "item": "Runtz",
+      "units": 3,
+      "revenue": 309,
+      "profit": 168
+    },
+    {
+      "date": "2024-09-13T00:00:00",
+      "item": "Gelato #36",
+      "units": 4,
+      "revenue": 308,
+      "profit": 168
+    },
+    {
+      "date": "2024-09-16T00:00:00",
+      "item": "Wedding Cake",
+      "units": 1,
+      "revenue": 120,
+      "profit": 77
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "item": "Gelato Cart",
+      "units": 8,
+      "revenue": 312,
+      "profit": 200
+    },
+    {
+      "date": "2024-09-26T00:00:00",
+      "item": "Runtz",
+      "units": 4,
+      "revenue": 424,
+      "profit": 232
+    },
+    {
+      "date": "2024-09-27T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 4,
+      "revenue": 420,
+      "profit": 252
+    },
+    {
+      "date": "2024-10-04T00:00:00",
+      "item": "Gelato Cart",
+      "units": 7,
+      "revenue": 273,
+      "profit": 175
+    },
+    {
+      "date": "2024-10-06T00:00:00",
+      "item": "Blue Dream",
+      "units": 2,
+      "revenue": 132,
+      "profit": 66
+    },
+    {
+      "date": "2024-10-06T00:00:00",
+      "item": "Kief Jar",
+      "units": 4,
+      "revenue": 616,
+      "profit": 424
+    },
+    {
+      "date": "2024-10-15T00:00:00",
+      "item": "Bubble Hash",
+      "units": 3,
+      "revenue": 615,
+      "profit": 423
+    },
+    {
+      "date": "2024-10-16T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 4,
+      "revenue": 696,
+      "profit": 448
+    },
+    {
+      "date": "2024-10-19T00:00:00",
+      "item": "Live Rosin",
+      "units": 6,
+      "revenue": 1140,
+      "profit": 732
+    },
+    {
+      "date": "2024-10-20T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 4,
+      "revenue": 252,
+      "profit": 168
+    },
+    {
+      "date": "2024-10-22T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 150,
+      "profit": 82
+    },
+    {
+      "date": "2024-10-26T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 5,
+      "revenue": 455,
+      "profit": 325
+    },
+    {
+      "date": "2024-10-29T00:00:00",
+      "item": "Bubble Hash",
+      "units": 3,
+      "revenue": 510,
+      "profit": 351
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "item": "Live Rosin",
+      "units": 8,
+      "revenue": 1520,
+      "profit": 976
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "item": "Blue Dream",
+      "units": 5,
+      "revenue": 340,
+      "profit": 170
+    },
+    {
+      "date": "2024-11-04T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 8,
+      "revenue": 1640,
+      "profit": 1128
+    },
+    {
+      "date": "2024-11-05T00:00:00",
+      "item": "Bubble Hash",
+      "units": 7,
+      "revenue": 1190,
+      "profit": 819
+    },
+    {
+      "date": "2024-11-06T00:00:00",
+      "item": "Bubble Hash",
+      "units": 6,
+      "revenue": 1230,
+      "profit": 846
+    },
+    {
+      "date": "2024-11-12T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 7,
+      "revenue": 1078,
+      "profit": 693
+    },
+    {
+      "date": "2024-11-20T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 7,
+      "revenue": 441,
+      "profit": 294
+    },
+    {
+      "date": "2024-11-23T00:00:00",
+      "item": "Gelato Cart",
+      "units": 3,
+      "revenue": 117,
       "profit": 75
     },
     {
-      "date": "2026-03-26T15:10:00",
-      "item": "Gelato Cart",
-      "units": 4,
-      "revenue": 144,
-      "profit": 72
+      "date": "2024-11-23T00:00:00",
+      "item": "Blue Dream",
+      "units": 1,
+      "revenue": 66,
+      "profit": 33
     },
     {
-      "date": "2026-03-31T19:10:00",
-      "item": "Gelato",
+      "date": "2024-11-24T00:00:00",
+      "item": "Runtz",
+      "units": 6,
+      "revenue": 636,
+      "profit": 348
+    },
+    {
+      "date": "2024-11-24T00:00:00",
+      "item": "Runtz",
+      "units": 4,
+      "revenue": 300,
+      "profit": 164
+    },
+    {
+      "date": "2024-11-24T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 118,
+      "profit": 71
+    },
+    {
+      "date": "2024-11-26T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 6,
+      "revenue": 432,
+      "profit": 288
+    },
+    {
+      "date": "2024-11-26T00:00:00",
+      "item": "Runtz #15",
+      "units": 5,
+      "revenue": 405,
+      "profit": 220
+    },
+    {
+      "date": "2024-11-28T00:00:00",
+      "item": "Bubble Hash",
+      "units": 7,
+      "revenue": 1232,
+      "profit": 847
+    },
+    {
+      "date": "2024-12-03T00:00:00",
+      "item": "Wedding Cake #14",
       "units": 2,
-      "revenue": 140,
-      "profit": 70
+      "revenue": 308,
+      "profit": 198
+    },
+    {
+      "date": "2024-12-05T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 434,
+      "profit": 280
+    },
+    {
+      "date": "2024-12-11T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 1,
+      "revenue": 62,
+      "profit": 31
+    },
+    {
+      "date": "2024-12-12T00:00:00",
+      "item": "Wedding Cake",
+      "units": 7,
+      "revenue": 1001,
+      "profit": 644
+    },
+    {
+      "date": "2024-12-13T00:00:00",
+      "item": "Wedding Cake",
+      "units": 7,
+      "revenue": 840,
+      "profit": 539
+    },
+    {
+      "date": "2024-12-15T00:00:00",
+      "item": "Live Rosin",
+      "units": 1,
+      "revenue": 176,
+      "profit": 113
+    },
+    {
+      "date": "2024-12-15T00:00:00",
+      "item": "Bubble Hash",
+      "units": 3,
+      "revenue": 615,
+      "profit": 423
+    },
+    {
+      "date": "2024-12-19T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 7,
+      "revenue": 441,
+      "profit": 294
+    },
+    {
+      "date": "2024-12-19T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 8,
+      "revenue": 1488,
+      "profit": 1024
+    },
+    {
+      "date": "2024-12-21T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 8,
+      "revenue": 1232,
+      "profit": 792
+    },
+    {
+      "date": "2024-12-21T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 7,
+      "revenue": 931,
+      "profit": 665
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 7,
+      "revenue": 931,
+      "profit": 665
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 125,
+      "profit": 75
+    },
+    {
+      "date": "2025-01-03T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 8,
+      "revenue": 576,
+      "profit": 384
+    },
+    {
+      "date": "2025-01-13T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 125,
+      "profit": 75
+    },
+    {
+      "date": "2025-01-16T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 3,
+      "revenue": 252,
+      "profit": 180
+    },
+    {
+      "date": "2025-01-17T00:00:00",
+      "item": "Jungle Cake",
+      "units": 8,
+      "revenue": 1024,
+      "profit": 616
+    },
+    {
+      "date": "2025-01-19T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 434,
+      "profit": 280
+    },
+    {
+      "date": "2025-01-21T00:00:00",
+      "item": "Runtz #15",
+      "units": 2,
+      "revenue": 162,
+      "profit": 88
+    },
+    {
+      "date": "2025-01-24T00:00:00",
+      "item": "Gelato Cart",
+      "units": 5,
+      "revenue": 195,
+      "profit": 125
+    },
+    {
+      "date": "2025-01-29T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 184,
+      "profit": 100
+    },
+    {
+      "date": "2025-01-31T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 4,
+      "revenue": 560,
+      "profit": 360
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "item": "Wedding Cake",
+      "units": 1,
+      "revenue": 120,
+      "profit": 77
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 4,
+      "revenue": 336,
+      "profit": 240
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 3,
+      "revenue": 387,
+      "profit": 249
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 5,
+      "revenue": 360,
+      "profit": 240
+    },
+    {
+      "date": "2025-02-09T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 848,
+      "profit": 464
+    },
+    {
+      "date": "2025-02-11T00:00:00",
+      "item": "Jungle Cake",
+      "units": 4,
+      "revenue": 500,
+      "profit": 300
+    },
+    {
+      "date": "2025-02-12T00:00:00",
+      "item": "Gelato Cart",
+      "units": 5,
+      "revenue": 195,
+      "profit": 125
+    },
+    {
+      "date": "2025-02-12T00:00:00",
+      "item": "Kief Jar",
+      "units": 6,
+      "revenue": 924,
+      "profit": 636
+    },
+    {
+      "date": "2025-02-20T00:00:00",
+      "item": "Runtz",
+      "units": 7,
+      "revenue": 525,
+      "profit": 287
+    },
+    {
+      "date": "2025-02-21T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 4,
+      "revenue": 816,
+      "profit": 524
+    },
+    {
+      "date": "2025-02-22T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 5,
+      "revenue": 950,
+      "profit": 610
+    },
+    {
+      "date": "2025-02-25T00:00:00",
+      "item": "Wedding Cake",
+      "units": 6,
+      "revenue": 858,
+      "profit": 552
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "item": "Bubble Hash",
+      "units": 3,
+      "revenue": 615,
+      "profit": 423
+    },
+    {
+      "date": "2025-03-02T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 184,
+      "profit": 100
+    },
+    {
+      "date": "2025-03-02T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 2,
+      "revenue": 258,
+      "profit": 166
+    },
+    {
+      "date": "2025-03-06T00:00:00",
+      "item": "Runtz Cart",
+      "units": 1,
+      "revenue": 62,
+      "profit": 40
+    },
+    {
+      "date": "2025-03-13T00:00:00",
+      "item": "Blue Dream",
+      "units": 7,
+      "revenue": 476,
+      "profit": 238
+    },
+    {
+      "date": "2025-03-17T00:00:00",
+      "item": "Blue Dream #23",
+      "units": 4,
+      "revenue": 208,
+      "profit": 104
+    },
+    {
+      "date": "2025-03-19T00:00:00",
+      "item": "Bubble Hash",
+      "units": 4,
+      "revenue": 680,
+      "profit": 468
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "item": "Blue Dream",
+      "units": 2,
+      "revenue": 136,
+      "profit": 68
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 8,
+      "revenue": 672,
+      "profit": 480
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 8,
+      "revenue": 1520,
+      "profit": 976
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "item": "Live Rosin",
+      "units": 5,
+      "revenue": 950,
+      "profit": 610
+    },
+    {
+      "date": "2025-03-25T00:00:00",
+      "item": "Kief Jar",
+      "units": 5,
+      "revenue": 770,
+      "profit": 530
+    },
+    {
+      "date": "2025-03-26T00:00:00",
+      "item": "Gelato #36",
+      "units": 4,
+      "revenue": 308,
+      "profit": 168
+    },
+    {
+      "date": "2025-03-28T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 4,
+      "revenue": 288,
+      "profit": 192
+    },
+    {
+      "date": "2025-03-30T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 600,
+      "profit": 328
+    },
+    {
+      "date": "2025-04-04T00:00:00",
+      "item": "Bubble Hash",
+      "units": 7,
+      "revenue": 1435,
+      "profit": 987
+    },
+    {
+      "date": "2025-04-13T00:00:00",
+      "item": "Runtz",
+      "units": 5,
+      "revenue": 515,
+      "profit": 280
+    },
+    {
+      "date": "2025-04-16T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 8,
+      "revenue": 1232,
+      "profit": 792
+    },
+    {
+      "date": "2025-04-17T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 4,
+      "revenue": 560,
+      "profit": 360
+    },
+    {
+      "date": "2025-04-17T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 3,
+      "revenue": 387,
+      "profit": 249
+    },
+    {
+      "date": "2025-04-18T00:00:00",
+      "item": "Live Rosin",
+      "units": 5,
+      "revenue": 1050,
+      "profit": 675
+    },
+    {
+      "date": "2025-04-18T00:00:00",
+      "item": "Gelato",
+      "units": 5,
+      "revenue": 375,
+      "profit": 205
+    },
+    {
+      "date": "2025-04-18T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 115,
+      "profit": 69
+    },
+    {
+      "date": "2025-04-19T00:00:00",
+      "item": "Runtz #15",
+      "units": 7,
+      "revenue": 567,
+      "profit": 308
+    },
+    {
+      "date": "2025-04-19T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 3,
+      "revenue": 216,
+      "profit": 144
+    },
+    {
+      "date": "2025-04-20T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 3,
+      "revenue": 420,
+      "profit": 270
+    },
+    {
+      "date": "2025-04-21T00:00:00",
+      "item": "Gelato Cart",
+      "units": 8,
+      "revenue": 312,
+      "profit": 200
+    },
+    {
+      "date": "2025-04-23T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 6,
+      "revenue": 372,
+      "profit": 186
+    },
+    {
+      "date": "2025-04-24T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 2,
+      "revenue": 168,
+      "profit": 120
+    },
+    {
+      "date": "2025-04-25T00:00:00",
+      "item": "Gelato #36",
+      "units": 6,
+      "revenue": 462,
+      "profit": 252
+    },
+    {
+      "date": "2025-04-27T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 5,
+      "revenue": 655,
+      "profit": 450
+    },
+    {
+      "date": "2025-04-27T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 8,
+      "revenue": 1120,
+      "profit": 720
+    },
+    {
+      "date": "2025-04-28T00:00:00",
+      "item": "Blue Dream #23",
+      "units": 4,
+      "revenue": 208,
+      "profit": 104
+    },
+    {
+      "date": "2025-04-29T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 850,
+      "profit": 585
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 750,
+      "profit": 450
+    },
+    {
+      "date": "2025-05-02T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 8,
+      "revenue": 1640,
+      "profit": 1128
+    },
+    {
+      "date": "2025-05-02T00:00:00",
+      "item": "Blue Dream",
+      "units": 5,
+      "revenue": 340,
+      "profit": 170
+    },
+    {
+      "date": "2025-05-12T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 8,
+      "revenue": 840,
+      "profit": 504
+    },
+    {
+      "date": "2025-05-12T00:00:00",
+      "item": "Runtz Cart",
+      "units": 1,
+      "revenue": 62,
+      "profit": 40
+    },
+    {
+      "date": "2025-05-12T00:00:00",
+      "item": "Blue Dream",
+      "units": 2,
+      "revenue": 136,
+      "profit": 68
+    },
+    {
+      "date": "2025-05-13T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 5,
+      "revenue": 360,
+      "profit": 240
+    },
+    {
+      "date": "2025-05-14T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 5,
+      "revenue": 870,
+      "profit": 560
+    },
+    {
+      "date": "2025-05-18T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 8,
+      "revenue": 1640,
+      "profit": 1128
+    },
+    {
+      "date": "2025-05-18T00:00:00",
+      "item": "Runtz Cart",
+      "units": 2,
+      "revenue": 100,
+      "profit": 64
+    },
+    {
+      "date": "2025-05-20T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 1,
+      "revenue": 190,
+      "profit": 122
+    },
+    {
+      "date": "2025-05-24T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 850,
+      "profit": 585
+    },
+    {
+      "date": "2025-05-25T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 8,
+      "revenue": 1640,
+      "profit": 1128
+    },
+    {
+      "date": "2025-05-27T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 7,
+      "revenue": 441,
+      "profit": 294
+    },
+    {
+      "date": "2025-05-28T00:00:00",
+      "item": "Kief Jar",
+      "units": 5,
+      "revenue": 770,
+      "profit": 530
+    },
+    {
+      "date": "2025-05-28T00:00:00",
+      "item": "Live Rosin",
+      "units": 1,
+      "revenue": 176,
+      "profit": 113
+    },
+    {
+      "date": "2025-05-29T00:00:00",
+      "item": "Runtz",
+      "units": 4,
+      "revenue": 368,
+      "profit": 200
+    },
+    {
+      "date": "2025-05-29T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 2,
+      "revenue": 124,
+      "profit": 62
+    },
+    {
+      "date": "2025-05-30T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 8,
+      "revenue": 504,
+      "profit": 336
+    },
+    {
+      "date": "2025-06-03T00:00:00",
+      "item": "Gelato",
+      "units": 7,
+      "revenue": 693,
+      "profit": 378
+    },
+    {
+      "date": "2025-06-03T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 4,
+      "revenue": 616,
+      "profit": 396
+    },
+    {
+      "date": "2025-06-09T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 848,
+      "profit": 464
+    },
+    {
+      "date": "2025-06-13T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 1,
+      "revenue": 91,
+      "profit": 65
+    },
+    {
+      "date": "2025-06-14T00:00:00",
+      "item": "Blue Dream",
+      "units": 3,
+      "revenue": 204,
+      "profit": 102
+    },
+    {
+      "date": "2025-06-14T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1470,
+      "profit": 945
+    },
+    {
+      "date": "2025-06-17T00:00:00",
+      "item": "Bubble Hash",
+      "units": 8,
+      "revenue": 1408,
+      "profit": 968
+    },
+    {
+      "date": "2025-06-18T00:00:00",
+      "item": "Jungle Cake",
+      "units": 4,
+      "revenue": 460,
+      "profit": 276
+    },
+    {
+      "date": "2025-06-18T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 5,
+      "revenue": 1020,
+      "profit": 655
+    },
+    {
+      "date": "2025-06-22T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 4,
+      "revenue": 560,
+      "profit": 360
+    },
+    {
+      "date": "2025-06-22T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 6,
+      "revenue": 372,
+      "profit": 186
+    },
+    {
+      "date": "2025-06-23T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 8,
+      "revenue": 1120,
+      "profit": 720
+    },
+    {
+      "date": "2025-06-23T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 6,
+      "revenue": 1116,
+      "profit": 768
+    },
+    {
+      "date": "2025-06-26T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 3,
+      "revenue": 273,
+      "profit": 195
+    },
+    {
+      "date": "2025-06-29T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 5,
+      "revenue": 870,
+      "profit": 560
+    },
+    {
+      "date": "2025-06-30T00:00:00",
+      "item": "Runtz #15",
+      "units": 5,
+      "revenue": 405,
+      "profit": 220
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 736,
+      "profit": 400
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "item": "Bubble Hash",
+      "units": 2,
+      "revenue": 410,
+      "profit": 282
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1470,
+      "profit": 945
+    },
+    {
+      "date": "2025-07-04T00:00:00",
+      "item": "Runtz Cart #41",
+      "units": 4,
+      "revenue": 248,
+      "profit": 160
+    },
+    {
+      "date": "2025-07-11T00:00:00",
+      "item": "Runtz #15",
+      "units": 1,
+      "revenue": 81,
+      "profit": 44
+    },
+    {
+      "date": "2025-07-14T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 7,
+      "revenue": 931,
+      "profit": 665
+    },
+    {
+      "date": "2025-07-17T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 7,
+      "revenue": 1330,
+      "profit": 854
+    },
+    {
+      "date": "2025-07-17T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 210,
+      "profit": 126
+    },
+    {
+      "date": "2025-07-19T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 210,
+      "profit": 126
+    },
+    {
+      "date": "2025-07-22T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 4,
+      "revenue": 204,
+      "profit": 136
+    },
+    {
+      "date": "2025-07-23T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 6,
+      "revenue": 1116,
+      "profit": 768
+    },
+    {
+      "date": "2025-07-24T00:00:00",
+      "item": "Gelato",
+      "units": 8,
+      "revenue": 792,
+      "profit": 432
+    },
+    {
+      "date": "2025-07-24T00:00:00",
+      "item": "Blue Dream #23",
+      "units": 4,
+      "revenue": 208,
+      "profit": 104
+    },
+    {
+      "date": "2025-07-25T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 8,
+      "revenue": 1032,
+      "profit": 664
+    },
+    {
+      "date": "2025-07-27T00:00:00",
+      "item": "Jungle Cake",
+      "units": 3,
+      "revenue": 345,
+      "profit": 207
+    },
+    {
+      "date": "2025-07-28T00:00:00",
+      "item": "Wedding Cake",
+      "units": 1,
+      "revenue": 143,
+      "profit": 92
+    },
+    {
+      "date": "2025-07-29T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 236,
+      "profit": 142
+    },
+    {
+      "date": "2025-07-30T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 1,
+      "revenue": 105,
+      "profit": 63
+    },
+    {
+      "date": "2025-07-30T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 600,
+      "profit": 328
+    },
+    {
+      "date": "2025-07-31T00:00:00",
+      "item": "Jungle Cake",
+      "units": 5,
+      "revenue": 590,
+      "profit": 355
+    },
+    {
+      "date": "2025-08-02T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 5,
+      "revenue": 280,
+      "profit": 140
+    },
+    {
+      "date": "2025-08-02T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 1,
+      "revenue": 105,
+      "profit": 63
+    },
+    {
+      "date": "2025-08-08T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 5,
+      "revenue": 655,
+      "profit": 450
+    },
+    {
+      "date": "2025-08-10T00:00:00",
+      "item": "Runtz #15",
+      "units": 2,
+      "revenue": 162,
+      "profit": 88
+    },
+    {
+      "date": "2025-08-10T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1330,
+      "profit": 854
+    },
+    {
+      "date": "2025-08-11T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 4,
+      "revenue": 336,
+      "profit": 240
+    },
+    {
+      "date": "2025-08-12T00:00:00",
+      "item": "Bubble Hash",
+      "units": 8,
+      "revenue": 1360,
+      "profit": 936
+    },
+    {
+      "date": "2025-08-14T00:00:00",
+      "item": "Live Rosin",
+      "units": 3,
+      "revenue": 570,
+      "profit": 366
+    },
+    {
+      "date": "2025-08-15T00:00:00",
+      "item": "Bubble Hash",
+      "units": 3,
+      "revenue": 615,
+      "profit": 423
+    },
+    {
+      "date": "2025-08-17T00:00:00",
+      "item": "Bubble Hash",
+      "units": 8,
+      "revenue": 1360,
+      "profit": 936
+    },
+    {
+      "date": "2025-08-18T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 880,
+      "profit": 605
+    },
+    {
+      "date": "2025-08-20T00:00:00",
+      "item": "Runtz",
+      "units": 3,
+      "revenue": 309,
+      "profit": 168
+    },
+    {
+      "date": "2025-08-21T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 8,
+      "revenue": 1640,
+      "profit": 1128
+    },
+    {
+      "date": "2025-08-22T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 3,
+      "revenue": 420,
+      "profit": 270
+    },
+    {
+      "date": "2025-08-23T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 5,
+      "revenue": 1020,
+      "profit": 655
+    },
+    {
+      "date": "2025-08-24T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 5,
+      "revenue": 1020,
+      "profit": 655
+    },
+    {
+      "date": "2025-08-25T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 7,
+      "revenue": 504,
+      "profit": 336
+    },
+    {
+      "date": "2025-08-26T00:00:00",
+      "item": "Jungle Cake",
+      "units": 8,
+      "revenue": 1000,
+      "profit": 600
+    },
+    {
+      "date": "2025-08-28T00:00:00",
+      "item": "Bubble Hash",
+      "units": 1,
+      "revenue": 170,
+      "profit": 117
+    },
+    {
+      "date": "2025-08-30T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 5,
+      "revenue": 360,
+      "profit": 240
+    },
+    {
+      "date": "2025-09-08T00:00:00",
+      "item": "Jungle Cake",
+      "units": 8,
+      "revenue": 840,
+      "profit": 504
+    },
+    {
+      "date": "2025-09-10T00:00:00",
+      "item": "Bubble Hash",
+      "units": 2,
+      "revenue": 340,
+      "profit": 234
+    },
+    {
+      "date": "2025-09-14T00:00:00",
+      "item": "Blue Dream",
+      "units": 7,
+      "revenue": 476,
+      "profit": 238
+    },
+    {
+      "date": "2025-09-17T00:00:00",
+      "item": "Runtz Cart #41",
+      "units": 8,
+      "revenue": 496,
+      "profit": 320
+    },
+    {
+      "date": "2025-09-18T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 7,
+      "revenue": 931,
+      "profit": 665
+    },
+    {
+      "date": "2025-09-21T00:00:00",
+      "item": "Jungle Cake",
+      "units": 4,
+      "revenue": 420,
+      "profit": 252
+    },
+    {
+      "date": "2025-09-22T00:00:00",
+      "item": "Jungle Cake",
+      "units": 3,
+      "revenue": 345,
+      "profit": 207
+    },
+    {
+      "date": "2025-09-22T00:00:00",
+      "item": "Wedding Cake",
+      "units": 6,
+      "revenue": 858,
+      "profit": 552
+    },
+    {
+      "date": "2025-09-23T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 750,
+      "profit": 450
+    },
+    {
+      "date": "2025-09-23T00:00:00",
+      "item": "Bubble Hash",
+      "units": 1,
+      "revenue": 205,
+      "profit": 141
+    },
+    {
+      "date": "2025-09-26T00:00:00",
+      "item": "Gelato Cart",
+      "units": 7,
+      "revenue": 273,
+      "profit": 175
+    },
+    {
+      "date": "2025-09-27T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 2,
+      "revenue": 348,
+      "profit": 224
+    },
+    {
+      "date": "2025-09-27T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 6,
+      "revenue": 1116,
+      "profit": 768
+    },
+    {
+      "date": "2025-09-28T00:00:00",
+      "item": "Wedding Cake",
+      "units": 3,
+      "revenue": 360,
+      "profit": 231
+    },
+    {
+      "date": "2025-09-28T00:00:00",
+      "item": "Runtz",
+      "units": 7,
+      "revenue": 525,
+      "profit": 287
+    },
+    {
+      "date": "2025-09-29T00:00:00",
+      "item": "Blue Dream",
+      "units": 7,
+      "revenue": 476,
+      "profit": 238
+    },
+    {
+      "date": "2025-09-29T00:00:00",
+      "item": "Runtz",
+      "units": 7,
+      "revenue": 616,
+      "profit": 336
+    },
+    {
+      "date": "2025-09-30T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 7,
+      "revenue": 1218,
+      "profit": 784
+    },
+    {
+      "date": "2025-10-07T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 690,
+      "profit": 414
+    },
+    {
+      "date": "2025-10-07T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 350,
+      "profit": 224
+    },
+    {
+      "date": "2025-10-09T00:00:00",
+      "item": "Bubble Hash",
+      "units": 6,
+      "revenue": 1020,
+      "profit": 702
+    },
+    {
+      "date": "2025-10-11T00:00:00",
+      "item": "Blue Dream",
+      "units": 7,
+      "revenue": 476,
+      "profit": 238
+    },
+    {
+      "date": "2025-10-12T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 2,
+      "revenue": 380,
+      "profit": 244
+    },
+    {
+      "date": "2025-10-14T00:00:00",
+      "item": "Runtz Cart #41",
+      "units": 5,
+      "revenue": 310,
+      "profit": 200
+    },
+    {
+      "date": "2025-10-14T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 2,
+      "revenue": 124,
+      "profit": 62
+    },
+    {
+      "date": "2025-10-14T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 1025,
+      "profit": 705
+    },
+    {
+      "date": "2025-10-16T00:00:00",
+      "item": "Runtz",
+      "units": 7,
+      "revenue": 721,
+      "profit": 392
+    },
+    {
+      "date": "2025-10-18T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 7,
+      "revenue": 903,
+      "profit": 581
+    },
+    {
+      "date": "2025-10-19T00:00:00",
+      "item": "Runtz Cart",
+      "units": 6,
+      "revenue": 372,
+      "profit": 240
+    },
+    {
+      "date": "2025-10-20T00:00:00",
+      "item": "Pre-Roll Pack #7",
+      "units": 2,
+      "revenue": 176,
+      "profit": 126
+    },
+    {
+      "date": "2025-10-21T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 5,
+      "revenue": 360,
+      "profit": 240
+    },
+    {
+      "date": "2025-10-21T00:00:00",
+      "item": "Wedding Cake",
+      "units": 1,
+      "revenue": 143,
+      "profit": 92
+    },
+    {
+      "date": "2025-10-22T00:00:00",
+      "item": "Jungle Cake",
+      "units": 3,
+      "revenue": 375,
+      "profit": 225
+    },
+    {
+      "date": "2025-10-22T00:00:00",
+      "item": "Pre-Roll Pack #7",
+      "units": 4,
+      "revenue": 352,
+      "profit": 252
+    },
+    {
+      "date": "2025-10-24T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 230,
+      "profit": 138
+    },
+    {
+      "date": "2025-10-25T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 4,
+      "revenue": 224,
+      "profit": 112
+    },
+    {
+      "date": "2025-10-25T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1470,
+      "profit": 945
+    },
+    {
+      "date": "2025-10-26T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 5,
+      "revenue": 655,
+      "profit": 450
+    },
+    {
+      "date": "2025-10-26T00:00:00",
+      "item": "Runtz",
+      "units": 4,
+      "revenue": 352,
+      "profit": 192
+    },
+    {
+      "date": "2025-10-28T00:00:00",
+      "item": "Runtz",
+      "units": 3,
+      "revenue": 225,
+      "profit": 123
+    },
+    {
+      "date": "2025-10-29T00:00:00",
+      "item": "Wedding Cake",
+      "units": 8,
+      "revenue": 1144,
+      "profit": 736
+    },
+    {
+      "date": "2025-11-01T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 5,
+      "revenue": 255,
+      "profit": 170
+    },
+    {
+      "date": "2025-11-01T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 1025,
+      "profit": 705
+    },
+    {
+      "date": "2025-11-08T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 6,
+      "revenue": 786,
+      "profit": 540
+    },
+    {
+      "date": "2025-11-08T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 4,
+      "revenue": 696,
+      "profit": 448
+    },
+    {
+      "date": "2025-11-08T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 1,
+      "revenue": 105,
+      "profit": 63
+    },
+    {
+      "date": "2025-11-09T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 4,
+      "revenue": 224,
+      "profit": 112
+    },
+    {
+      "date": "2025-11-11T00:00:00",
+      "item": "Wedding Cake",
+      "units": 8,
+      "revenue": 1144,
+      "profit": 736
+    },
+    {
+      "date": "2025-11-12T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 768,
+      "profit": 462
+    },
+    {
+      "date": "2025-11-14T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 1,
+      "revenue": 72,
+      "profit": 48
+    },
+    {
+      "date": "2025-11-14T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 150,
+      "profit": 82
+    },
+    {
+      "date": "2025-11-15T00:00:00",
+      "item": "Blue Dream",
+      "units": 3,
+      "revenue": 198,
+      "profit": 99
+    },
+    {
+      "date": "2025-11-15T00:00:00",
+      "item": "Bubble Hash",
+      "units": 1,
+      "revenue": 170,
+      "profit": 117
+    },
+    {
+      "date": "2025-11-20T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 5,
+      "revenue": 645,
+      "profit": 415
+    },
+    {
+      "date": "2025-11-21T00:00:00",
+      "item": "Pre-Roll Pack",
+      "units": 6,
+      "revenue": 504,
+      "profit": 360
+    },
+    {
+      "date": "2025-11-22T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 1025,
+      "profit": 705
+    },
+    {
+      "date": "2025-11-24T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 3,
+      "revenue": 387,
+      "profit": 249
+    },
+    {
+      "date": "2025-11-24T00:00:00",
+      "item": "Runtz",
+      "units": 6,
+      "revenue": 528,
+      "profit": 288
+    },
+    {
+      "date": "2025-11-25T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 8,
+      "revenue": 496,
+      "profit": 248
+    },
+    {
+      "date": "2025-11-25T00:00:00",
+      "item": "Blue Dream #23",
+      "units": 4,
+      "revenue": 208,
+      "profit": 104
+    },
+    {
+      "date": "2025-11-26T00:00:00",
+      "item": "Runtz",
+      "units": 5,
+      "revenue": 515,
+      "profit": 280
+    },
+    {
+      "date": "2025-11-26T00:00:00",
+      "item": "Pre-Roll Pack #7",
+      "units": 1,
+      "revenue": 88,
+      "profit": 63
+    },
+    {
+      "date": "2025-11-27T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 4,
+      "revenue": 252,
+      "profit": 168
+    },
+    {
+      "date": "2025-11-27T00:00:00",
+      "item": "Gelato",
+      "units": 7,
+      "revenue": 525,
+      "profit": 287
+    },
+    {
+      "date": "2025-11-29T00:00:00",
+      "item": "Runtz",
+      "units": 3,
+      "revenue": 318,
+      "profit": 174
+    },
+    {
+      "date": "2025-12-01T00:00:00",
+      "item": "Kief Jar #19",
+      "units": 6,
+      "revenue": 786,
+      "profit": 540
+    },
+    {
+      "date": "2025-12-01T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 8,
+      "revenue": 1120,
+      "profit": 720
+    },
+    {
+      "date": "2025-12-01T00:00:00",
+      "item": "Gelato #36",
+      "units": 6,
+      "revenue": 462,
+      "profit": 252
+    },
+    {
+      "date": "2025-12-07T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 5,
+      "revenue": 525,
+      "profit": 315
+    },
+    {
+      "date": "2025-12-07T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 4,
+      "revenue": 532,
+      "profit": 380
+    },
+    {
+      "date": "2025-12-08T00:00:00",
+      "item": "Runtz Cart",
+      "units": 4,
+      "revenue": 200,
+      "profit": 128
+    },
+    {
+      "date": "2025-12-08T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 4,
+      "revenue": 252,
+      "profit": 168
+    },
+    {
+      "date": "2025-12-09T00:00:00",
+      "item": "Blue Dream",
+      "units": 3,
+      "revenue": 204,
+      "profit": 102
+    },
+    {
+      "date": "2025-12-10T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 125,
+      "profit": 75
+    },
+    {
+      "date": "2025-12-10T00:00:00",
+      "item": "Runtz Cart",
+      "units": 4,
+      "revenue": 248,
+      "profit": 160
+    },
+    {
+      "date": "2025-12-12T00:00:00",
+      "item": "Bubble Hash",
+      "units": 8,
+      "revenue": 1360,
+      "profit": 936
+    },
+    {
+      "date": "2025-12-12T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 8,
+      "revenue": 1120,
+      "profit": 720
+    },
+    {
+      "date": "2025-12-13T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 2,
+      "revenue": 258,
+      "profit": 166
+    },
+    {
+      "date": "2025-12-14T00:00:00",
+      "item": "Jungle Cake",
+      "units": 6,
+      "revenue": 690,
+      "profit": 414
+    },
+    {
+      "date": "2025-12-15T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 236,
+      "profit": 142
+    },
+    {
+      "date": "2025-12-16T00:00:00",
+      "item": "Blue Dream",
+      "units": 3,
+      "revenue": 198,
+      "profit": 99
+    },
+    {
+      "date": "2025-12-18T00:00:00",
+      "item": "Bubble Hash",
+      "units": 6,
+      "revenue": 1230,
+      "profit": 846
+    },
+    {
+      "date": "2025-12-19T00:00:00",
+      "item": "Wedding Cake",
+      "units": 2,
+      "revenue": 240,
+      "profit": 154
+    },
+    {
+      "date": "2025-12-21T00:00:00",
+      "item": "Live Rosin",
+      "units": 7,
+      "revenue": 1232,
+      "profit": 791
+    },
+    {
+      "date": "2025-12-24T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 3,
+      "revenue": 186,
+      "profit": 93
+    },
+    {
+      "date": "2025-12-24T00:00:00",
+      "item": "Wedding Cake #14",
+      "units": 4,
+      "revenue": 616,
+      "profit": 396
+    },
+    {
+      "date": "2025-12-25T00:00:00",
+      "item": "Runtz #15",
+      "units": 2,
+      "revenue": 162,
+      "profit": 88
+    },
+    {
+      "date": "2025-12-26T00:00:00",
+      "item": "Bubble Hash",
+      "units": 5,
+      "revenue": 1025,
+      "profit": 705
+    },
+    {
+      "date": "2025-12-26T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 212,
+      "profit": 116
+    },
+    {
+      "date": "2025-12-26T00:00:00",
+      "item": "Runtz Cart #41",
+      "units": 1,
+      "revenue": 62,
+      "profit": 40
+    },
+    {
+      "date": "2025-12-27T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 7,
+      "revenue": 434,
+      "profit": 217
+    },
+    {
+      "date": "2025-12-27T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 6,
+      "revenue": 774,
+      "profit": 498
+    },
+    {
+      "date": "2025-12-31T00:00:00",
+      "item": "Runtz",
+      "units": 1,
+      "revenue": 92,
+      "profit": 50
+    },
+    {
+      "date": "2026-01-05T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 5,
+      "revenue": 950,
+      "profit": 610
+    },
+    {
+      "date": "2026-01-06T00:00:00",
+      "item": "Jungle Cake",
+      "units": 7,
+      "revenue": 896,
+      "profit": 539
+    },
+    {
+      "date": "2026-01-06T00:00:00",
+      "item": "Bubble Hash #31",
+      "units": 7,
+      "revenue": 1435,
+      "profit": 987
+    },
+    {
+      "date": "2026-01-07T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 6,
+      "revenue": 1116,
+      "profit": 768
+    },
+    {
+      "date": "2026-01-08T00:00:00",
+      "item": "Runtz Cart",
+      "units": 1,
+      "revenue": 50,
+      "profit": 32
+    },
+    {
+      "date": "2026-01-08T00:00:00",
+      "item": "Gelato Cart",
+      "units": 2,
+      "revenue": 78,
+      "profit": 50
+    },
+    {
+      "date": "2026-01-09T00:00:00",
+      "item": "Chocolate Bar #1",
+      "units": 6,
+      "revenue": 432,
+      "profit": 288
+    },
+    {
+      "date": "2026-01-09T00:00:00",
+      "item": "Live Rosin",
+      "units": 6,
+      "revenue": 1140,
+      "profit": 732
+    },
+    {
+      "date": "2026-01-13T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 3,
+      "revenue": 522,
+      "profit": 336
+    },
+    {
+      "date": "2026-01-17T00:00:00",
+      "item": "Runtz",
+      "units": 5,
+      "revenue": 460,
+      "profit": 250
+    },
+    {
+      "date": "2026-01-18T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 8,
+      "revenue": 448,
+      "profit": 224
+    },
+    {
+      "date": "2026-01-18T00:00:00",
+      "item": "Bubble Hash",
+      "units": 4,
+      "revenue": 680,
+      "profit": 468
+    },
+    {
+      "date": "2026-01-18T00:00:00",
+      "item": "Pre-Roll Pack #22",
+      "units": 8,
+      "revenue": 1064,
+      "profit": 760
+    },
+    {
+      "date": "2026-01-19T00:00:00",
+      "item": "Bubble Hash",
+      "units": 4,
+      "revenue": 704,
+      "profit": 484
+    },
+    {
+      "date": "2026-01-19T00:00:00",
+      "item": "Wedding Cake",
+      "units": 1,
+      "revenue": 120,
+      "profit": 77
+    },
+    {
+      "date": "2026-01-19T00:00:00",
+      "item": "Bubble Hash",
+      "units": 7,
+      "revenue": 1232,
+      "profit": 847
+    },
+    {
+      "date": "2026-01-20T00:00:00",
+      "item": "Bubble Hash",
+      "units": 6,
+      "revenue": 1020,
+      "profit": 702
+    },
+    {
+      "date": "2026-01-20T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 8,
+      "revenue": 1632,
+      "profit": 1048
+    },
+    {
+      "date": "2026-01-21T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 2,
+      "revenue": 280,
+      "profit": 180
+    },
+    {
+      "date": "2026-01-21T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 250,
+      "profit": 150
+    },
+    {
+      "date": "2026-01-22T00:00:00",
+      "item": "Wedding Cake",
+      "units": 3,
+      "revenue": 429,
+      "profit": 276
+    },
+    {
+      "date": "2026-01-24T00:00:00",
+      "item": "Jungle Cake",
+      "units": 5,
+      "revenue": 575,
+      "profit": 345
+    },
+    {
+      "date": "2026-01-24T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 2,
+      "revenue": 348,
+      "profit": 224
+    },
+    {
+      "date": "2026-01-25T00:00:00",
+      "item": "Wedding Cake",
+      "units": 4,
+      "revenue": 480,
+      "profit": 308
+    },
+    {
+      "date": "2026-01-30T00:00:00",
+      "item": "Blue Dream",
+      "units": 6,
+      "revenue": 408,
+      "profit": 204
+    },
+    {
+      "date": "2026-02-04T00:00:00",
+      "item": "Live Rosin #12",
+      "units": 5,
+      "revenue": 950,
+      "profit": 610
+    },
+    {
+      "date": "2026-02-06T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 2,
+      "revenue": 372,
+      "profit": 256
+    },
+    {
+      "date": "2026-02-06T00:00:00",
+      "item": "Kief Jar",
+      "units": 2,
+      "revenue": 308,
+      "profit": 212
+    },
+    {
+      "date": "2026-02-06T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 1,
+      "revenue": 174,
+      "profit": 112
+    },
+    {
+      "date": "2026-02-07T00:00:00",
+      "item": "Runtz Cart",
+      "units": 4,
+      "revenue": 248,
+      "profit": 160
+    },
+    {
+      "date": "2026-02-08T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 8,
+      "revenue": 448,
+      "profit": 224
+    },
+    {
+      "date": "2026-02-08T00:00:00",
+      "item": "Runtz Cart",
+      "units": 8,
+      "revenue": 400,
+      "profit": 256
+    },
+    {
+      "date": "2026-02-09T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 7,
+      "revenue": 1218,
+      "profit": 784
+    },
+    {
+      "date": "2026-02-11T00:00:00",
+      "item": "Pre-Roll Pack #7",
+      "units": 6,
+      "revenue": 528,
+      "profit": 378
+    },
+    {
+      "date": "2026-02-14T00:00:00",
+      "item": "Kief Jar",
+      "units": 6,
+      "revenue": 924,
+      "profit": 636
+    },
+    {
+      "date": "2026-02-14T00:00:00",
+      "item": "Blue Dream #23",
+      "units": 1,
+      "revenue": 52,
+      "profit": 26
+    },
+    {
+      "date": "2026-02-15T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 350,
+      "profit": 224
+    },
+    {
+      "date": "2026-02-16T00:00:00",
+      "item": "Runtz",
+      "units": 2,
+      "revenue": 212,
+      "profit": 116
+    },
+    {
+      "date": "2026-02-21T00:00:00",
+      "item": "Wedding Cake #24",
+      "units": 2,
+      "revenue": 258,
+      "profit": 166
+    },
+    {
+      "date": "2026-02-22T00:00:00",
+      "item": "Gelato #36",
+      "units": 6,
+      "revenue": 462,
+      "profit": 252
+    },
+    {
+      "date": "2026-02-23T00:00:00",
+      "item": "Live Rosin",
+      "units": 6,
+      "revenue": 1260,
+      "profit": 810
+    },
+    {
+      "date": "2026-02-23T00:00:00",
+      "item": "Runtz Cart",
+      "units": 5,
+      "revenue": 250,
+      "profit": 160
+    },
+    {
+      "date": "2026-02-25T00:00:00",
+      "item": "Wedding Cake",
+      "units": 6,
+      "revenue": 858,
+      "profit": 552
+    },
+    {
+      "date": "2026-02-25T00:00:00",
+      "item": "Wedding Cake #8",
+      "units": 7,
+      "revenue": 980,
+      "profit": 630
+    },
+    {
+      "date": "2026-02-26T00:00:00",
+      "item": "Chocolate Bar #49",
+      "units": 5,
+      "revenue": 315,
+      "profit": 210
+    },
+    {
+      "date": "2026-02-27T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 6,
+      "revenue": 372,
+      "profit": 186
+    },
+    {
+      "date": "2026-02-27T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 5,
+      "revenue": 255,
+      "profit": 170
+    },
+    {
+      "date": "2026-02-28T00:00:00",
+      "item": "Live Rosin",
+      "units": 4,
+      "revenue": 760,
+      "profit": 488
+    },
+    {
+      "date": "2026-03-01T00:00:00",
+      "item": "Jungle Cake",
+      "units": 1,
+      "revenue": 128,
+      "profit": 77
+    },
+    {
+      "date": "2026-03-01T00:00:00",
+      "item": "Kief Jar",
+      "units": 1,
+      "revenue": 154,
+      "profit": 106
+    },
+    {
+      "date": "2026-03-06T00:00:00",
+      "item": "Jungle Cake",
+      "units": 7,
+      "revenue": 826,
+      "profit": 497
+    },
+    {
+      "date": "2026-03-07T00:00:00",
+      "item": "Live Rosin #10",
+      "units": 3,
+      "revenue": 522,
+      "profit": 336
+    },
+    {
+      "date": "2026-03-07T00:00:00",
+      "item": "Runtz #15",
+      "units": 7,
+      "revenue": 567,
+      "profit": 308
+    },
+    {
+      "date": "2026-03-08T00:00:00",
+      "item": "Blue Dream #48",
+      "units": 4,
+      "revenue": 248,
+      "profit": 124
+    },
+    {
+      "date": "2026-03-08T00:00:00",
+      "item": "Jungle Cake #26",
+      "units": 1,
+      "revenue": 105,
+      "profit": 63
+    },
+    {
+      "date": "2026-03-11T00:00:00",
+      "item": "Jungle Cake",
+      "units": 7,
+      "revenue": 896,
+      "profit": 539
+    },
+    {
+      "date": "2026-03-12T00:00:00",
+      "item": "Live Rosin",
+      "units": 4,
+      "revenue": 840,
+      "profit": 540
+    },
+    {
+      "date": "2026-03-15T00:00:00",
+      "item": "Gelato",
+      "units": 6,
+      "revenue": 450,
+      "profit": 246
+    },
+    {
+      "date": "2026-03-15T00:00:00",
+      "item": "Blue Dream #44",
+      "units": 8,
+      "revenue": 448,
+      "profit": 224
+    },
+    {
+      "date": "2026-03-15T00:00:00",
+      "item": "Jungle Cake",
+      "units": 2,
+      "revenue": 210,
+      "profit": 126
+    },
+    {
+      "date": "2026-03-16T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 6,
+      "revenue": 432,
+      "profit": 288
+    },
+    {
+      "date": "2026-03-17T00:00:00",
+      "item": "Kief Jar",
+      "units": 2,
+      "revenue": 308,
+      "profit": 212
+    },
+    {
+      "date": "2026-03-18T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 848,
+      "profit": 464
+    },
+    {
+      "date": "2026-03-19T00:00:00",
+      "item": "Live Rosin",
+      "units": 4,
+      "revenue": 760,
+      "profit": 488
+    },
+    {
+      "date": "2026-03-20T00:00:00",
+      "item": "Runtz Cart",
+      "units": 7,
+      "revenue": 350,
+      "profit": 224
+    },
+    {
+      "date": "2026-03-21T00:00:00",
+      "item": "Runtz",
+      "units": 8,
+      "revenue": 736,
+      "profit": 400
+    },
+    {
+      "date": "2026-03-22T00:00:00",
+      "item": "Runtz Cart",
+      "units": 5,
+      "revenue": 250,
+      "profit": 160
+    },
+    {
+      "date": "2026-03-22T00:00:00",
+      "item": "Gelato #36",
+      "units": 6,
+      "revenue": 462,
+      "profit": 252
+    },
+    {
+      "date": "2026-03-23T00:00:00",
+      "item": "Live Rosin #46",
+      "units": 4,
+      "revenue": 816,
+      "profit": 524
+    },
+    {
+      "date": "2026-03-25T00:00:00",
+      "item": "Chocolate Bar",
+      "units": 1,
+      "revenue": 51,
+      "profit": 34
+    },
+    {
+      "date": "2026-03-27T00:00:00",
+      "item": "Bubble Hash #6",
+      "units": 5,
+      "revenue": 930,
+      "profit": 640
+    },
+    {
+      "date": "2026-03-30T00:00:00",
+      "item": "Runtz Cart",
+      "units": 2,
+      "revenue": 124,
+      "profit": 80
+    },
+    {
+      "date": "2026-03-30T00:00:00",
+      "item": "Live Rosin",
+      "units": 1,
+      "revenue": 176,
+      "profit": 113
+    },
+    {
+      "date": "2026-03-30T00:00:00",
+      "item": "Bubble Hash",
+      "units": 2,
+      "revenue": 352,
+      "profit": 242
+    },
+    {
+      "date": "2026-03-30T00:00:00",
+      "item": "Jungle Cake",
+      "units": 5,
+      "revenue": 640,
+      "profit": 385
     }
   ]
 }
