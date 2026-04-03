@@ -23,16 +23,21 @@
             background: var(--card); 
             border-radius: 12px; 
             margin-bottom: 12px; 
-            padding: 14px; 
+            padding: 16px; 
             display: flex; 
             justify-content: space-between; 
             align-items: flex-start; 
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); 
+            transition: all 0.3s;
         }
-        .product-info { flex: 1; padding-right: 12px; }
-        .product-name { font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 4px; }
-        .product-desc { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
-        .trait-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .product-item.archived { 
+            opacity: 0.65; 
+            filter: grayscale(50%); 
+        }
+        .product-info { flex: 1; padding-right: 16px; }
+        .product-name { font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; }
+        .product-desc { font-size: 13px; color: var(--text-light); margin-bottom: 8px; line-height: 1.5; }
+        .trait-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
         .trait-badge { 
             display: inline-block; 
             padding: 2px 8px; 
@@ -44,18 +49,19 @@
         .medium { background: #fbbf24; color: #0f172a; }
         .low { background: #f87171; color: #0f172a; }
         .neutral { background: #64748b; color: #e2e8f0; }
-        .time-on-menu { font-size: 12px; margin-top: 6px; color: var(--text-light); }
+        .warning-badge { background: #ef4444; color: white; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+        .time-on-menu { font-size: 12px; margin-top: 8px; color: var(--text-light); }
         .time-normal { color: #86efac; } .time-red { color: #ef4444; }
         .edit-btn { background: #22d3ee; color: #0f172a; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; }
         .tab-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #334155; flex-wrap: wrap; }
         .tab-btn { padding: 10px 18px; font-size: 14px; background: #334155; border: none; border-radius: 6px 6px 0 0; cursor: pointer; }
         .tab-btn.active { background: #1e2937; border-bottom: 3px solid var(--accent); color: var(--accent); }
         .result { margin-top: 30px; background: #1e2937; border-radius: 12px; padding: 20px; color: #67e8f9; font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 320px; overflow: auto; border: 1px solid #334155; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
         .modal-content { 
             background: #1e2937; 
             color: #e2e8f0; 
-            padding: 24px; 
+            padding: 20px; 
             border-radius: 12px; 
             max-width: 920px; 
             margin: 20px auto; 
@@ -66,23 +72,43 @@
             color: #e2e8f0; 
             border: 1px solid #475569; 
             border-radius: 6px; 
-            padding: 10px; 
+            padding: 8px; 
             width: 100%; 
-            margin-bottom: 12px; 
+            margin-bottom: 10px; 
+            font-size: 14px;
         }
         label { 
             display: block; 
             font-size: 13px; 
             color: var(--text-light); 
-            margin-bottom: 6px; 
+            margin-bottom: 4px; 
             font-weight: 500; 
         }
+        .history-item { font-size: 13px; color: var(--text-light); margin-bottom: 4px; }
     </style>
 </head>
 <body>
     <h1>Lucky Propagation 🌱</h1>
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
-    <p class="note">Genetic Library • Mother Cycle • Clone Timeline</p>
+    <p class="note">Genetic Library • Mother Cycle • Clone Timeline • Archive</p>
+
+    <!-- Always-visible Dashboard -->
+    <div id="dashboard-view" class="dashboard-grid">
+        <div style="background:#1e2937;padding:16px;border-radius:12px;">
+            <h3 style="margin:0 0 8px 0;color:#67e8f9;">Mothers Due for Rotation</h3>
+            <div id="due-mothers" style="font-size:32px;font-weight:700;color:#f97316;">0</div>
+        </div>
+        <div style="background:#1e2937;padding:16px;border-radius:12px;">
+            <h3 style="margin:0 0 8px 0;color:#67e8f9;">Active Clone Batches</h3>
+            <div id="active-clones" style="font-size:32px;font-weight:700;color:#67e8f9;">0</div>
+        </div>
+        <div style="background:#1e2937;padding:16px;border-radius:12px;">
+            <h3 style="margin:0 0 8px 0;color:#67e8f9;">Rare Backups</h3>
+            <div id="rare-backups" style="font-size:32px;font-weight:700;color:#a78bfa;">0</div>
+        </div>
+    </div>
+
+    <div id="alert-list" style="margin:16px 0 24px 0;"></div>
 
     <div class="controls-top">
         <button onclick="showGeneticLibrary()">🌱 Genetic Library</button>
@@ -92,9 +118,9 @@
     </div>
 
     <div class="tab-header" id="main-tabs">
-        <button class="tab-btn active" onclick="switchTab(1)">📊 Dashboard</button>
         <button class="tab-btn" onclick="switchTab(2)">👩‍🌾 Mothers</button>
         <button class="tab-btn" onclick="switchTab(3)">🌱 Clones</button>
+        <button class="tab-btn" onclick="switchTab(4)">📦 Archive</button>
     </div>
 
     <div class="controls-bottom" id="add-controls">
@@ -103,32 +129,14 @@
 
     <div id="productList" class="product-list"></div>
 
-    <div id="dashboard-view" style="display: none;">
-        <div class="dashboard-grid">
-            <div style="background:#1e2937;padding:20px;border-radius:12px;">
-                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Mothers Due for Rotation</h3>
-                <div id="due-mothers" style="font-size:28px;font-weight:700;color:#f97316;">0</div>
-            </div>
-            <div style="background:#1e2937;padding:20px;border-radius:12px;">
-                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Active Clone Batches</h3>
-                <div id="active-clones" style="font-size:28px;font-weight:700;color:#67e8f9;">0</div>
-            </div>
-            <div style="background:#1e2937;padding:20px;border-radius:12px;">
-                <h3 style="margin:0 0 12px 0;color:#67e8f9;">Rare Backups</h3>
-                <div id="rare-backups" style="font-size:28px;font-weight:700;color:#a78bfa;">0</div>
-            </div>
-        </div>
-        <canvas id="timelineChart" height="220" style="margin-top:24px;"></canvas>
-        <div id="alert-list" style="margin-top:24px;"></div>
-    </div>
-
     <div id="output" class="result"></div>
 
     <div class="user-manual">
         <h3 style="color:#22d3ee;">🌱 Quick Tips</h3>
         <ul>
-            <li>Genetic cards show compact color-coded traits.</li>
-            <li>Manage Mother → Take Clones Now lets you choose quantity.</li>
+            <li>Dashboard always visible at top.</li>
+            <li>Archive button on mothers and clones now works identically (archives to Archive tab, click again to restore).</li>
+            <li>Prune button flashes for feedback and deduplicates same-day entries.</li>
         </ul>
     </div>
 
@@ -138,11 +146,10 @@
         let genetics = [];
         let mothers = [];
         let clones = [];
-        let currentTab = 1;
+        let currentTab = 2;
         let lastUpdated = null;
-        let timelineChart = null;
 
-        const clonePhases = ["Cutting", "Rooting", "Rooted", "Veg/Transplanted", "Solo Cup / Ready"];
+        const clonePhases = ["Cutting", "Rooting", "Rooted", "Veg/Transplanted", "Solo Cup / Ready", "Retail", "Flowering", "Replenish Moms"];
 
         function updateLastUpdated() {
             lastUpdated = new Date();
@@ -169,49 +176,98 @@
             if (currentTab === 2) { // Mothers
                 document.getElementById('add-btn-text').innerHTML = '+ Add Mother';
                 mothers.forEach((m, i) => {
+                    if (m.status === 'Archived') return;
                     const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
-                    const daysOld = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
-                    const colorClass = daysOld > 90 ? 'time-red' : 'time-normal';
+                    const daysSinceClone = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
+                    const showWarning = daysSinceClone > 30;
+                    const pruneCount = m.pruneHistory ? m.pruneHistory.length : 0;
+                    const cloneCount = m.cloneHistory ? m.cloneHistory.length : 0;
                     const div = document.createElement('div');
                     div.className = 'product-item';
                     div.innerHTML = `
                         <div class="product-info">
                             <div class="product-name">${m.tag} — ${genetic.name}</div>
                             <div class="product-desc">Health: ${m.health} • Location: ${m.location || '—'}</div>
-                            <div class="product-meta">Last clone: ${m.lastCloneDate || 'Never'}</div>
-                            <div class="time-on-menu ${colorClass}">Cycle: ${daysOld} days</div>
+                            <div style="font-size:13px;color:var(--text-light);margin:8px 0;">
+                                Last clone: ${m.lastCloneDate || 'Never'}<br>
+                                Last prune: ${m.lastPruneDate || 'Never'}<br>
+                                Prunes: ${pruneCount} • Clones taken: ${cloneCount}
+                            </div>
+                            ${showWarning ? `<span class="warning-badge">⚠️ No clone in ${daysSinceClone} days</span>` : ''}
                         </div>
-                        <button class="edit-btn" onclick="editMother(${i}); event.stopImmediatePropagation();">Manage</button>
+                        <div style="display:flex;gap:6px;flex-direction:column;">
+                            <button class="edit-btn" onclick="pruneMother(${i}); event.stopImmediatePropagation();">Prune</button>
+                            <button class="edit-btn" onclick="editMother(${i}); event.stopImmediatePropagation();">Manage</button>
+                        </div>
                     `;
                     container.appendChild(div);
                 });
-                if (mothers.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No mothers yet.</div>`;
+                if (mothers.filter(m => m.status !== 'Archived').length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active mothers yet.</div>`;
             } else if (currentTab === 3) { // Clones
                 document.getElementById('add-btn-text').innerHTML = '+ Take Clones';
                 clones.forEach((c, i) => {
+                    if (c.isArchived) return;
                     const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+                    const isMixed = (c.sourceMothers && c.sourceMothers.length > 1);
+                    const displayName = isMixed ? 'Mixed Batch' : genetic.name;
+                    const qtyBreakdown = c.quantityBreakdown ? Object.entries(c.quantityBreakdown).map(([m,q]) => `${m}: ${q}`).join(' + ') : c.quantity;
                     const div = document.createElement('div');
                     div.className = 'product-item';
                     div.innerHTML = `
                         <div class="product-info">
-                            <div class="product-name">Batch #${c.id} — ${genetic.name}</div>
-                            <div class="product-desc">Phase: ${c.status} • Qty: ${c.quantity}</div>
-                            <div class="product-meta">Cut: ${c.cutDate} • From: ${c.motherTag || '—'}</div>
-                            <div class="time-on-menu">${c.isBackup ? '🧬 BACKUP' : ''}</div>
+                            <div class="product-name">Batch #${c.id} — ${displayName}</div>
+                            <div class="product-desc">Phase: ${c.status} • Total Qty: ${c.quantity}</div>
+                            <div style="font-size:13px;color:var(--text-light);margin:8px 0;">
+                                Breakdown: ${qtyBreakdown}<br>
+                                Purpose: ${c.purpose || 'Not set'}<br>
+                                Cut: ${c.cutDate}
+                            </div>
                         </div>
-                        <button class="edit-btn" onclick="editClone(${i}); event.stopImmediatePropagation();">Update Phase</button>
+                        <button class="edit-btn" onclick="editClone(${i}); event.stopImmediatePropagation();">Manage</button>
                     `;
                     container.appendChild(div);
                 });
-                if (clones.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No clones yet. Use + Take Clones or Manage a mother.</div>`;
+                if (clones.filter(c => !c.isArchived).length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active clones yet. Use + Take Clones.</div>`;
+            } else if (currentTab === 4) { // Archive
+                let html = '<h3 style="color:#64748b;margin:20px 0 10px 0;">Archived Mothers</h3>';
+                const archivedMothers = mothers.filter(m => m.status === 'Archived');
+                if (archivedMothers.length === 0) html += '<div style="padding:20px;color:#64748b;">No archived mothers yet.</div>';
+                else archivedMothers.forEach((m, globalIndex) => {
+                    const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
+                    html += `
+                        <div class="product-item archived">
+                            <div class="product-info">
+                                <div class="product-name">${m.tag} — ${genetic.name} (Archived)</div>
+                                <div class="product-desc">Health: ${m.health} • Location: ${m.location || '—'}</div>
+                            </div>
+                            <button class="edit-btn" onclick="toggleArchiveMother(${globalIndex}); event.stopImmediatePropagation();">Restore to Active</button>
+                        </div>`;
+                });
+
+                html += '<h3 style="color:#64748b;margin:30px 0 10px 0;">Archived Clones</h3>';
+                const archivedClones = clones.filter(c => c.isArchived);
+                if (archivedClones.length === 0) html += '<div style="padding:20px;color:#64748b;">No archived clones yet.</div>';
+                else archivedClones.forEach((c, globalIndex) => {
+                    const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+                    const isMixed = (c.sourceMothers && c.sourceMothers.length > 1);
+                    const displayName = isMixed ? 'Mixed Batch' : genetic.name;
+                    const qtyBreakdown = c.quantityBreakdown ? Object.entries(c.quantityBreakdown).map(([m,q]) => `${m}: ${q}`).join(' + ') : c.quantity;
+                    html += `
+                        <div class="product-item archived">
+                            <div class="product-info">
+                                <div class="product-name">Batch #${c.id} — ${displayName} (Archived)</div>
+                                <div class="product-desc">Phase: ${c.status} • Qty: ${qtyBreakdown}</div>
+                            </div>
+                            <button class="edit-btn" onclick="toggleArchiveClone(${globalIndex}); event.stopImmediatePropagation();">Restore to Active</button>
+                        </div>`;
+                });
+                container.innerHTML = html;
             }
         }
 
         function showGeneticLibrary() {
             currentTab = 0;
             document.getElementById('productList').style.display = 'block';
-            document.getElementById('dashboard-view').style.display = 'none';
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('add-controls').style.display = 'flex';
             document.getElementById('add-btn-text').innerHTML = '+ Add New Genetic';
             renderGeneticLibrary();
@@ -262,12 +318,12 @@
             const g = genetics[index];
             const modalHTML = `
             <div class="modal-content">
-                <h3 style="color:#22d3ee;margin-bottom:20px;">Edit Genetic — ${g.name || 'New Strain'}</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <h3 style="color:#22d3ee;margin-bottom:16px;">Edit Genetic — ${g.name || 'New Strain'}</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <div><label>Strain Name</label><input value="${g.name||''}" onchange="genetics[${index}].name=this.value;updateLastUpdated();"></div>
                     <div><label>Lineage</label><input value="${g.lineage||''}" onchange="genetics[${index}].lineage=this.value;updateLastUpdated();"></div>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
                     <div><label>Vigor</label><select onchange="genetics[${index}].vigor=this.value;updateLastUpdated();"><option value="">Select</option><option value="High" ${g.vigor==='High'?'selected':''}>High</option><option value="Medium" ${g.vigor==='Medium'?'selected':''}>Medium</option><option value="Low" ${g.vigor==='Low'?'selected':''}>Low</option></select></div>
                     <div><label>Rooting Ease</label><select onchange="genetics[${index}].rootingEase=this.value;updateLastUpdated();"><option value="">Select</option><option value="Easy (5-10 days)" ${g.rootingEase==='Easy (5-10 days)'?'selected':''}>Easy (5-10 days)</option><option value="Moderate (10-14 days)" ${g.rootingEase==='Moderate (10-14 days)'?'selected':''}>Moderate (10-14 days)</option><option value="Difficult (14+ days)" ${g.rootingEase==='Difficult (14+ days)'?'selected':''}>Difficult (14+ days)</option></select></div>
                     <div><label>Flower Type</label><select onchange="genetics[${index}].flowerType=this.value;updateLastUpdated();"><option value="">Select</option><option value="Indica" ${g.flowerType==='Indica'?'selected':''}>Indica</option><option value="Sativa" ${g.flowerType==='Sativa'?'selected':''}>Sativa</option><option value="Hybrid" ${g.flowerType==='Hybrid'?'selected':''}>Hybrid</option></select></div>
@@ -275,17 +331,22 @@
                     <div><label>Structure</label><select onchange="genetics[${index}].structure=this.value;updateLastUpdated();"><option value="">Select</option><option value="Bushy" ${g.structure==='Bushy'?'selected':''}>Bushy</option><option value="Stretchy" ${g.structure==='Stretchy'?'selected':''}>Stretchy</option><option value="Compact" ${g.structure==='Compact'?'selected':''}>Compact</option></select></div>
                     <div><label>Flowering Weeks</label><select onchange="genetics[${index}].floweringWeeks=this.value;updateLastUpdated();"><option value="">Select</option><option value="7-8" ${g.floweringWeeks==='7-8'?'selected':''}>7-8</option><option value="8-9" ${g.floweringWeeks==='8-9'?'selected':''}>8-9</option><option value="9-10" ${g.floweringWeeks==='9-10'?'selected':''}>9-10</option><option value="10-11" ${g.floweringWeeks==='10-11'?'selected':''}>10-11</option></select></div>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <div><label>THC %</label><input value="${g.thc||''}" onchange="genetics[${index}].thc=this.value;updateLastUpdated();"></div>
                     <div><label>CBD %</label><input value="${g.cbd||''}" onchange="genetics[${index}].cbd=this.value;updateLastUpdated();"></div>
                 </div>
-                <div style="margin-top:16px;"><label>Key Terpenes</label><input value="${g.terpenes||''}" onchange="genetics[${index}].terpenes=this.value;updateLastUpdated();" style="width:100%;"></div>
-                <div style="margin-top:16px;"><label>Full Notes</label><textarea style="height:100px;width:100%;" onchange="genetics[${index}].notes=this.value;updateLastUpdated();">${g.notes||''}</textarea></div>
-                <div style="margin-top:24px;text-align:right;">
+                <div style="margin-top:12px;"><label>Key Terpenes</label><input value="${g.terpenes||''}" onchange="genetics[${index}].terpenes=this.value;updateLastUpdated();" style="width:100%;"></div>
+                <div style="margin-top:12px;"><label>Full Notes</label><textarea style="height:80px;width:100%;" onchange="genetics[${index}].notes=this.value;updateLastUpdated();">${g.notes||''}</textarea></div>
+                <div style="margin-top:20px;text-align:right;display:flex;gap:12px;justify-content:flex-end;">
+                    <button onclick="deleteGenetic(${index});hideModal()" style="background:#ef4444;color:white;padding:12px 24px;border-radius:8px;">Delete Genetic</button>
                     <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save & Return</button>
                 </div>
             </div>`;
             showModal(modalHTML);
+        }
+
+        function deleteGenetic(i) {
+            if (confirm("Permanently delete this genetic?")) genetics.splice(i, 1);
         }
 
         function addMother() {
@@ -306,7 +367,11 @@
         function createMother() {
             const geneticId = parseInt(document.getElementById('genetic-select').value);
             const tag = document.getElementById('mother-tag').value.trim() || `MOM-${String(Date.now()).slice(-4)}`;
-            const newM = { id: Date.now(), geneticId, tag, startDate: new Date().toISOString().split('T')[0], lastCloneDate: "", lastPruneDate: "", health: "Good", location: "", notes: "" };
+            const newM = { 
+                id: Date.now(), geneticId, tag, startDate: new Date().toISOString().split('T')[0], 
+                lastCloneDate: "", lastPruneDate: "", pruneHistory: [], cloneHistory: [], 
+                health: "Good", location: "", notes: "", status: "Active" 
+            };
             mothers.unshift(newM);
             hideModal();
             switchTab(2);
@@ -314,9 +379,30 @@
             saveToLocal();
         }
 
+        function pruneMother(i) {
+            const today = new Date().toISOString().split('T')[0];
+            mothers[i].lastPruneDate = today;
+            if (!mothers[i].pruneHistory) mothers[i].pruneHistory = [];
+            if (mothers[i].pruneHistory[0] !== today) {
+                mothers[i].pruneHistory.unshift(today);
+            }
+            // Visual flash feedback
+            const items = document.querySelectorAll('.product-item');
+            if (items[i]) {
+                const orig = items[i].style.background;
+                items[i].style.background = '#22d3ee';
+                setTimeout(() => { if (items[i]) items[i].style.background = orig || ''; }, 400);
+            }
+            updateLastUpdated();
+            saveToLocal();
+            renderList();
+        }
+
         function editMother(i) {
             const m = mothers[i];
             const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
+            const pruneHist = m.pruneHistory && m.pruneHistory.length ? m.pruneHistory.map(d => `<div class="history-item">Pruned: ${d}</div>`).join('') : '<div class="history-item">No prunes yet</div>';
+            const cloneHist = m.cloneHistory && m.cloneHistory.length ? m.cloneHistory.map(entry => `<div class="history-item">Cloned: ${entry.date} (${entry.qty} clones)</div>`).join('') : '<div class="history-item">No clones yet</div>';
             const modalHTML = `
             <div class="modal-content">
                 <h3 style="color:#22d3ee;margin-bottom:20px;">Manage Mother — ${m.tag} (${genetic.name})</h3>
@@ -328,48 +414,28 @@
                     <div><label>Last Clone Date</label><input type="date" value="${m.lastCloneDate||''}" onchange="mothers[${i}].lastCloneDate=this.value;updateLastUpdated();"></div>
                     <div><label>Last Prune Date</label><input type="date" value="${m.lastPruneDate||''}" onchange="mothers[${i}].lastPruneDate=this.value;updateLastUpdated();"></div>
                 </div>
-                <div style="margin-top:16px;"><label>Notes</label><textarea style="height:120px;width:100%;" onchange="mothers[${i}].notes=this.value;updateLastUpdated();">${m.notes||''}</textarea></div>
+                <div style="margin-top:20px;">
+                    <label>Prune History</label>
+                    <div style="background:#0f172a;padding:12px;border-radius:8px;max-height:120px;overflow:auto;">${pruneHist}</div>
+                </div>
+                <div style="margin-top:16px;">
+                    <label>Clone History</label>
+                    <div style="background:#0f172a;padding:12px;border-radius:8px;max-height:120px;overflow:auto;">${cloneHist}</div>
+                </div>
+                <div style="margin-top:16px;"><label>Notes</label><textarea style="height:100px;width:100%;" onchange="mothers[${i}].notes=this.value;updateLastUpdated();">${m.notes||''}</textarea></div>
                 <div style="margin-top:24px;text-align:right;">
-                    <button onclick="takeClonesFromMotherPrompt(${i})" style="background:#67e8f9;color:#0f172a;padding:12px 24px;border-radius:8px;margin-right:12px;">Take Clones Now</button>
+                    <button onclick="toggleArchiveMother(${i})" style="background:#64748b;color:white;padding:12px 24px;border-radius:8px;margin-right:12px;">${m.status === 'Archived' ? 'Restore to Active' : 'Archive Mother'}</button>
                     <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save & Return</button>
                 </div>
             </div>`;
             showModal(modalHTML);
         }
 
-        function takeClonesFromMotherPrompt(motherIndex) {
-            const mother = mothers[motherIndex];
-            const modalHTML = `
-            <div class="modal-content">
-                <h3 style="color:#22d3ee;margin-bottom:16px;">Take Clones from ${mother.tag}</h3>
-                <input id="clone-qty" type="number" value="12" placeholder="Number of clones" style="margin-bottom:16px;">
-                <div style="text-align:right;">
-                    <button onclick="takeClonesFromMother(${motherIndex})" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Take Clones</button>
-                </div>
-            </div>`;
-            showModal(modalHTML);
-        }
-
-        function takeClonesFromMother(motherIndex) {
-            const qtyInput = document.getElementById('clone-qty');
-            const qty = qtyInput ? parseInt(qtyInput.value) || 12 : 12;
-            const mother = mothers[motherIndex];
-            const newClone = { 
-                id: Date.now(), 
-                geneticId: mother.geneticId, 
-                motherId: mother.id, 
-                motherTag: mother.tag, 
-                cutDate: new Date().toISOString().split('T')[0], 
-                rootedDate: "", 
-                status: "Cutting", 
-                quantity: qty, 
-                isBackup: false, 
-                progressNotes: "" 
-            };
-            clones.unshift(newClone);
-            mother.lastCloneDate = newClone.cutDate;
+        function toggleArchiveMother(i) {
+            const m = mothers[i];
+            m.status = (m.status === 'Archived') ? "Active" : "Archived";
             hideModal();
-            switchTab(3);
+            switchTab(2);
             updateLastUpdated();
             saveToLocal();
         }
@@ -377,58 +443,138 @@
         function takeClonesFromMotherPrompt() {
             if (mothers.length === 0) return alert("No mothers available.");
             let options = mothers.map((m, idx) => {
+                if (m.status === 'Archived') return '';
                 const gen = genetics.find(g => g.id === m.geneticId) || {name: ''};
                 return `<option value="${idx}">${m.tag} — ${gen.name}</option>`;
             }).join('');
             const html = `
             <div class="modal-content">
-                <h3 style="color:#22d3ee;margin-bottom:16px;">Select Mother to Take Clones From</h3>
-                <select id="mother-select" style="margin-bottom:16px;">${options}</select>
-                <input id="clone-qty" type="number" value="12" style="margin-bottom:16px;">
+                <h3 style="color:#22d3ee;margin-bottom:16px;">Take Clones — Select Mothers & Quantities</h3>
+                <div id="mom-quantity-list" style="max-height:300px;overflow:auto;margin-bottom:16px;"></div>
                 <div style="text-align:right;">
-                    <button onclick="createCloneFromSelected()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Take Clones</button>
+                    <button onclick="hideModal()" style="background:#64748b;color:white;padding:12px 24px;border-radius:8px;margin-right:12px;">Cancel</button>
+                    <button onclick="createMultiMotherClone()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Create Batch</button>
                 </div>
             </div>`;
             showModal(html);
+            renderMotherQuantityList();
         }
 
-        function createCloneFromSelected() {
-            const idx = parseInt(document.getElementById('mother-select').value);
-            const qty = parseInt(document.getElementById('clone-qty').value) || 10;
-            const mother = mothers[idx];
-            const newClone = { id: Date.now(), geneticId: mother.geneticId, motherId: mother.id, motherTag: mother.tag, cutDate: new Date().toISOString().split('T')[0], rootedDate: "", status: "Cutting", quantity: qty, isBackup: false, progressNotes: "" };
+        function renderMotherQuantityList() {
+            const container = document.getElementById('mom-quantity-list');
+            container.innerHTML = '';
+            mothers.forEach((m, idx) => {
+                if (m.status === 'Archived') return;
+                const genetic = genetics.find(g => g.id === m.geneticId) || {name: ''};
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px;background:#0f172a;border-radius:8px;';
+                row.innerHTML = `
+                    <input type="checkbox" id="check-${idx}" style="width:auto;" checked>
+                    <div style="flex:1;">
+                        <div>${m.tag} — ${genetic.name}</div>
+                    </div>
+                    <input type="number" id="qty-${idx}" value="12" style="width:80px;">
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function createMultiMotherClone() {
+            const selected = [];
+            let totalQty = 0;
+            const quantityBreakdown = {};
+            mothers.forEach((m, idx) => {
+                const checked = document.getElementById(`check-${idx}`);
+                if (checked && checked.checked) {
+                    const qty = parseInt(document.getElementById(`qty-${idx}`).value) || 0;
+                    if (qty > 0) {
+                        selected.push(m);
+                        quantityBreakdown[m.tag] = qty;
+                        totalQty += qty;
+                        if (!m.cloneHistory) m.cloneHistory = [];
+                        m.cloneHistory.unshift({date: new Date().toISOString().split('T')[0], qty: qty});
+                        m.lastCloneDate = new Date().toISOString().split('T')[0];
+                    }
+                }
+            });
+            if (selected.length === 0) return alert("Select at least one mother and enter quantity.");
+            const firstMother = selected[0];
+            const sourceTags = selected.map(m => m.tag);
+            const newClone = { 
+                id: Date.now(), 
+                geneticId: firstMother.geneticId, 
+                sourceMothers: sourceTags, 
+                quantityBreakdown: quantityBreakdown,
+                cutDate: new Date().toISOString().split('T')[0], 
+                status: "Cutting", 
+                purpose: "", 
+                quantity: totalQty, 
+                isBackup: false, 
+                progressNotes: "",
+                isArchived: false
+            };
             clones.unshift(newClone);
-            mother.lastCloneDate = newClone.cutDate;
             hideModal();
             switchTab(3);
             updateLastUpdated();
             saveToLocal();
+            renderList();
         }
 
         function editClone(i) {
             const c = clones[i];
             const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+            const isMixed = (c.sourceMothers && c.sourceMothers.length > 1);
+            const displayName = isMixed ? 'Mixed Batch' : genetic.name;
+            const breakdown = c.quantityBreakdown ? Object.entries(c.quantityBreakdown).map(([m,q]) => `${m}: ${q}`).join(' + ') : c.quantity;
             const html = `
             <div class="modal-content">
-                <h3 style="color:#22d3ee;margin-bottom:20px;">Update Clone Batch — ${genetic.name}</h3>
+                <h3 style="color:#22d3ee;margin-bottom:20px;">Manage Clone Batch — ${displayName}</h3>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                     <div><label>Current Phase</label><select onchange="clones[${i}].status=this.value;updateLastUpdated();">${clonePhases.map(p => `<option value="${p}" ${c.status===p?'selected':''}>${p}</option>`).join('')}</select></div>
-                    <div><label>Quantity</label><input type="number" value="${c.quantity}" onchange="clones[${i}].quantity=Number(this.value);updateLastUpdated();"></div>
+                    <div><label>Total Quantity</label><input type="number" value="${c.quantity}" onchange="clones[${i}].quantity=Number(this.value);updateLastUpdated();"></div>
+                </div>
+                <div style="margin-top:16px;"><label>Quantity Breakdown</label><div style="background:#0f172a;padding:10px;border-radius:6px;">${breakdown}</div></div>
+                <div style="margin-top:16px;"><label>Purpose</label>
+                    <select onchange="clones[${i}].purpose=this.value;updateLastUpdated();">
+                        <option value="">Select Purpose</option>
+                        <option value="Retail" ${c.purpose==='Retail'?'selected':''}>Retail</option>
+                        <option value="Flowering" ${c.purpose==='Flowering'?'selected':''}>Flowering</option>
+                        <option value="Replenish Moms" ${c.purpose==='Replenish Moms'?'selected':''}>Replenish Moms</option>
+                    </select>
                 </div>
                 <div style="margin-top:16px;"><label>Progress Notes</label><textarea style="height:100px;width:100%;" onchange="clones[${i}].progressNotes=this.value;updateLastUpdated();">${c.progressNotes||''}</textarea></div>
-                <div style="margin-top:24px;text-align:right;">
+                <div style="margin-top:20px;text-align:right;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
+                    <button onclick="toggleArchiveClone(${i});hideModal()" style="background:#64748b;color:white;padding:12px 24px;border-radius:8px;">${c.isArchived ? 'Restore to Active' : 'Archive Batch'}</button>
+                    <button onclick="deleteClone(${i});hideModal()" style="background:#ef4444;color:white;padding:12px 24px;border-radius:8px;">Delete Batch</button>
                     <button onclick="hideModal()" style="background:#22d3ee;color:#0f172a;padding:14px 36px;border-radius:8px;">Save</button>
                 </div>
             </div>`;
             showModal(html);
         }
 
+        function toggleArchiveClone(i) {
+            const c = clones[i];
+            c.isArchived = !c.isArchived;
+            hideModal();
+            renderList();
+            updateLastUpdated();
+            saveToLocal();
+        }
+
+        function deleteClone(i) {
+            if (confirm("Permanently delete this clone batch?")) {
+                clones.splice(i, 1);
+                hideModal();
+                renderList();
+                updateLastUpdated();
+                saveToLocal();
+            }
+        }
+
         function copyPropagationSMS() {
             let text = "🌱 LUCKY PROPAGATION READY LIST\n\n";
-            const readyMothers = mothers.filter(m => {
-                const days = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
-                return days > 30;
-            });
+            const readyMothers = mothers.filter(m => m.status === "Active" && (m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999) > 30);
             if (readyMothers.length) {
                 text += "MOTHERS READY FOR SNIPS:\n";
                 readyMothers.forEach(m => {
@@ -438,12 +584,14 @@
                 text += "\n";
             }
             clonePhases.forEach(phase => {
-                const inPhase = clones.filter(c => c.status === phase);
+                const inPhase = clones.filter(c => !c.isArchived && c.status === phase);
                 if (inPhase.length) {
                     text += `${phase.toUpperCase()}:\n`;
                     inPhase.forEach(c => {
-                        const gen = genetics.find(g => g.id === c.geneticId) || {name:''};
-                        text += `• ${gen.name} ×${c.quantity} (${c.cutDate})\n`;
+                        const genetic = genetics.find(g => g.id === c.geneticId) || {name: 'Unknown'};
+                        const isMixed = (c.sourceMothers && c.sourceMothers.length > 1);
+                        const displayName = isMixed ? 'Mixed Batch' : genetic.name;
+                        text += `• ${displayName} ×${c.quantity} (${c.cutDate}) Purpose:${c.purpose||'—'}\n`;
                     });
                     text += "\n";
                 }
@@ -454,24 +602,19 @@
         function switchTab(tab) {
             currentTab = tab;
             document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i+1 === tab));
-            document.getElementById('productList').style.display = (tab === 2 || tab === 3) ? 'block' : 'none';
-            document.getElementById('dashboard-view').style.display = (tab === 1) ? 'block' : 'none';
-            document.getElementById('add-controls').style.display = (tab === 1) ? 'none' : 'flex';
-            if (tab === 1) renderDashboard();
-            else if (tab === 2 || tab === 3) renderList();
+            document.getElementById('productList').style.display = 'block';
+            document.getElementById('add-controls').style.display = (tab === 2 || tab === 3) ? 'flex' : 'none';
+            renderList();
         }
 
         function renderDashboard() {
-            const due = mothers.filter(m => {
-                const days = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
-                return days > 90;
-            }).length;
+            const due = mothers.filter(m => m.status === "Active" && (m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999) > 90).length;
             document.getElementById('due-mothers').textContent = due;
-            const active = clones.filter(c => !["Solo Cup / Ready"].includes(c.status)).length;
+            const active = clones.filter(c => !c.isArchived && !["Retail", "Flowering", "Replenish Moms"].includes(c.status)).length;
             document.getElementById('active-clones').textContent = active;
-            const backups = clones.filter(c => c.isBackup).length;
+            const backups = clones.filter(c => !c.isArchived && c.isBackup).length;
             document.getElementById('rare-backups').textContent = backups;
-            let alertHTML = due > 0 ? `<div style="background:#f97316;color:#0f172a;padding:12px;border-radius:8px;">⚠️ ${due} mothers overdue for rotation (rotate every 3-6 months).</div>` : `<div style="color:#67e8f9;">All cycles look healthy! 🌱</div>`;
+            let alertHTML = due > 0 ? `<div style="background:#f97316;color:#0f172a;padding:12px;border-radius:8px;">⚠️ ${due} mothers overdue for rotation.</div>` : `<div style="color:#67e8f9;">All cycles look healthy! 🌱</div>`;
             document.getElementById('alert-list').innerHTML = alertHTML;
         }
 
@@ -490,8 +633,7 @@
         function hideModal() {
             const modal = document.getElementById('modal-overlay');
             if (modal) modal.style.display = 'none';
-            if (currentTab === 0) renderGeneticLibrary();
-            else renderList();
+            renderList();
             saveToLocal();
         }
 
@@ -509,7 +651,7 @@
                     updateLastUpdated();
                     saveToLocal();
                     alert("✅ Imported successfully!");
-                    switchTab(1);
+                    switchTab(2);
                 } catch(err) { alert("Error importing JSON"); }
             };
             reader.readAsText(file);
@@ -530,27 +672,8 @@
 
         window.onload = () => {
             loadFromLocal();
-            if (genetics.length === 0) {
-                genetics = [{
-                    id: Date.now(),
-                    name: "Blue Dream",
-                    lineage: "Blueberry x Haze",
-                    createdDate: "2025-04-01",
-                    vigor: "High",
-                    rootingEase: "Easy (5-10 days)",
-                    flowerType: "Hybrid",
-                    yieldPotential: "High",
-                    structure: "Bushy",
-                    pestResistance: "Medium",
-                    moldResistance: "High",
-                    floweringWeeks: "8-9",
-                    thc: "18-24%",
-                    cbd: "0.5-1%",
-                    terpenes: "Myrcene, Pinene, Caryophyllene",
-                    notes: "Reliable mother for perpetual veg and clone backups."
-                }];
-            }
-            switchTab(1);
+            renderDashboard();
+            switchTab(2);
             updateLastUpdated();
         };
     </script>
