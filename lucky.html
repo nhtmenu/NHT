@@ -87,7 +87,7 @@
 <body>
     <h1>Lucky Propagation 🌱</h1>
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
-    <p class="note">Genetic Library • Mother Cycle • Clone Timeline • Archive</p>
+    <p class="note">Start fresh every time • Import your JSON to load data</p>
 
     <!-- Always-visible Dashboard -->
     <div id="dashboard-view" class="dashboard-grid">
@@ -153,6 +153,11 @@
                 genetics = parsed.genetics || [];
                 mothers = parsed.mothers || [];
                 clones = parsed.clones || [];
+            } else {
+                // Start completely blank every time (no sample data)
+                genetics = [];
+                mothers = [];
+                clones = [];
             }
         }
 
@@ -196,7 +201,7 @@
                     container.appendChild(div);
                 });
                 if (mothers.filter(m => m.status !== 'Archived').length === 0) {
-                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active mothers yet. Add one from the Genetic Library.</div>`;
+                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active mothers yet.<br>Start by adding genetics then mothers.</div>`;
                 }
             } else if (currentTab === 3) { // Clones
                 document.getElementById('add-btn-text').innerHTML = '+ Take Clones';
@@ -224,7 +229,7 @@
                     container.appendChild(div);
                 });
                 if (clones.filter(c => !c.isArchived).length === 0) {
-                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active clones yet. Use + Take Clones.</div>`;
+                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active clones yet.<br>Use + Take Clones from the Mothers tab.</div>`;
                 }
             } else if (currentTab === 4) { // Archive
                 let html = '<h3 style="color:#64748b;margin:20px 0 10px 0;">Archived Mothers</h3>';
@@ -295,7 +300,7 @@
                 `;
                 container.appendChild(div);
             });
-            if (genetics.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No genetics yet. Click + Add New Genetic.</div>`;
+            if (genetics.length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No genetics yet.<br>Import your JSON or add new genetics.</div>`;
         }
 
         function addNewItem() {
@@ -643,9 +648,9 @@
                     clones = imported.clones || [];
                     updateLastUpdated();
                     saveToLocal();
-                    alert("✅ Imported successfully!");
+                    alert("✅ Imported successfully! Data loaded.");
                     switchTab(2);
-                } catch(err) { alert("Error importing JSON"); }
+                } catch(err) { alert("Error importing JSON. Please check the file."); }
             };
             reader.readAsText(file);
         });
@@ -664,7 +669,11 @@
         }
 
         window.onload = () => {
-            loadFromLocal();
+            // Always start completely blank (no sample data)
+            genetics = [];
+            mothers = [];
+            clones = [];
+            loadFromLocal(); // This will load saved data if it exists, but new sessions are blank until import
             renderDashboard();
             switchTab(2);
             updateLastUpdated();
