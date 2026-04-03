@@ -50,13 +50,10 @@
         .low { background: #f87171; color: #0f172a; }
         .neutral { background: #64748b; color: #e2e8f0; }
         .warning-badge { background: #ef4444; color: white; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
-        .time-on-menu { font-size: 12px; margin-top: 8px; color: var(--text-light); }
-        .time-normal { color: #86efac; } .time-red { color: #ef4444; }
         .edit-btn { background: #22d3ee; color: #0f172a; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; }
         .tab-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #334155; flex-wrap: wrap; }
         .tab-btn { padding: 10px 18px; font-size: 14px; background: #334155; border: none; border-radius: 6px 6px 0 0; cursor: pointer; }
         .tab-btn.active { background: #1e2937; border-bottom: 3px solid var(--accent); color: var(--accent); }
-        .result { margin-top: 30px; background: #1e2937; border-radius: 12px; padding: 20px; color: #67e8f9; font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 320px; overflow: auto; border: 1px solid #334155; }
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
         .modal-content { 
             background: #1e2937; 
@@ -129,17 +126,6 @@
 
     <div id="productList" class="product-list"></div>
 
-    <div id="output" class="result"></div>
-
-    <div class="user-manual">
-        <h3 style="color:#22d3ee;">🌱 Quick Tips</h3>
-        <ul>
-            <li>Dashboard always visible at top.</li>
-            <li>Archive button on mothers and clones now works identically (archives to Archive tab, click again to restore).</li>
-            <li>Prune button flashes for feedback and deduplicates same-day entries.</li>
-        </ul>
-    </div>
-
     <input type="file" id="fileInput" accept=".json" style="display:none;">
 
     <script>
@@ -170,18 +156,25 @@
             }
         }
 
+        function getDaysSinceClone(m) {
+            if (!m.lastCloneDate || m.lastCloneDate === "") return null;
+            return Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000);
+        }
+
         function renderList() {
             const container = document.getElementById('productList');
             container.innerHTML = '';
+
             if (currentTab === 2) { // Mothers
                 document.getElementById('add-btn-text').innerHTML = '+ Add Mother';
                 mothers.forEach((m, i) => {
                     if (m.status === 'Archived') return;
                     const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
-                    const daysSinceClone = m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999;
-                    const showWarning = daysSinceClone > 30;
+                    const daysSince = getDaysSinceClone(m);
+                    const showWarning = daysSince !== null && daysSince > 30;
                     const pruneCount = m.pruneHistory ? m.pruneHistory.length : 0;
                     const cloneCount = m.cloneHistory ? m.cloneHistory.length : 0;
+
                     const div = document.createElement('div');
                     div.className = 'product-item';
                     div.innerHTML = `
@@ -193,7 +186,7 @@
                                 Last prune: ${m.lastPruneDate || 'Never'}<br>
                                 Prunes: ${pruneCount} • Clones taken: ${cloneCount}
                             </div>
-                            ${showWarning ? `<span class="warning-badge">⚠️ No clone in ${daysSinceClone} days</span>` : ''}
+                            ${showWarning ? `<span class="warning-badge">⚠️ No clone in ${daysSince} days</span>` : ''}
                         </div>
                         <div style="display:flex;gap:6px;flex-direction:column;">
                             <button class="edit-btn" onclick="pruneMother(${i}); event.stopImmediatePropagation();">Prune</button>
@@ -202,7 +195,9 @@
                     `;
                     container.appendChild(div);
                 });
-                if (mothers.filter(m => m.status !== 'Archived').length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active mothers yet.</div>`;
+                if (mothers.filter(m => m.status !== 'Archived').length === 0) {
+                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active mothers yet. Add one from the Genetic Library.</div>`;
+                }
             } else if (currentTab === 3) { // Clones
                 document.getElementById('add-btn-text').innerHTML = '+ Take Clones';
                 clones.forEach((c, i) => {
@@ -211,6 +206,7 @@
                     const isMixed = (c.sourceMothers && c.sourceMothers.length > 1);
                     const displayName = isMixed ? 'Mixed Batch' : genetic.name;
                     const qtyBreakdown = c.quantityBreakdown ? Object.entries(c.quantityBreakdown).map(([m,q]) => `${m}: ${q}`).join(' + ') : c.quantity;
+
                     const div = document.createElement('div');
                     div.className = 'product-item';
                     div.innerHTML = `
@@ -227,7 +223,9 @@
                     `;
                     container.appendChild(div);
                 });
-                if (clones.filter(c => !c.isArchived).length === 0) container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active clones yet. Use + Take Clones.</div>`;
+                if (clones.filter(c => !c.isArchived).length === 0) {
+                    container.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b;">No active clones yet. Use + Take Clones.</div>`;
+                }
             } else if (currentTab === 4) { // Archive
                 let html = '<h3 style="color:#64748b;margin:20px 0 10px 0;">Archived Mothers</h3>';
                 const archivedMothers = mothers.filter(m => m.status === 'Archived');
@@ -442,11 +440,6 @@
 
         function takeClonesFromMotherPrompt() {
             if (mothers.length === 0) return alert("No mothers available.");
-            let options = mothers.map((m, idx) => {
-                if (m.status === 'Archived') return '';
-                const gen = genetics.find(g => g.id === m.geneticId) || {name: ''};
-                return `<option value="${idx}">${m.tag} — ${gen.name}</option>`;
-            }).join('');
             const html = `
             <div class="modal-content">
                 <h3 style="color:#22d3ee;margin-bottom:16px;">Take Clones — Select Mothers & Quantities</h3>
@@ -574,7 +567,7 @@
 
         function copyPropagationSMS() {
             let text = "🌱 LUCKY PROPAGATION READY LIST\n\n";
-            const readyMothers = mothers.filter(m => m.status === "Active" && (m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999) > 30);
+            const readyMothers = mothers.filter(m => m.status === "Active" && getDaysSinceClone(m) !== null && getDaysSinceClone(m) > 30);
             if (readyMothers.length) {
                 text += "MOTHERS READY FOR SNIPS:\n";
                 readyMothers.forEach(m => {
@@ -608,7 +601,7 @@
         }
 
         function renderDashboard() {
-            const due = mothers.filter(m => m.status === "Active" && (m.lastCloneDate ? Math.floor((Date.now() - new Date(m.lastCloneDate)) / 86400000) : 999) > 90).length;
+            const due = mothers.filter(m => m.status === "Active" && getDaysSinceClone(m) !== null && getDaysSinceClone(m) > 90).length;
             document.getElementById('due-mothers').textContent = due;
             const active = clones.filter(c => !c.isArchived && !["Retail", "Flowering", "Replenish Moms"].includes(c.status)).length;
             document.getElementById('active-clones').textContent = active;
