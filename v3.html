@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>P7 Genetic Catalog Manager • V3</title>
+    <title>P7 Genetic Catalog Manager • V4</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap');
@@ -300,7 +300,7 @@
 <body>
     <h1>P7 Genetic Catalog Manager</h1>
     <div id="lastUpdated" class="last-updated">Last Updated: Never</div>
-    <p class="note">V3 • Orphan alert added • Fully tested &amp; polished</p>
+    <p class="note">V4 • Rotation after 3 clone sessions • Smart mother tags</p>
 
     <div id="dashboard-view" class="dashboard-grid">
         <div><h3 style="margin:0 0 8px 0;color:#67e8f9;">Mothers Due</h3><div id="due-mothers" style="font-size:34px;font-weight:700;color:#f97316;">0</div></div>
@@ -349,7 +349,7 @@
         }
 
         function saveToLocal() {
-            localStorage.setItem('p7GeneticData', JSON.stringify({genetics, mothers, clones, version: "3"}));
+            localStorage.setItem('p7GeneticData', JSON.stringify({genetics, mothers, clones, version: "4"}));
         }
 
         function loadFromLocal() {
@@ -372,12 +372,35 @@
             return m.cloneHistory.reduce((sum, entry) => sum + (entry.qty || 0), 0);
         }
 
+        function getCloneSessions(m) {
+            return m.cloneHistory ? m.cloneHistory.length : 0;
+        }
+
         function getActiveMothersForGenetic(geneticId) {
             return mothers.filter(m => m.geneticId === geneticId && m.status !== 'Archived').length;
         }
 
         function getOrphanGeneticsCount() {
             return genetics.filter(g => getActiveMothersForGenetic(g.id) === 0).length;
+        }
+
+        function generateMotherTag(geneticName, geneticId) {
+            // Create smart prefix from genetic name (first letters of words, max 4 chars)
+            let prefix = geneticName
+                .split(/[\s-]+/)
+                .map(word => word[0] ? word[0].toUpperCase() : '')
+                .join('')
+                .slice(0, 4);
+            
+            if (prefix.length < 2) {
+                prefix = geneticName.slice(0, 4).toUpperCase();
+            }
+
+            // Count existing mothers for this genetic
+            const existingCount = mothers.filter(m => m.geneticId === geneticId && m.status !== 'Archived').length;
+            const nextNumber = existingCount + 1;
+
+            return `MOM-${prefix}-${String(nextNumber).zfill(3)}`;
         }
 
         function renderList() {
@@ -390,10 +413,11 @@
                     if (m.status === 'Archived') return;
                     const genetic = genetics.find(g => g.id === m.geneticId) || {name: 'Unknown'};
                     const daysSince = getDaysSinceClone(m);
-                    const showWarning = daysSince !== null && daysSince > 30;
+                    const sessions = getCloneSessions(m);
+                    const showRotationWarning = sessions >= 3;
+                    const showCloneWarning = daysSince !== null && daysSince > 30;
                     const pruneCount = m.pruneHistory ? m.pruneHistory.length : 0;
                     const totalClones = getTotalClonesTaken(m);
-                    const cloneSessions = m.cloneHistory ? m.cloneHistory.length : 0;
                     const rareLabel = m.isRare ? ' ⭐ Rare' : '';
 
                     const div = document.createElement('div');
@@ -403,11 +427,12 @@
                             <div class="product-name">${m.tag} — ${genetic.name}${rareLabel}</div>
                             <div class="product-desc">Health: ${m.health} • Location: ${m.location || '—'}</div>
                             <div class="product-meta">
-                                Last clone: ${m.lastCloneDate || 'Never'}<br>
+                                Clone sessions: ${sessions} • Last clone: ${m.lastCloneDate || 'Never'}<br>
                                 Last prune: ${m.lastPruneDate || 'Never'}<br>
-                                Prunes: ${pruneCount} • Total clones: ${totalClones} (${cloneSessions} sessions)
+                                Prunes: ${pruneCount} • Total clones: ${totalClones}
                             </div>
-                            ${showWarning ? `<span class="warning-badge" style="margin-top:10px;display:inline-block;">⚠️ No clone in ${daysSince} days</span>` : ''}
+                            ${showRotationWarning ? `<span class="warning-badge" style="margin-top:8px;display:inline-block;">🔄 Due for rotation (3+ sessions)</span>` : ''}
+                            ${showCloneWarning ? `<span class="warning-badge" style="margin-top:8px;display:inline-block;">⚠️ No clone in ${daysSince} days</span>` : ''}
                         </div>
                         <div class="action-buttons">
                             <button class="rare-btn ${m.isRare ? 'active' : ''}" onclick="toggleRare(${i}); event.stopImmediatePropagation();">⭐ Rare</button>
@@ -640,7 +665,7 @@
             <div class="modal-content">
                 <h3 style="color:#22d3ee;margin-bottom:20px;">Add New Mother</h3>
                 <select id="genetic-select" style="margin-bottom:20px;">${options}</select>
-                <input id="mother-tag" placeholder="Mother Tag (e.g. MOM-BD-001)" style="margin-bottom:20px;">
+                <input id="mother-tag" placeholder="Mother Tag (auto-generated if left blank)" style="margin-bottom:20px;">
                 <div style="text-align:right;display:flex;gap:12px;justify-content:flex-end;">
                     <button onclick="hideModal()" style="background:#64748b;color:white;padding:14px 28px;border-radius:9999px;">Cancel</button>
                     <button onclick="createMother()" style="background:#22d3ee;color:#0f172a;padding:14px 40px;border-radius:9999px;font-weight:700;">Create Mother</button>
@@ -651,7 +676,13 @@
 
         function createMother() {
             const geneticId = parseInt(document.getElementById('genetic-select').value);
-            const tag = document.getElementById('mother-tag').value.trim() || `MOM-${String(Date.now()).slice(-4)}`;
+            const genetic = genetics.find(g => g.id === geneticId);
+            let tag = document.getElementById('mother-tag').value.trim();
+            
+            if (!tag) {
+                tag = generateMotherTag(genetic ? genetic.name : 'UNK', geneticId);
+            }
+
             const newM = { 
                 id: Date.now(), geneticId, tag, startDate: new Date().toISOString().split('T')[0], 
                 lastCloneDate: "", lastPruneDate: "", pruneHistory: [], cloneHistory: [], 
@@ -998,16 +1029,16 @@
         });
 
         function exportFile() {
-            const exportData = { genetics, mothers, clones, lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString(), version: "3" };
+            const exportData = { genetics, mothers, clones, lastUpdated: lastUpdated ? lastUpdated.toISOString() : new Date().toISOString(), version: "4" };
             const jsonStr = JSON.stringify(exportData, null, 2);
             const blob = new Blob([jsonStr], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `p7-genetic-catalog-v3-${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `p7-genetic-catalog-v4-${new Date().toISOString().slice(0,10)}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            alert("✅ Exported as V3!");
+            alert("✅ Exported as V4!");
         }
 
         window.onload = () => {
