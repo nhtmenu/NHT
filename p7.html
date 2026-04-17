@@ -61,6 +61,18 @@
             padding: 16px 24px; 
             max-width: 320px; 
         }
+        .rare-btn { 
+            background: #64748b; 
+            color: white; 
+            font-size: 12px; 
+            padding: 6px 14px; 
+            border-radius: 9999px; 
+        }
+        .rare-btn.active { 
+            background: #a78bfa; 
+            color: #0f172a; 
+            font-weight: 700; 
+        }
 
         .tab-header { 
             display: flex; 
@@ -231,12 +243,13 @@
                     const showWarning = daysSince !== null && daysSince > 30;
                     const pruneCount = m.pruneHistory ? m.pruneHistory.length : 0;
                     const cloneCount = m.cloneHistory ? m.cloneHistory.length : 0;
+                    const rareLabel = m.isRare ? ' ⭐ Rare' : '';
 
                     const div = document.createElement('div');
                     div.className = 'product-item';
                     div.innerHTML = `
                         <div class="product-info">
-                            <div class="product-name">${m.tag} — ${genetic.name}</div>
+                            <div class="product-name">${m.tag} — ${genetic.name}${rareLabel}</div>
                             <div class="product-desc">Health: ${m.health} • Location: ${m.location || '—'}</div>
                             <div style="font-size:13px;color:var(--text-light);margin:8px 0;">
                                 Last clone: ${m.lastCloneDate || 'Never'}<br>
@@ -245,7 +258,8 @@
                             </div>
                             ${showWarning ? `<span class="warning-badge">⚠️ No clone in ${daysSince} days</span>` : ''}
                         </div>
-                        <div style="display:flex;gap:8px;flex-direction:column;">
+                        <div style="display:flex;gap:6px;flex-direction:column;">
+                            <button class="edit-btn rare-btn ${m.isRare ? 'active' : ''}" onclick="toggleRare(${i}); event.stopImmediatePropagation();">Rare</button>
                             <button class="edit-btn" onclick="pruneMother(${i}); event.stopImmediatePropagation();">Prune</button>
                             <button class="edit-btn" onclick="editMother(${i}); event.stopImmediatePropagation();">Manage</button>
                         </div>
@@ -349,7 +363,7 @@
                         <div class="product-name">${g.name || 'Unnamed Strain'}</div>
                         <div class="product-desc">${g.lineage || ''}</div>
                         <div class="trait-badges">${badges}</div>
-                        <div onclick="showGeneticDetails(${i}); event.stopImmediatePropagation();" style="margin-top:10px;font-size:13px;color:var(--accent);text-decoration:underline;cursor:pointer;">View Terpenes & Notes →</div>
+                        <div onclick="showGeneticDetails(${i}); event.stopImmediatePropagation();" style="margin-top:10px;font-size:13px;color:var(--accent);text-decoration:underline;cursor:pointer;">View Full Details →</div>
                     </div>
                     <button class="edit-btn" onclick="editGenetic(${i}); event.stopImmediatePropagation();">Edit</button>
                 `;
@@ -363,7 +377,18 @@
             const modalHTML = `
             <div class="modal-content">
                 <h3 style="color:#22d3ee;margin-bottom:16px;">${g.name || 'Unnamed Strain'}</h3>
-                <div style="background:#0f172a;padding:16px;border-radius:8px;margin-bottom:16px;">
+                <div style="background:#0f172a;padding:16px;border-radius:8px;margin-bottom:12px;">
+                    <strong>Lineage:</strong> ${g.lineage || '—'}<br>
+                    <strong>Vigor:</strong> ${g.vigor || '—'}<br>
+                    <strong>Rooting Ease:</strong> ${g.rootingEase || '—'}<br>
+                    <strong>Flower Type:</strong> ${g.flowerType || '—'}<br>
+                    <strong>Yield Potential:</strong> ${g.yieldPotential || '—'}<br>
+                    <strong>Structure:</strong> ${g.structure || '—'}<br>
+                    <strong>Flowering Weeks:</strong> ${g.floweringWeeks || '—'}<br>
+                    <strong>THC:</strong> ${g.thc || '—'}<br>
+                    <strong>CBD:</strong> ${g.cbd || '—'}
+                </div>
+                <div style="background:#0f172a;padding:16px;border-radius:8px;margin-bottom:12px;">
                     <strong>Key Terpenes:</strong><br>${g.terpenes || 'No terpenes listed'}
                 </div>
                 <div style="background:#0f172a;padding:16px;border-radius:8px;">
@@ -448,7 +473,7 @@
             const newM = { 
                 id: Date.now(), geneticId, tag, startDate: new Date().toISOString().split('T')[0], 
                 lastCloneDate: "", lastPruneDate: "", pruneHistory: [], cloneHistory: [], 
-                health: "Good", location: "", notes: "", status: "Active" 
+                health: "Good", location: "", notes: "", status: "Active", isRare: false 
             };
             mothers.unshift(newM);
             hideModal();
@@ -479,6 +504,14 @@
             updateLastUpdated();
             saveToLocal();
             renderList();
+        }
+
+        function toggleRare(i) {
+            mothers[i].isRare = !mothers[i].isRare;
+            updateLastUpdated();
+            saveToLocal();
+            renderList();
+            renderDashboard();
         }
 
         function editMother(i) {
@@ -685,10 +718,13 @@
         function renderDashboard() {
             const due = mothers.filter(m => m.status === "Active" && getDaysSinceClone(m) !== null && getDaysSinceClone(m) > 90).length;
             document.getElementById('due-mothers').textContent = due;
+
             const active = clones.filter(c => !c.isArchived && !["Retail", "Flowering", "Replenish Moms"].includes(c.status)).length;
             document.getElementById('active-clones').textContent = active;
-            const backups = clones.filter(c => !c.isArchived && c.isBackup).length;
-            document.getElementById('rare-backups').textContent = backups;
+
+            const rare = mothers.filter(m => m.isRare && m.status !== 'Archived').length;
+            document.getElementById('rare-backups').textContent = rare;
+
             let alertHTML = due > 0 ? `<div style="background:#f97316;color:#0f172a;padding:12px;border-radius:8px;">⚠️ ${due} mothers overdue for rotation.</div>` : `<div style="color:#67e8f9;">All cycles look healthy! 🌱</div>`;
             document.getElementById('alert-list').innerHTML = alertHTML;
         }
@@ -710,6 +746,7 @@
             if (modal) modal.style.display = 'none';
             setTimeout(() => {
                 renderList();
+                renderDashboard();
                 saveToLocal();
             }, 50);
         }
