@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOL NEVER HAD THAT - Keyword: MENU</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000080 url('https://www.transparenttextures.com/patterns/old-wall.png') repeat;
+            color: #ffffff;
+            font-family: 'Press Start 2P', system-ui;
+            line-height: 1.5;
+            image-rendering: pixelated;
+        }
+
+        .aol-topbar {
+            background: #0000ff;
+            color: #ffff00;
+            padding: 8px 15px;
+            text-align: center;
+            font-size: 14px;
+            border-bottom: 4px solid #ffffff;
+            text-shadow: 2px 2px 0 #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .aol-topbar a {
+            color: #ffff00;
+            text-decoration: underline;
+            margin: 0 12px;
+            cursor: pointer;
+        }
+
+        .checkout-link {
+            display: block;
+            margin: 8px auto 0;
+            background: #ff0000;
+            color: #ffff00;
+            padding: 8px 20px;
+            font-weight: bold;
+            border: 4px solid #ffffff;
+            box-shadow: 4px 4px 0 #000;
+            width: fit-content;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 20px auto;
+            background: #c0c0c0;
+            border: 8px solid #dfdfdf;
+            border-right-color: #808080;
+            border-bottom-color: #808080;
+            box-shadow: 10px 10px 0 #000;
+            padding: 15px;
+        }
+
+        .header {
+            background: linear-gradient(#000080, #0000aa);
+            color: #ffffff;
+            padding: 18px;
+            text-align: center;
+            border: 6px solid #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .welcome {
+            font-size: 18px;
+            color: #ffff00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .marquee {
+            background: #000000;
+            color: #00ff00;
+            padding: 8px;
+            font-size: 13px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 15px 0;
+            border: 3px solid #ff0000;
+        }
+
+        .marquee span {
+            display: inline-block;
+            animation: marquee 35s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .menu-area {
+            background: #ffffff;
+            border: 6px solid #000080;
+            padding: 20px;
+            color: #000;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #000080;
+            font-size: 17px;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            border-bottom: 4px solid #ff0000;
+            padding-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+        }
+
+        .item-list.active {
+            display: block;
+        }
+
+        .item {
+            padding: 12px 8px;
+            border-bottom: 2px dotted #808080;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .item:hover {
+            background: #ffffe0;
+        }
+
+        .item.added {
+            background: #ffff00;
+            animation: flash 0.6s;
+        }
+
+        @keyframes flash {
+
+            0%,
+            100% {
+                background: #ffff00;
+            }
+
+            50% {
+                background: #ffffff;
+            }
+        }
+
+        .item-main {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-desc {
+            font-size: 11px;
+            color: #808080;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .price-area {
+            text-align: right;
+            min-width: 100px;
+        }
+
+        .price {
+            color: #ff0000;
+            font-weight: bold;
+            display: block;
+            transition: all 0.4s;
+        }
+
+        .item.added .price {
+            color: #00ff00;
+            animation: pricePop 0.8s ease-out;
+        }
+
+        @keyframes pricePop {
+            0% {
+                transform: scale(1);
+                color: #ff0000;
+            }
+
+            50% {
+                transform: scale(1.4);
+                color: #00ff00;
+            }
+
+            100% {
+                transform: scale(1);
+                color: #00ff00;
+            }
+        }
+
+        .grower {
+            font-size: 10px;
+            color: #000080;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .music-player {
+            background: #000080;
+            border: 6px solid #ffffff;
+            padding: 15px;
+            margin: 25px 0;
+            color: #00ff00;
+            text-align: center;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .music-player h3 {
+            margin: 0 0 12px 0;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #000;
+            font-size: 15px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .now-playing {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #ffff00;
+            min-height: 18px;
+        }
+
+        .cart-panel,
+        .info-panel,
+        .map-panel {
+            background: #ffffff;
+            border: 6px solid #000080;
+            padding: 20px;
+            color: #000;
+            margin: 25px 0;
+        }
+
+        #cart-text {
+            width: 100%;
+            height: 260px;
+            background: #000080;
+            color: #00ff00;
+            border: 4px solid #ffff00;
+            padding: 12px;
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .button-row {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        button {
+            background: #c0c0c0;
+            color: #000080;
+            border: 4px solid #ffffff;
+            border-right-color: #808080;
+            border-bottom-color: #808080;
+            padding: 12px 24px;
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 6px;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .cart-option {
+            margin: 15px 0;
+            padding: 10px;
+            border: 3px solid #000080;
+        }
+
+        .instagram-link {
+            color: #0000ff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .contact-box {
+            background: #000080;
+            color: #ffff00;
+            text-align: center;
+            padding: 22px;
+            font-size: 19px;
+            margin: 25px 0;
+            border: 6px solid #ffffff;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .phone-link {
+            color: #ffff00;
+            text-decoration: underline;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 420px;
+            border: 4px solid #000080;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent 0px,
+                transparent 3px,
+                rgba(0,255,0,0.06) 3px,
+                rgba(0,255,0,0.06) 6px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #808080;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="aol-topbar">
+        <span style="color:#ff0000; font-size:22px;">AOL</span> •
+        <a onclick="document.getElementById('contact-box').scrollIntoView({behavior:'smooth'})">Mail</a> •
+        <a href="#">Menu</a> •
+        <a onclick="document.getElementById('info-panel').scrollIntoView({behavior:'smooth'})">Chat</a> •
+        <a onclick="document.getElementById('map-panel').scrollIntoView({behavior:'smooth'})">Hudson Valley</a> •
+        <a href="https://instagram.com/never.had.that" target="_blank">Never Had That</a>
+
+        <br>
+
+        <a id="checkout-link" class="checkout-link"
+            onclick="document.getElementById('cart-panel').scrollIntoView({behavior:'smooth'})">
+            🛒 CHECKOUT (0) $0
+        </a>
+    </div>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>NEVER HAD THAT DELIVERY</h1>
+            <div class="welcome">You've Got Goods!</div>
+        </div>
+
+        <div class="marquee">
+            <span>
+                ★★★ MENU LAST UPDATED: MAY 25, 2026 ★ $100+ GETS FREE DELIVERY ★ MENU UPDATED EVERY FRIDAY ★ FAST • DISCREET • 21+ ONLY ★★★
+            </span>
+        </div>
+
+        <!-- FLOWER -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('flower-list')">FLOWER ▼</h2>
+
+            <ul class="item-list active" id="flower-list">
+
+                <li class="item" onclick="addToCart(event, this, 'Gelonoids 7g', 100)">
+                    <div class="item-main">
+                        <span class="item-name">Gelonoids</span><br>
+                        <span class="item-desc">7g • Available up to 28g</span>
+                    </div>
+
+                    <div class="price-area">
+                        <span class="price">$100</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+
+                <li class="item" onclick="addToCart(event, this, 'Gelonoids 14g', 200)">
+                    <div class="item-main">
+                        <span class="item-name">Gelonoids</span><br>
+                        <span class="item-desc">14g • Fu’s Flowers</span>
+                    </div>
+
+                    <div class="price-area">
+                        <span class="price">$200</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+
+                <li class="item" onclick="addToCart(event, this, 'Gelonoids 28g', 400)">
+                    <div class="item-main">
+                        <span class="item-name">Gelonoids</span><br>
+                        <span class="item-desc">28g • Fu’s Flowers</span>
+                    </div>
+
+                    <div class="price-area">
+                        <span class="price">$400</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- HASH -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('hash-list')">HASH ▼</h2>
+
+            <ul class="item-list" id="hash-list">
+                <li class="item">
+                    <div class="item-main">
+                        <span class="item-name">COMING SOON</span><br>
+                        <span class="item-desc">Fresh solventless drops weekly</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- EDIBLES -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('edible-list')">EDIBLE ▼</h2>
+
+            <ul class="item-list" id="edible-list">
+
+                <li class="item" onclick="addToCart(event, this, 'Dubai Chocolate Bar', 40)">
+                    <div class="item-main">
+                        <span class="item-name">Dubai Chocolate Bar</span><br>
+                        <span class="item-desc">350mg • Munch N Melt x Fu’s Flowers</span>
+                    </div>
+
+                    <div class="price-area">
+                        <span class="price">$40</span><br>
+                        <span class="grower">Munch N Melt / Fu’s Flowers</span>
+                    </div>
+                </li>
+
+                <li class="item" onclick="addToCart(event, this, 'Fu Chews 250mg', 30)">
+                    <div class="item-main">
+                        <span class="item-name">Fu Chews</span><br>
+                        <span class="item-desc">250mg infused chews</span>
+                    </div>
+
+                    <div class="price-area">
+                        <span class="price">$30</span><br>
+                        <span class="grower">Fu’s Flowers</span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- BONUS -->
+        <div class="menu-area">
+            <h2 onclick="toggleSection('bonus-list')">BONUS (MISC) ▼</h2>
+
+            <ul class="item-list" id="bonus-list">
+                <li class="item">
+                    <div class="item-main">
+                        <span class="item-name">COMING SOON</span><br>
+                        <span class="item-desc">Special drops & accessories</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- MUSIC -->
+        <div class="music-player">
+            <h3>♪ NOW SPINNING ON AOL RADIO ♪</h3>
+
+            <audio id="aol-radio" controls autoplay></audio>
+
+            <div class="now-playing" id="now-playing">
+                Loading 90s vibes...
+            </div>
+
+            <button onclick="playRandomTrack()" style="margin-top:10px; padding:8px 16px; font-size:12px;">
+                NEXT TRACK
+            </button>
+        </div>
+
+        <!-- CART -->
+        <div id="cart-panel" class="cart-panel">
+
+            <h2>YOUR CART</h2>
+
+            <div style="margin:15px 0; padding:10px; border:3px solid #000080;">
+                <label>
+                    <input type="radio" name="orderType" value="pickup" checked onchange="updateCartDisplay()">
+                    Pickup (Free)
+                </label>
+
+                <br>
+
+                <label>
+                    <input type="radio" name="orderType" value="delivery" onchange="updateCartDisplay()">
+                    Delivery
+                </label>
+            </div>
+
+            <div id="pickup-fields" class="cart-option">
+                <strong>Pickup Location</strong><br>
+
+                <select id="pickup-location" onchange="updateCartDisplay()" style="width:100%; margin-top:4px;">
+                    <option value="North Hudson">North Hudson</option>
+                    <option value="Mid Hudson" selected>Mid Hudson</option>
+                    <option value="South Hudson">South Hudson</option>
+                </select>
+
+                <br>
+
+                Requested Time:
+                <input id="pickup-time" type="text" placeholder="e.g. 7:30 PM"
+                    style="width:100%; margin-top:4px;" onchange="updateCartDisplay()">
+            </div>
+
+            <div id="delivery-fields" class="cart-option" style="display:none;">
+                <strong>Delivery Address</strong><br>
+
+                <input id="delivery-address" type="text" placeholder="Full delivery address"
+                    style="width:100%; margin-top:4px;" onchange="updateCartDisplay()">
+
+                <br>
+
+                Requested Time:
+                <input id="delivery-time" type="text" value="ASAP"
+                    style="width:100%; margin-top:4px;" onchange="updateCartDisplay()">
+
+                <div id="delivery-fee-display"
+                    style="margin-top:8px; font-size:13px; color:#000080; font-weight:bold;">
+                </div>
+            </div>
+
+            <textarea id="cart-text" readonly
+                placeholder="Click items above to add to cart..."></textarea>
+
+            <div class="button-row">
+                <button onclick="clearCart()">CLEAR CART</button>
+                <button onclick="copyToClipboard()">COPY TO CLIPBOARD</button>
+                <button onclick="sendSMS()">SEND VIA TEXT</button>
+            </div>
+        </div>
+
+        <!-- INFO -->
+        <div id="info-panel" class="info-panel">
+            <h2>NEVER HAD THAT INFO</h2>
+
+            <p><strong>Delivery Info:</strong> Fast • Discreet • 21+ Only</p>
+
+            <p><strong>Tip of the Day:</strong> Schedule ahead for faster delivery!</p>
+
+            <hr style="border: 2px dashed #000080; margin: 15px 0;">
+
+            <strong>Instant Message Us:</strong><br>
+
+            <a href="https://instagram.com/never.had.that"
+                target="_blank"
+                class="instagram-link">
+                never.had.that
+            </a>
+        </div>
+
+        <!-- MAP -->
+        <div id="map-panel" class="map-panel">
+
+            <h2>HUDSON VALLEY DELIVERY ZONE</h2>
+
+            <p>
+                <strong>Service area includes:</strong>
+                Poughkeepsie, Beacon, Newburgh, Kingston, Hudson, Catskill,
+                and surrounding towns.
+            </p>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1200000!2d-74.5!3d41.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e5b0b0b0b0b0%3A0x0!2sHudson+Valley%2C+NY!5e0!3m2!1sen!2sus!4v1740000000000"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div id="contact-box" class="contact-box">
+
+            📞 CALL OR TEXT TO ORDER:<br>
+
+            <a href="tel:6466886312" class="phone-link">
+                <strong>(646) 688-6312</strong>
+            </a>
+
+            <br>
+
+            <span style="font-size:14px;">
+                Discreet Delivery • You've Got Goods!
+            </span>
+        </div>
+
+        <div class="footer">
+            © 2026 NEVER HAD THAT DELIVERY • HUDSON VALLEY • ALL RIGHTS RESERVED<br>
+            CONNECTED AT 28.8 KBPS • BEST VIEWED IN AOL 4.0
+        </div>
+
+    </div>
+
+    <div class="scanlines"></div>
+
+    <audio id="ching"
+        src="https://www.soundjay.com/buttons/beep-07.mp3"
+        preload="auto">
+    </audio>
+
+    <script>
+
+        let cart = [];
+
+        const audio = document.getElementById('aol-radio');
+        const nowPlaying = document.getElementById('now-playing');
+        const chingSound = document.getElementById('ching');
+
+        const tracks = [
+            {
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                title: "Chill 90s Vibes"
+            },
+            {
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                title: "Retro Groove"
+            },
+            {
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+                title: "90s Dreamy Beat"
+            }
+        ];
+
+        function playRandomTrack() {
+            const idx = Math.floor(Math.random() * tracks.length);
+
+            audio.src = tracks[idx].src;
+            nowPlaying.textContent = tracks[idx].title;
+
+            audio.play().catch(() => {});
+        }
+
+        audio.addEventListener('ended', playRandomTrack);
+
+        function toggleSection(id) {
+            const list = document.getElementById(id);
+
+            if (list) {
+                list.classList.toggle('active');
+            }
+        }
+
+        function addToCart(e, element, itemName, price) {
+
+            e.stopImmediatePropagation();
+
+            element.classList.add('added');
+
+            setTimeout(() => {
+                element.classList.remove('added');
+            }, 800);
+
+            chingSound.currentTime = 0;
+            chingSound.play().catch(() => {});
+
+            cart.push({
+                name: itemName,
+                price: price
+            });
+
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+
+            const textarea = document.getElementById('cart-text');
+
+            let subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+
+            let deliveryFee = 0;
+
+            let type = document.querySelector('input[name="orderType"]:checked').value;
+
+            if (type === "delivery") {
+
+                deliveryFee = (subtotal >= 100) ? 0 : 40;
+
+                document.getElementById('delivery-fields').style.display = 'block';
+
+                document.getElementById('pickup-fields').style.display = 'none';
+
+            } else {
+
+                document.getElementById('pickup-fields').style.display = 'block';
+
+                document.getElementById('delivery-fields').style.display = 'none';
+            }
+
+            let total = subtotal + deliveryFee;
+
+            const checkoutBtn = document.getElementById('checkout-link');
+
+            checkoutBtn.innerHTML = `🛒 CHECKOUT (${cart.length}) $${total}`;
+
+            let text = "NEVER HAD THAT ORDER\n===================\n\n";
+
+            cart.forEach((item, i) => {
+                text += `${i + 1}. ${item.name} — $${item.price}\n`;
+            });
+
+            text += `\nSUBTOTAL: $${subtotal}\n`;
+
+            if (type === "pickup") {
+
+                const location = document.getElementById('pickup-location').value;
+
+                const time = document.getElementById('pickup-time').value || "[Requested Time]";
+
+                text += `PICKUP: ${location} at ${time}\n`;
+
+                text += "Pickup Fee: $0\n";
+
+            } else {
+
+                const address = document.getElementById('delivery-address').value || "[Delivery Address]";
+
+                const time = document.getElementById('delivery-time').value || "ASAP";
+
+                text += `DELIVERY: ${address} at ${time}\n`;
+
+                text += `Delivery Fee: $${deliveryFee} ${deliveryFee === 0 ? '(FREE over $100)' : ''}\n`;
+            }
+
+            text += `TOTAL: $${total}\n`;
+
+            text += `\nASAP • 21+ only\nPayment: Cash preferred\n\nLet me know if this looks good!`;
+
+            textarea.value = text;
+
+            const feeDisplay = document.getElementById('delivery-fee-display');
+
+            if (feeDisplay) {
+                feeDisplay.textContent =
+                    `Delivery Fee: $${deliveryFee} ${deliveryFee === 0 ? '(FREE over $100)' : ''}`;
+            }
+        }
+
+        function clearCart() {
+
+            if (confirm("Clear your entire cart?")) {
+
+                cart = [];
+
+                updateCartDisplay();
+
+                alert("✅ Cart cleared!");
+            }
+        }
+
+        async function copyToClipboard() {
+
+            const text = document.getElementById('cart-text').value.trim();
+
+            if (!text) {
+                return alert("Nothing to copy yet!");
+            }
+
+            try {
+
+                await navigator.clipboard.writeText(text);
+
+                alert("✅ Copied!");
+
+            } catch (e) {
+
+                alert("✅ Copied!");
+            }
+        }
+
+        function sendSMS() {
+
+            const text = document.getElementById('cart-text').value.trim();
+
+            if (!text) {
+                return alert("Add items first!");
+            }
+
+            const link = document.createElement('a');
+
+            link.href = `sms:6466886312?body=${encodeURIComponent(text)}`;
+
+            link.style.display = 'none';
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+        }
+
+        window.onload = () => {
+
+            console.log(
+                "%cAOL Never Had That Delivery loaded — You've Got Goods! 🔥",
+                "color: lime; font-family: monospace;"
+            );
+
+            playRandomTrack();
+
+            updateCartDisplay();
+
+            document.querySelectorAll('input[name="orderType"]').forEach(radio => {
+                radio.addEventListener('change', updateCartDisplay);
+            });
+
+            const inputs = document.querySelectorAll(
+                '#pickup-fields select, #pickup-fields input, #delivery-fields input'
+            );
+
+            inputs.forEach(input => {
+                input.addEventListener('input', updateCartDisplay);
+            });
+        };
+
+    </script>
+
+</body>
+</html>
